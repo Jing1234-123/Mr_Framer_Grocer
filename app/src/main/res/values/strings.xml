@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">Product Details</string>
+    <string name="app_name">Mr.Farmer Grocer</string>
 
     <!-- Content Description-->
     <string name="rect1">rect1</string>
     <string name="rect2">rect2</string>
     <string name="cart">cart</string>
     <string name="prodQty">1</string>
+    <string name="heart">heart</string>
 
     <!-- Text-->
     <string name="tomato">Tomato</string>
@@ -13,6 +14,10 @@
     <string name="weight">(±500g)</string>
     <string name="stock">In Stock</string>
     <string name="relatedProd">Related Products</string>
+    <string name="tnc">Terms Condition</string>
+    <string name="totalItem">3 item(s)</string>
+    <string name="total">Total:</string>
+    <string name="my_cart">My Cart</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

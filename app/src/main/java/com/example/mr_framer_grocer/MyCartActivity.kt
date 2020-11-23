@@ -27,7 +27,7 @@ class MyCartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        generateItem()
+        generateItem()
 
         // if the my cart is empty
         if(itemList.isNullOrEmpty()) {

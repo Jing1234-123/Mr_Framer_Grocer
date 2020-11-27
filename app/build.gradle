@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -28,6 +29,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildscript {
+        ext.room_version = '2.1.0-alpha01'
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -51,4 +57,16 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Volley
+    implementation 'com.android.volley:volley:1.1.1'
+
+    // room database
+    def room_version = "2.2.5"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Gson  - covert to Json format
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

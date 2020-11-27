@@ -10,14 +10,22 @@
 
     <!-- Text-->
     <string name="tomato">Tomato</string>
-    <string name="price">RM 3.60</string>
-    <string name="weight">(±500g)</string>
-    <string name="stock">In Stock</string>
+    <string name="price">RM %1$.2f</string>
+    <string name="weight">(%1$s)</string>
+    <string name="stock">In Stock (%1$d)</string>
     <string name="relatedProd">Related Products</string>
     <string name="tnc">Terms Condition</string>
-    <string name="totalItem">3 item(s)</string>
+    <string name="totalItem">%1$d item(s)</string>
     <string name="total">Total:</string>
     <string name="my_cart">My Cart</string>
+    <string name="emptyCart"><u>Clear the Cart</u></string>
+
+
+    <!--Database-->
+    <string name="url_server">https://mr-farmer-grocer.000webhostapp.com/api/</string>
+    <string name="url_user_read">user/read.php</string>
+    <string name="url_product_read">product/read.php</string>
+    <string name="url_user_create">user/create.php</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -9,7 +9,7 @@
     app:cardBackgroundColor="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="140dp"
         android:layout_height="match_parent">
 
         <ImageView
@@ -43,7 +43,9 @@
             android:text="@string/tomato"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:maxWidth="150dp"
+            android:maxWidth="80dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/prod_img" />
 
@@ -65,13 +67,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="3dp"
             android:fontFamily="sans-serif"
             android:text="@string/weight"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/prodName"
+            app:layout_constraintHorizontal_bias="0.535"
+            app:layout_constraintStart_toEndOf="@+id/price"
             app:layout_constraintTop_toBottomOf="@+id/prod_img" />
 
         <Button
@@ -79,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/small_add_cart"
             android:contentDescription="@string/cart"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,4 +1,4 @@
-package com.example.mr_framer_grocer
+package com.example.mr_framer_grocer.Adapter
 import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
+import com.example.mr_framer_grocer.R
 import java.util.*
 
 class CustomExpandableListAdapter internal constructor(

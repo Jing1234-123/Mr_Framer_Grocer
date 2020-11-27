@@ -21,14 +21,14 @@ class Testing : AppCompatActivity() {
         setContentView(R.layout.activity_testing)
 
         // Related Products
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
+//        prodList.add(Product("Tomato", "RM 3.60", "(±500g)", "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
 
         adapter = ProdAdapters(this, prodList)
 //        var relatedProdList = findViewById<LinearLayout>(R.id.related_prod_list).adapter
@@ -57,7 +57,7 @@ class Testing : AppCompatActivity() {
             // Pass the product information
             Glide.with(context!!).load(product.img).into(prodView.findViewById(R.id.prod_img))
             prodView.findViewById<TextView>(R.id.prodName).text = product.name
-            prodView.findViewById<TextView>(R.id.price).text = product.price
+            prodView.findViewById<TextView>(R.id.price).text = product.price.toString()
             prodView.findViewById<TextView>(R.id.weight).text = product.weight
 
             return prodView

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        tools:context=".Delivery">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="200dp"
+            android:background="@drawable/back_btn"
+            app:layout_constraintBottom_toTopOf="@id/delivery_info"
+            app:layout_constraintEnd_toStartOf="@id/checkout_info"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/checkout_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/checkout_info"
+            app:layout_constraintBottom_toTopOf="@id/delivery_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/back_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/delivery_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/delivery_info"
+            app:layout_constraintBottom_toTopOf="@id/add_details_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.076"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_btn" />
+
+        <TextView
+            android:id="@+id/add_details_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/add_details_info"
+            app:layout_constraintBottom_toTopOf="@id/border_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delivery_info" />
+
+        <Button
+            android:id="@+id/change_add_info"
+            android:layout_width="66dp"
+            android:layout_height="24dp"
+            android:background="@drawable/change_add_info"
+            app:layout_constraintBottom_toTopOf="@id/border_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.615"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delivery_info"
+            app:layout_constraintVertical_bias="0.869" />
+
+        <ImageView
+            android:id="@+id/border_1"
+            android:layout_width="377dp"
+            android:layout_height="187dp"
+            app:layout_constraintBottom_toTopOf="@id/deliver_method_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.137"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_details_info"
+            app:srcCompat="@drawable/border" />
+
+        <TextView
+            android:id="@+id/customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:text="Quah Tze Wei"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/border_1"
+            app:layout_constraintStart_toStartOf="@+id/border_1"
+            app:layout_constraintTop_toTopOf="@+id/border_1"
+            app:layout_constraintVertical_bias="0.177" />
+
+        <TextView
+            android:id="@+id/cust_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:text="01127658325"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/border_1"
+            app:layout_constraintStart_toStartOf="@+id/border_1"
+            app:layout_constraintTop_toBottomOf="@id/customer_name"
+            app:layout_constraintVertical_bias="0.173" />
+
+        <TextView
+            android:id="@+id/customer_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:maxWidth="350dp"
+            android:text="1-2-3, Taman Happy Valley, Jalan Faraday 12300 Selangor"
+            android:textSize="18sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="@+id/border_1"
+            app:layout_constraintStart_toStartOf="@+id/border_1"
+            app:layout_constraintTop_toBottomOf="@id/cust_phone_number"
+            app:layout_constraintVertical_bias="0.309" />
+
+        <TextView
+            android:id="@+id/deliver_method_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/delivery_method_info"
+            app:layout_constraintBottom_toTopOf="@id/border_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/border_2"
+            android:layout_width="268dp"
+            android:layout_height="131dp"
+            app:layout_constraintBottom_toTopOf="@id/subtotal_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deliver_method_info"
+            app:srcCompat="@drawable/border" />
+
+        <RadioGroup
+            android:layout_width="196dp"
+            android:layout_height="87dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/border_2"
+            app:layout_constraintEnd_toEndOf="@+id/border_2"
+            app:layout_constraintStart_toStartOf="@+id/border_2"
+            app:layout_constraintTop_toTopOf="@+id/border_2">
+
+            <RadioButton
+                android:id="@+id/radio_door_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/dark_grey"
+                android:onClick="onDoorDeliveryClicked"
+                android:text="@string/door_delivery"
+                android:textColor="@color/dark_grey"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/radio_self_pickup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:buttonTint="@color/dark_grey"
+                android:onClick="onSelfPickupClicked"
+                android:text="@string/self_pickup"
+                android:textColor="@color/dark_grey"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radio_door_delivery" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/subtotal_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="300dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/subtotal_info"
+            app:layout_constraintBottom_toTopOf="@id/delivery_fee_info"
+            app:layout_constraintEnd_toStartOf="@id/subtotal_txt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/border_2"
+            app:layout_constraintVertical_bias="0.72" />
+
+        <TextView
+            android:id="@+id/subtotal_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="40dp"
+            android:text="25.00"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/delivery_fee_txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/subtotal_info"
+            app:layout_constraintTop_toBottomOf="@id/border_2" />
+
+        <TextView
+            android:id="@+id/delivery_fee_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/delivery_fee_info"
+            app:layout_constraintTop_toBottomOf="@id/subtotal_info"
+            app:layout_constraintBottom_toTopOf="@id/total_info"
+            app:layout_constraintEnd_toStartOf="@id/delivery_fee_txt"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="290dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/delivery_fee_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="0.00"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/delivery_fee_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subtotal_txt"
+            app:layout_constraintBottom_toTopOf="@id/total_txt"/>
+
+        <TextView
+            android:id="@+id/total_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/total_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delivery_fee_info"
+            app:layout_constraintBottom_toTopOf="@id/proceed_btn"
+            app:layout_constraintEnd_toStartOf="@id/total_txt"
+            android:layout_marginEnd="270dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/total_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="25.00"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/total_info"
+            app:layout_constraintBottom_toTopOf="@id/proceed_btn"
+            app:layout_constraintTop_toBottomOf="@id/delivery_fee_txt"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/proceed_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="36dp"
+            android:background="@drawable/proceed_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/total_info" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

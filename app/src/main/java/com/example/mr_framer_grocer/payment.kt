@@ -2,8 +2,12 @@ package com.example.mr_framer_grocer
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.databinding.ActivityPaymentBinding
@@ -17,13 +21,14 @@ class payment : AppCompatActivity() {
     lateinit var storedVerificationId: String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-
+    lateinit var et_cardholder_name:EditText
+    lateinit var et_card_num:EditText
+    lateinit var otp_btn:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         auth = FirebaseAuth.getInstance()
 
         binding.monthPicker.minValue = 1
@@ -34,39 +39,125 @@ class payment : AppCompatActivity() {
         binding.yearPicker.maxValue = 2050
         binding.yearPicker.wrapSelectorWheel = false
 
-        binding.sendOtp.setOnClickListener {
-           // val mobileNumber = findViewById<TextView>(R.id.cust_phone_number)
-           // var phoneno = mobileNumber.text.toString().trim()
-            // (2) var phoneno = findViewById<TextView>(R.id.cust_phone_number).text.toString().trim()
-            // The test phone number and code should be whitelisted in the console.
-          //  var phoneno = "0142468151".trim()
+        val back = binding.backBtn
+        back.setOnClickListener {
+            intent = Intent(this, Delivery::class.java)
+            startActivity(intent)
+        }
 
-            val phoneNo = "+60164666826"
+        val intent = intent
+        val subtotal = intent.getStringExtra("Subtotal").toString()
+        val delivery_fee = intent.getStringExtra("Delivery_Fee").toString()
+        val total = intent.getStringExtra("Total").toString()
+
+        val new_subtotal = binding.subtotalTxt
+        new_subtotal.text = subtotal
+        val new_delivery_fee = binding.deliveryFeeTxt
+        new_delivery_fee.text = delivery_fee
+        val new_total = binding.totalTxt
+        new_total.text = total
+
+        var rb_credit_card = binding.radioCreditCard
+        var rb_cod = binding.radioCod
+
+//        et_cardholder_name = binding.cardholderNameTxt
+//        et_card_num = binding.cardNoTxt
+
+//        if(et_card_num.text.trim().isNotEmpty() && et_cardholder_name.text.trim().isNotEmpty()){
+//
+//            //binding.sendOtp.isEnabled = true
+//
+//            binding.sendOtp.setOnClickListener {
+//                val intent = intent
+//                val phoneno = intent.getStringExtra("Phone_No").toString()
+//                var phoneNo = "+6$phoneno"
+//                binding.otpTxt.isEnabled = true
+//
+//                if (!phoneNo.isEmpty()) {
+//                    sendVerificationcode(phoneNo)
+//                } else {
+//                    Toast.makeText(
+//                        applicationContext,
+//                        "Please enter phone number in your personal account. \n Settings -> Account ",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
+//            }
+//        }
+//        else if (et_card_num.text.trim().isNotEmpty() || et_cardholder_name.text.trim().isNotEmpty()){
+//            Toast.makeText(
+//                applicationContext,
+//                "Please enter credit card details! ",
+//                Toast.LENGTH_LONG
+//            ).show()
+//        }
+
+//        val textWatcher = object :TextWatcher{
+//            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2:Int) {
+//
+//            }
+//
+//            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+//
+//            }
+//
+//            override fun afterTextChanged(editable: Editable?) {
+//                if (editable != null && !editable.toString().equals("")) {
+//                    // Checking editable.hashCode() to understand which edittext is using right now
+//                    if (et_cardholder_name.hashCode() === editable.hashCode()) {
+//                        // This is just an example, your magic will be here!
+////                        val value = editable.toString()
+////                        et_cardholder_name!!.removeTextChangedListener(this)
+////                        et_cardholder_name!!.setText(value)
+////                        et_cardholder_name!!.addTextChangedListener(this)
+//                        binding.sendOtp.isEnabled = true
+//                    }
+//                } else if (et_card_num.hashCode() === editable!!.hashCode()) {
+//                    // This is just an example, your magic will be here!
+////                    val value = editable!!.toString()
+////                    et_card_num!!.removeTextChangedListener(this)
+////                    et_card_num!!.setText(value)
+////                    et_card_num!!.addTextChangedListener(this)
+//                    binding.sendOtp.isEnabled = true
+//                }
+//            }
+//        }
+
+        binding.sendOtp.setOnClickListener {
+            val intent = intent
+            val phoneno = intent.getStringExtra("Phone_No").toString()
+            var phoneNo = "+6$phoneno"
+            binding.otpTxt.isEnabled = true
 
             if (!phoneNo.isEmpty()) {
-             //   phoneno = "+6" + phoneno
                 sendVerificationcode(phoneNo)
             } else {
                 Toast.makeText(
-                        applicationContext,
-                        "Please enter phone number in your personal account. \n Settings -> Account ",
-                        Toast.LENGTH_LONG
+                    applicationContext,
+                    "Please enter phone number in your personal account. \n Settings -> Account ",
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }
 
         binding.proceedPaymentBtn.setOnClickListener {
-            var code = binding.otpTxt.toString()
-
-            if (code.isNotEmpty()) {
-                verifyVerficationCode(code)
-            } else {
-                Toast.makeText(
-                        applicationContext,
+            if(rb_credit_card.isChecked){
+                var code = binding.otpTxt.text.toString()
+                if (code.isNotEmpty()) {
+                    verifyVerficationCode(code)
+                } else {
+                    Toast.makeText(applicationContext,
                         "Please enter the OTP sent to your device.",
-                        Toast.LENGTH_LONG
-                ).show()
+                        Toast.LENGTH_LONG).show()
+                }
+            }else if(rb_cod.isChecked){
+                val intent = Intent(applicationContext, OrderSuccessful::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+                Toast.makeText(applicationContext, "Please choose one of the payment method!", Toast.LENGTH_LONG).show()
             }
+
         }
 
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -79,20 +170,7 @@ class payment : AppCompatActivity() {
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
 
-//                val code = credential.smsCode
-//                if (code != null) {
-//                    binding.otpTxt.setText(code)
-//                    verifyVerficationCode(code)
-//                }
-//                else{
-//                    payment(credential)
-//                }
-
-                Toast.makeText(applicationContext, " Congratssss", Toast.LENGTH_LONG)
-                        .show()
-
-              //  startActivity(Intent(applicationContext, payment_successful::class.java))
-             //   finish()
+                Toast.makeText(applicationContext, " Verification Completed!", Toast.LENGTH_LONG).show()
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
@@ -102,8 +180,8 @@ class payment : AppCompatActivity() {
             }
 
             override fun onCodeSent(
-                    verificationId: String,
-                    token: PhoneAuthProvider.ForceResendingToken
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
             ) {
                 // The SMS verification code has been sent to the provided phone number, we
                 // now need to ask the user to enter the code and then construct a credential
@@ -113,25 +191,14 @@ class payment : AppCompatActivity() {
 
                 storedVerificationId = verificationId
                 resendToken = token
-               // var intent = Intent(applicationContext,payment_successful::class.java)  // not sure this correct ma
-               // intent.putExtra("storedVerificationId",storedVerificationId)
-               // startActivity(intent) //not sure this correct maaaa
-                Toast.makeText(applicationContext, "HELOOO!", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "OTP code has been sent to your device!", Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
     private fun sendVerificationcode(phoneNo: String) {
-       // val smsCode = "123456"
-
-        val firebaseAuthSettings = auth.firebaseAuthSettings
-
-        // Configure faking the auto-retrieval with the whitelisted numbers.
-    //    firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber(phoneNo, smsCode)
-
         val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phoneNo) //Phone number to verify
+            .setPhoneNumber(phoneNo) // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(this)
             .setCallbacks(callbacks)
@@ -149,22 +216,17 @@ class payment : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                //    val user = task.result?.user
-                    Toast.makeText(applicationContext, "Payment successfully!", Toast.LENGTH_LONG)
-                        .show()
                     val intent = Intent(applicationContext, payment_successful::class.java)
                     startActivity(intent)
                     finish()
-
-
                 } else {
                     // Sign in failed, display a message and update the UI
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
                         Toast.makeText(
-                                applicationContext,
-                                "Payment failed with invalid OTP!",
-                                Toast.LENGTH_LONG
+                            applicationContext,
+                            "Payment failed with invalid OTP!",
+                            Toast.LENGTH_LONG
                         ).show()
                         binding.otpTxt.setText("")
                     }
@@ -175,6 +237,7 @@ class payment : AppCompatActivity() {
     fun showLayout(view: View) {
 
         if (binding.radioCreditCard.isChecked) {
+            binding.creditCardDetails.setVisibility(View.VISIBLE)
             binding.cardholderNameInfo.setVisibility(View.VISIBLE)
             binding.cardholderNameTxt.setVisibility(View.VISIBLE)
             binding.cardNoInfo.setVisibility(View.VISIBLE)
@@ -186,6 +249,7 @@ class payment : AppCompatActivity() {
             binding.otpTxt.setVisibility(View.VISIBLE)
             binding.sendOtp.setVisibility(View.VISIBLE)
         } else {
+            binding.creditCardDetails.setVisibility(View.INVISIBLE)
             binding.cardholderNameInfo.setVisibility(View.INVISIBLE)
             binding.cardholderNameTxt.setVisibility(View.INVISIBLE)
             binding.cardNoInfo.setVisibility(View.INVISIBLE)
@@ -199,8 +263,8 @@ class payment : AppCompatActivity() {
         }
     }
 
-
 }
+
 
 
 

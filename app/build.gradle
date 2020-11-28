@@ -20,7 +20,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 
     buildTypes {
@@ -38,6 +38,8 @@ android {
     }
 }
 
+def ev_version = "1.0.1"
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -54,6 +56,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation "com.google.firebase:firebase-auth:20.0.1"
-//    implementation "com.wajahatkarim3.easyvalidation:easyvalidation-core:$ev_version"
+    implementation "com.wajahatkarim3.easyvalidation:easyvalidation-core:$ev_version"
     implementation "com.google.android.gms:play-services-safetynet:17.0.0"
 }

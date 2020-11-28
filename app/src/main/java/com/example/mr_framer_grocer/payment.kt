@@ -60,69 +60,6 @@ class payment : AppCompatActivity() {
         var rb_credit_card = binding.radioCreditCard
         var rb_cod = binding.radioCod
 
-//        et_cardholder_name = binding.cardholderNameTxt
-//        et_card_num = binding.cardNoTxt
-
-//        if(et_card_num.text.trim().isNotEmpty() && et_cardholder_name.text.trim().isNotEmpty()){
-//
-//            //binding.sendOtp.isEnabled = true
-//
-//            binding.sendOtp.setOnClickListener {
-//                val intent = intent
-//                val phoneno = intent.getStringExtra("Phone_No").toString()
-//                var phoneNo = "+6$phoneno"
-//                binding.otpTxt.isEnabled = true
-//
-//                if (!phoneNo.isEmpty()) {
-//                    sendVerificationcode(phoneNo)
-//                } else {
-//                    Toast.makeText(
-//                        applicationContext,
-//                        "Please enter phone number in your personal account. \n Settings -> Account ",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
-//            }
-//        }
-//        else if (et_card_num.text.trim().isNotEmpty() || et_cardholder_name.text.trim().isNotEmpty()){
-//            Toast.makeText(
-//                applicationContext,
-//                "Please enter credit card details! ",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
-
-//        val textWatcher = object :TextWatcher{
-//            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2:Int) {
-//
-//            }
-//
-//            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-//
-//            }
-//
-//            override fun afterTextChanged(editable: Editable?) {
-//                if (editable != null && !editable.toString().equals("")) {
-//                    // Checking editable.hashCode() to understand which edittext is using right now
-//                    if (et_cardholder_name.hashCode() === editable.hashCode()) {
-//                        // This is just an example, your magic will be here!
-////                        val value = editable.toString()
-////                        et_cardholder_name!!.removeTextChangedListener(this)
-////                        et_cardholder_name!!.setText(value)
-////                        et_cardholder_name!!.addTextChangedListener(this)
-//                        binding.sendOtp.isEnabled = true
-//                    }
-//                } else if (et_card_num.hashCode() === editable!!.hashCode()) {
-//                    // This is just an example, your magic will be here!
-////                    val value = editable!!.toString()
-////                    et_card_num!!.removeTextChangedListener(this)
-////                    et_card_num!!.setText(value)
-////                    et_card_num!!.addTextChangedListener(this)
-//                    binding.sendOtp.isEnabled = true
-//                }
-//            }
-//        }
-
         binding.sendOtp.setOnClickListener {
             val intent = intent
             val phoneno = intent.getStringExtra("Phone_No").toString()
@@ -141,15 +78,38 @@ class payment : AppCompatActivity() {
         }
 
         binding.proceedPaymentBtn.setOnClickListener {
+            var code = binding.otpTxt.text.toString()
             if(rb_credit_card.isChecked){
-                var code = binding.otpTxt.text.toString()
-                if (code.isNotEmpty()) {
-                    verifyVerficationCode(code)
-                } else {
+                if(binding.cardholderNameTxt.text.toString().isNotEmpty()){
+                    if(binding.cardNoTxt.text.toString().isNotEmpty()){
+                        if(binding.cardNoTxt.text.toString().length == 16){
+                            if(code.isNotEmpty()){
+                                verifyVerficationCode(code)
+                            }
+                            else {
+                                Toast.makeText(applicationContext,
+                                    "Please enter the OTP sent to your device.",
+                                    Toast.LENGTH_LONG).show()
+                            }
+                        }
+                        else {
+                            Toast.makeText(applicationContext,
+                                "Please enter valid credit card number!",
+                                Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    else {
+                        Toast.makeText(applicationContext,
+                            "Please enter your credit card number!",
+                            Toast.LENGTH_LONG).show()
+                    }
+                }
+                else {
                     Toast.makeText(applicationContext,
-                        "Please enter the OTP sent to your device.",
+                        "Please enter your credit cardholder name!!",
                         Toast.LENGTH_LONG).show()
                 }
+
             }else if(rb_cod.isChecked){
                 val intent = Intent(applicationContext, OrderSuccessful::class.java)
                 startActivity(intent)

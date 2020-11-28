@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        intent = Intent(this, TestingHomeScreen::class.java)
+        intent = Intent(this, TestingCheckout::class.java)
         startActivity(intent)
 
 //        setContentView(R.layout.activity_main)

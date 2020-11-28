@@ -10,19 +10,19 @@ import androidx.core.app.ActivityCompat
 import com.example.mr_framer_grocer.databinding.ActivityContactUsBinding
 
 class ContactUs : AppCompatActivity() {
+    // Binding Contact Us Activity
     private lateinit var binding:ActivityContactUsBinding
+
+    // For phone call purpose
     val mobno = "0172073921"
-    val REQUEST_PHONE_CALL=1
+    val REQUEST_PHONE_CALL = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      //  setContentView(R.layout.activity_contact_us)
         binding = ActivityContactUsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        intent = Intent(this,ContactUs::class.java)
-//        startActivity(intent)
-
+        // For phone call purpose
         val call = binding.mobileDetails
         call.setOnClickListener{
             if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
@@ -35,6 +35,7 @@ class ContactUs : AppCompatActivity() {
             }
         }
 
+        // For sending email purpose using intent
         val email = binding.emailDetails
         email.setOnClickListener{
             val recipient = "hello@mrfarmergroup.com"
@@ -43,10 +44,11 @@ class ContactUs : AppCompatActivity() {
             sendEmail(recipient, subject)
         }
 
+        // For viewing street view purpose using intent
         val openMap = binding.addressDetails
         openMap!!.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:3.089613,101.691924"))
-//            startActivity(intent)
+            // Mr Farmer Grocer - Latitude, Longitude
+            // 3.089613,101.691924
 
             // Create a Uri from an intent string. Use the result to create an Intent.
             val gmmIntentUri = Uri.parse("google.streetview:cbll=3.089613,101.691924")
@@ -61,6 +63,7 @@ class ContactUs : AppCompatActivity() {
             startActivity(mapIntent)
         }
 
+        // For opening Facebook purpose using intent
         val openFB = binding.facebookDetails
         openFB.setOnClickListener {
             val fb_url = "https://www.facebook.com/mrfarmergrocer/"
@@ -69,6 +72,7 @@ class ContactUs : AppCompatActivity() {
             startActivity(fbIntent)
         }
 
+        // For viewing official website of Mr Farmer Grocer purpose using intent
         val openWeb = binding.websiteDetails
         openWeb.setOnClickListener {
             val url = "https://www.mrfarmergrocer.com"
@@ -77,6 +81,7 @@ class ContactUs : AppCompatActivity() {
             startActivity(urlIntent)
         }
 
+        // Up button to My Profile Activity
         val back = binding.backBtn
         back.setOnClickListener{
             intent=Intent(this, TestingHomeScreen::class.java)
@@ -84,31 +89,29 @@ class ContactUs : AppCompatActivity() {
         }
     }
 
+    // Sending email function using intent
     private fun sendEmail(recipient: String, subject: String) {
         /*ACTION_SEND action to launch an email client installed on your Android device.*/
         val mIntent = Intent(Intent.ACTION_SEND)
-        /*To send an email you need to specify mailto: as URI using setData() method
-        and data type will be to text/plain using setType() method*/
+        /*To send an email you need to specify mailto: as URI using setData() method and data type will be to text/plain using setType() method*/
         mIntent.data = Uri.parse("mailto:")
         mIntent.type = "text/plain"
-        // put recipient email in intent
-        /* recipient is put as array because you may wanna send email to multiple emails
-           so enter comma(,) separated emails, it will be stored in array*/
+        // Put recipient email in intent
         mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
-        //put the Subject in the intent
+        // Put the Subject in the intent
         mIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
 
         try {
-            //start email intent
+            // Start email intent
             startActivity(Intent.createChooser(mIntent, "Choose Email Client..."))
         }
         catch (e: Exception){
-            //if any thing goes wrong for example no email client application or any exception
-            //get and show exception message
+            // If any thing goes wrong for example no email client application or any exception get and show exception message
             Toast.makeText(this, "There is no email client in this device!", Toast.LENGTH_LONG).show()
         }
     }
 
+    // Phone call function using intent
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

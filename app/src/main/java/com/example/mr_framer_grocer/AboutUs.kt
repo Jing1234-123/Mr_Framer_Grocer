@@ -1,34 +1,38 @@
 package com.example.mr_framer_grocer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.mr_framer_grocer.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.databinding.ActivityAboutUsBinding
 
 class AboutUs : AppCompatActivity() {
+    // Binding About Us Activity
     private lateinit var binding: ActivityAboutUsBinding
+
+    // For expandable listview purpose
     private lateinit var listViewAdapter: ExpandableListViewAdapter
     private lateinit var expandable_list:List<String>
     private lateinit var expandable_list_text:HashMap<String, List<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      //  setContentView(R.layout.activity_about_us2)
         binding = ActivityAboutUsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Up button to My Profile Activity
         val back = binding.backBtn
         back.setOnClickListener{
             intent= Intent(this,TestingHomeScreen::class.java)
             startActivity(intent)
         }
 
+        // Expandable listview
         showList()
         listViewAdapter = ExpandableListViewAdapter(this,expandable_list,expandable_list_text)
         binding.eListView.setAdapter(listViewAdapter)
     }
 
+    // Expandable Listview
     private fun showList(){
         expandable_list = ArrayList()
         expandable_list_text = HashMap()

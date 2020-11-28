@@ -23,7 +23,7 @@ class ContactUs : AppCompatActivity() {
 //        intent = Intent(this,ContactUs::class.java)
 //        startActivity(intent)
 
-        val call = binding.callBtn
+        val call = binding.mobileDetails
         call.setOnClickListener{
             if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
                 ActivityCompat.requestPermissions(this,
@@ -35,7 +35,7 @@ class ContactUs : AppCompatActivity() {
             }
         }
 
-        val email = binding.emailBtn
+        val email = binding.emailDetails
         email.setOnClickListener{
             val recipient = "hello@mrfarmergroup.com"
             val subject = "Enquiries on Mr Farmer Grocer"
@@ -43,9 +43,7 @@ class ContactUs : AppCompatActivity() {
             sendEmail(recipient, subject)
         }
 
-        //3.0895823969157687, 101.6919338898916
-
-        val openMap = binding.mapBtn
+        val openMap = binding.addressDetails
         openMap!!.setOnClickListener {
 //            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:3.089613,101.691924"))
 //            startActivity(intent)
@@ -61,6 +59,22 @@ class ContactUs : AppCompatActivity() {
 
             // Attempt to start an activity that can handle the Intent
             startActivity(mapIntent)
+        }
+
+        val openFB = binding.facebookDetails
+        openFB.setOnClickListener {
+            val fb_url = "https://www.facebook.com/mrfarmergrocer/"
+            val fbIntent = Intent(Intent.ACTION_VIEW)
+            fbIntent.data = Uri.parse(fb_url)
+            startActivity(fbIntent)
+        }
+
+        val openWeb = binding.websiteDetails
+        openWeb.setOnClickListener {
+            val url = "https://www.mrfarmergrocer.com"
+            val urlIntent = Intent(Intent.ACTION_VIEW)
+            urlIntent.data = Uri.parse(url)
+            startActivity(urlIntent)
         }
 
         val back = binding.backBtn

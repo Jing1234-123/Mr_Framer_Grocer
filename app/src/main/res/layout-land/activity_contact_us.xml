@@ -66,17 +66,6 @@
             app:layout_constraintTop_toBottomOf="@+id/contact_us_info"
             app:layout_constraintVertical_bias="1.0" />
 
-        <Button
-            android:id="@+id/map_btn"
-            android:layout_width="136dp"
-            android:layout_height="59dp"
-            android:background="@drawable/map_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.554"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.206" />
 
         <TextView
             android:id="@+id/address_details"
@@ -108,28 +97,15 @@
             android:id="@+id/mobile_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="23dp"
             android:background="@drawable/mobile_details"
             app:layout_constraintBottom_toTopOf="@+id/email"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/call_btn"
-            app:layout_constraintHorizontal_bias="0.37"
+            app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mobile"
             app:layout_constraintVertical_bias="0.925" />
-
-        <Button
-            android:id="@+id/call_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:background="@drawable/call_us_btn"
-            app:layout_constraintBottom_toTopOf="@id/email"
-            app:layout_constraintStart_toEndOf="@id/mobile_details"
-            app:layout_constraintTop_toBottomOf="@id/mobile"
-            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/email"
@@ -154,18 +130,6 @@
             app:layout_constraintHorizontal_bias="0.104"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email" />
-
-        <Button
-            android:id="@+id/email_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/email_us_btn"
-            app:layout_constraintBottom_toTopOf="@id/facebook"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.128"
-            app:layout_constraintStart_toEndOf="@id/email_details"
-            app:layout_constraintTop_toBottomOf="@id/call_btn"
-            app:layout_constraintVertical_bias="0.797" />
 
         <TextView
             android:id="@+id/facebook"

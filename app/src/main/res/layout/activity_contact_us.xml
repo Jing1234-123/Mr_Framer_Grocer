@@ -77,18 +77,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address" />
 
-        <Button
-            android:id="@+id/map_btn"
-            android:layout_width="88dp"
-            android:layout_height="38dp"
-            android:background="@drawable/map_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.609"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.196" />
-
         <TextView
             android:id="@+id/mobile"
             android:layout_width="wrap_content"
@@ -118,20 +106,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mobile" />
 
-        <Button
-            android:id="@+id/call_btn"
-            android:layout_width="90dp"
-            android:layout_height="33dp"
-            android:layout_marginTop="352dp"
-            android:layout_marginBottom="485dp"
-            android:background="@drawable/call_us_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.604"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
@@ -159,18 +133,6 @@
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email" />
-
-        <Button
-            android:id="@+id/email_btn"
-            android:layout_width="88dp"
-            android:layout_height="35dp"
-            android:background="@drawable/email_us_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.596"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.586" />
 
         <TextView
             android:id="@+id/facebook"

@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
 
-
         <GridView
             android:id="@+id/related"
             android:layout_width="0dp"

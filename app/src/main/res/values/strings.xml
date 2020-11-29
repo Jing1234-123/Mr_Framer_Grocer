@@ -18,7 +18,12 @@
     <string name="totalItem">3 item(s)</string>
     <string name="total">Total:</string>
     <string name="my_cart">My Cart</string>
+    <string name="my_fav">My Favorite</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_tabbed_category">TabbedCategory</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="expand_all" />
 </resources>

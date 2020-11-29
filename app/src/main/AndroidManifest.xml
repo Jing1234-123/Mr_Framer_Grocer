@@ -11,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mr_Framer_Grocer">
+        <activity android:name=".AllCategory"></activity>
         <activity
             android:name=".SplashScreenActivity"
-            android:theme="@style/SplashScreenTheme" >
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,6 +25,8 @@
         <activity android:name=".Testing" />
         <activity android:name=".MyCartActivity" />
         <activity android:name=".ProductDetailsActivity" />
+        <activity android:name=".productList" />
+        <activity android:name=".BottomNavBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

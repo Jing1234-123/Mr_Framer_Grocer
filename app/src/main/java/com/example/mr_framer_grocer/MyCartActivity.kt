@@ -29,10 +29,14 @@ class MyCartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityMyCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         loadCartItem()
+
+        generateItem()
+
 
         // if the my cart is empty
         if(itemList.isNullOrEmpty()) {

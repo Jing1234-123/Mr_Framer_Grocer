@@ -54,6 +54,21 @@ class MyCartActivity : AppCompatActivity() {
             cartAdapter = MyAdapter(this, itemList)
             binding.cartList.adapter = cartAdapter
 
+            cartAdapter.setOnDataChangeListener(object : MyAdapter.OnDataChangeListener {
+                override fun onDataChanged() {
+
+                    totalprice = 0f
+
+                    for(i in 0..itemList.size - 1)
+                    {
+//
+                        totalprice += itemList[i].price!! * itemList[i].quantity
+                    }
+
+                    binding.totalprice.text = getString(R.string.price, totalprice)
+                }
+            })
+
 
             val swipe = object : MySwipeHelper(this, binding.cartList) {
                 override fun instantiateMyButton(viewHolder: RecyclerView.ViewHolder, buffer: MutableList<MyButton>) {
@@ -125,13 +140,13 @@ class MyCartActivity : AppCompatActivity() {
 
             }
 
-            // calculate total price of all cart items
-            for(i in 0..cartAdapter.itemList.size - 1)
-            {
-                this.totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
-            }
+                // calculate total price of all cart items
+                for(i in 0..cartAdapter.itemList.size - 1)
+                {
+                    totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
+                }
 
-            binding.totalprice.text = getString(R.string.price, totalprice)
+                binding.totalprice.text = getString(R.string.price, totalprice)
 
             binding.emptyCart.setOnClickListener{
                 // ask for confirmation
@@ -189,15 +204,15 @@ class MyCartActivity : AppCompatActivity() {
         alertDialog!!.show()
     }
 
-    fun reloadTotalPrice()
-    {
-        for(i in 0..cartAdapter.itemList.size - 1)
-        {
-            this.totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
-        }
-
-        binding.totalprice.text = getString(R.string.price, totalprice)
-    }
+//    fun reloadTotalPrice()
+//    {
+//        for(i in 0..cartAdapter.itemList.size - 1)
+//        {
+//            this.totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
+//        }
+//
+//        binding.totalprice.text = getString(R.string.price, totalprice)
+//    }
 
 
 //    fun generateItem() {

@@ -84,6 +84,22 @@ class ProductDetailsActivity : AppCompatActivity() {
         // initiate the cart
         initDB()
 
+        loadRelatedProd()
+        binding.relatedProdList.setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.relatedProdList.layoutManager = layoutManager
+
+        relatedProdadapter = ProdAdapter(this, prodList)
+        binding.relatedProdList.adapter = relatedProdadapter
+
+        relatedProdadapter.setOnItemChangeListener(object : ProdAdapter.OnItemChangeListener {
+            override fun onItemChanged() {
+                Toast.makeText(this@ProductDetailsActivity, "123456!", Toast.LENGTH_SHORT).show()
+                this@ProductDetailsActivity.updateCartCount()
+            }
+        })
+
+
         // handle qty plus and minus button
         binding.plusBtn.setOnClickListener { plusQty() }
         binding.minusBtn.setOnClickListener { minusQty() }
@@ -104,12 +120,10 @@ class ProductDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.relatedProdList.setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.relatedProdList.layoutManager = layoutManager
-        loadRelatedProd()
-        relatedProdadapter = ProdAdapter(this, prodList)
-        binding.relatedProdList.adapter = relatedProdadapter
+
+//
+//        updateCartCount()
+
 
         // when the user click the empty heart, chg the heart to filled heart
         binding.heartButton.setOnClickListener {
@@ -145,9 +159,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Item already added.", Toast.LENGTH_SHORT).show()
             }
 
-        updateCartCount()
+            updateCartCount()
 
         }
+
     }
 
     private fun updateCartCount() {
@@ -170,7 +185,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
     }
 
-    // get related products based on category from myphpadmin database
+    // get related products based on category from server database
     private fun loadRelatedProd() {
 
         binding.progress.visibility = View.VISIBLE

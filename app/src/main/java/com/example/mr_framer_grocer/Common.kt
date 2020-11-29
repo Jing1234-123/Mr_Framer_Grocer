@@ -16,5 +16,7 @@ class Common {
         var image:  String? = null
         var category: String? = null
         var stock = 0
+
+//        var totalprice = 0f
     }
 }

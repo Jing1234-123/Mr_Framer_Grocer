@@ -12,7 +12,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val imageView2: ImageView = findViewById(R.id.imageView2)
         imageView2.alpha = 0f
-        imageView2.animate().setDuration(1500).alpha(1f).withEndAction {
+        imageView2.animate().setDuration(2000).alpha(1f).withEndAction {
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

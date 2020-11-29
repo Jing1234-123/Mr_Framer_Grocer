@@ -12,9 +12,12 @@ class MyCartViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     var cart_name: TextView
     var cart_price: TextView
     var cart_image: ImageView
+    var qty: TextView
+
     init {
         cart_image = itemView.findViewById(R.id.cart_item_image)
         cart_name = itemView.findViewById(R.id.cart_item_name)
         cart_price = itemView.findViewById(R.id.cart_item_price)
+        qty = itemView.findViewById(R.id.qtyrect)
     }
 }

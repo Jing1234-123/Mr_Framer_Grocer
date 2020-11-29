@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/homepage"
+    android:layout_height="match_parent">
+
+    <GridView
+        android:id="@+id/products"
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="25dp"
+        android:numColumns="auto_fit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.653">
+
+    </GridView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/activity_horizontal_margin"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/back_arrow"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_width="78dp"
+            android:layout_height="64dp"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/pageHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="top"
+            android:text="Vegetables"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+    <SearchView
+        android:id="@+id/searchBtn"
+        android:layout_width="38dp"
+        android:layout_height="34dp"
+        android:layout_marginLeft="350dp"
+        android:queryHint="search..."
+        android:layout_marginTop="72dp" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/filterList"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/material_on_background_disabled"
+        app:srcCompat="@drawable/filter" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/white"
+            app:fabCradleMargin="5dp"
+            app:fabCradleRoundedCornerRadius="5dp"
+            app:fabCradleVerticalOffset="5dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/white"
+                app:menu="@menu/bottom_nav_menu" />
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cart"
+            app:layout_anchor="@id/bottomAppBar" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

@@ -30,5 +30,8 @@
     <string name="otp">One Time Password(OTP)</string>
 
 
+    <string name="birth_date">Birth Date</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

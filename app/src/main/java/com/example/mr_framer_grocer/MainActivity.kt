@@ -8,13 +8,17 @@ import com.example.mr_framer_grocer.Model.Product
 
 class MainActivity : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
 
-        val button: Button = findViewById(R.id.button2)
+        intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+
+        /*intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)*/
+
+       /* val button: Button = findViewById(R.id.button2)
         button.setOnClickListener{
 
             val product = Product(
@@ -28,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("weight", product.weight)
             intent.putExtra("img", product.img)
             startActivity(intent)
-        }
+        }*/
 
 
 

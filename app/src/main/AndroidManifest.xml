@@ -11,9 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mr_Framer_Grocer">
+        <activity android:name=".PasswordResetSuccessful"></activity>
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".PasswordChangedSuccessful" />
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".PasswordRecoveryActivity" />
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".SplashScreenActivity"
-            android:theme="@style/SplashScreenTheme" >
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

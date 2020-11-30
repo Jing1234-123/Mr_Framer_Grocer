@@ -12,6 +12,16 @@
         android:padding="12dp"
         tools:context=".payment">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
@@ -149,9 +159,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:cursorVisible="true"
+                android:maxLength="35"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:visibility="gone" />
 
             <TextView
@@ -172,7 +183,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="number"
                 android:maxLength="16"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:visibility="gone"   />
 
             <TextView
@@ -227,7 +238,7 @@
                     android:inputType="number"
                     android:enabled="false"
                     android:maxLength="6"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone"   />
 
                 <Button

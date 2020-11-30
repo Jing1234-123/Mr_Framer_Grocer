@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="12dp">
-    
+
     <EditText
         android:id="@+id/edit_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter your new address "
-        android:textSize="18sp"
-        android:maxLength="74"
+        android:imeOptions="actionDone"
         android:inputType="textMultiLine"
+        android:maxLength="100"
         android:textAlignment="viewStart"
-        android:imeOptions="actionDone"/>
+        android:textSize="18sp" />
 
 </LinearLayout>

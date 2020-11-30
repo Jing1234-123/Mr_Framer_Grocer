@@ -16,11 +16,11 @@
             android:id="@+id/progressBar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/back_btn"
@@ -40,11 +40,11 @@
             android:id="@+id/checkout_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="120dp"
             android:background="@drawable/checkout_info"
             app:layout_constraintBottom_toTopOf="@id/payment_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/back_btn"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -168,6 +168,7 @@
                 android:cursorVisible="true"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
+                android:maxLength="35"
                 android:textSize="16sp"
                 android:visibility="gone" />
 
@@ -242,6 +243,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:enabled="false"
+                    android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="6"
                     android:textSize="16sp"

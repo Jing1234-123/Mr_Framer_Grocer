@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="12dp"
         tools:context=".MainActivity">
 
@@ -16,42 +16,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="90dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/back_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/contact_us_info"
             app:layout_constraintEnd_toStartOf="@+id/my_profile_info"
             app:layout_constraintHorizontal_bias="0.195"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/my_profile_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:background="@drawable/my_profile_info"
             app:layout_constraintBottom_toTopOf="@+id/contact_us_info"
+            app:layout_constraintStart_toEndOf="@id/back_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+             />
 
         <TextView
             android:id="@+id/contact_us_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/contact_us_info"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/address"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="90dp"
-            app:layout_constraintHorizontal_bias="0.082"
-            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.084"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/back_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.00" />
+            app:layout_constraintTop_toBottomOf="@id/back_btn" />
 
         <TextView
             android:id="@+id/address"
@@ -66,20 +60,17 @@
             app:layout_constraintTop_toBottomOf="@+id/contact_us_info"
             app:layout_constraintVertical_bias="1.0" />
 
-
         <TextView
             android:id="@+id/address_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="0dp"
             android:background="@drawable/address_details"
             app:layout_constraintBottom_toTopOf="@+id/mobile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.13"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/address"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@id/address" />
 
         <TextView
             android:id="@+id/mobile"
@@ -98,7 +89,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="23dp"
             android:background="@drawable/mobile_details"
             app:layout_constraintBottom_toTopOf="@+id/email"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +141,7 @@
             android:background="@drawable/facebook_details"
             app:layout_constraintBottom_toTopOf="@id/website"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.086"
+            app:layout_constraintHorizontal_bias="0.078"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/facebook"
             app:layout_constraintVertical_bias="0.0" />
@@ -173,8 +163,7 @@
             android:id="@+id/website_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/website_details"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

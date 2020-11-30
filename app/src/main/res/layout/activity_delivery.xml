@@ -22,7 +22,6 @@
             android:background="@drawable/back_btn"
             app:layout_constraintBottom_toTopOf="@id/delivery_info"
             app:layout_constraintEnd_toStartOf="@id/checkout_info"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +47,6 @@
             android:background="@drawable/delivery_info"
             app:layout_constraintBottom_toTopOf="@id/add_details_info"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/back_btn" />
 
@@ -61,7 +59,6 @@
             android:background="@drawable/add_details_info"
             app:layout_constraintBottom_toTopOf="@id/border_1"
             app:layout_constraintEnd_toStartOf="@+id/change_add_info"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/delivery_info" />
 
@@ -87,7 +84,6 @@
             app:layout_constraintBottom_toTopOf="@id/deliver_method_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_details_info"
             app:srcCompat="@drawable/border" />
@@ -139,7 +135,6 @@
             android:background="@drawable/delivery_method_info"
             app:layout_constraintBottom_toTopOf="@id/deliver_method_info"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/border_1" />
 
@@ -152,7 +147,6 @@
             app:layout_constraintBottom_toTopOf="@id/subtotal_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.533"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deliver_method_info"
             app:srcCompat="@drawable/border" />
@@ -164,7 +158,6 @@
             android:layout_marginStart="25dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@id/subtotal_info"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deliver_method_info"
             app:layout_constraintVertical_bias="0.341">
@@ -179,7 +172,6 @@
                 android:textColor="@color/dark_grey"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/radio_self_pickup"
-                app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/deliver_method_info" />
 
@@ -193,24 +185,19 @@
                 android:text="@string/self_pickup"
                 android:textColor="@color/dark_grey"
                 android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/radio_door_delivery" />
-
         </RadioGroup>
 
         <TextView
             android:id="@+id/subtotal_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="232dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="210dp"
             android:background="@drawable/subtotal_info"
             app:layout_constraintBottom_toTopOf="@+id/delivery_fee_info"
             app:layout_constraintEnd_toStartOf="@+id/subtotal_txt"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/border_2" />
 
@@ -218,28 +205,24 @@
             android:id="@+id/subtotal_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="300dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
             android:text="25.00"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/delivery_fee_txt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/subtotal_info"
             app:layout_constraintTop_toBottomOf="@id/border_2" />
 
         <TextView
             android:id="@+id/delivery_fee_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="212dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="200dp"
             android:background="@drawable/delivery_fee_info"
             app:layout_constraintBottom_toTopOf="@+id/total_info"
             app:layout_constraintEnd_toStartOf="@+id/delivery_fee_txt"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/subtotal_info" />
 
@@ -247,28 +230,24 @@
             android:id="@+id/delivery_fee_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="300dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
             android:text="0.00"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/total_txt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/delivery_fee_info"
             app:layout_constraintTop_toBottomOf="@id/subtotal_txt" />
 
         <TextView
             android:id="@+id/total_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="202dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="185dp"
             android:background="@drawable/total_info"
             app:layout_constraintBottom_toTopOf="@+id/proceed_btn"
             app:layout_constraintEnd_toStartOf="@+id/total_txt"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/delivery_fee_info" />
 
@@ -276,29 +255,25 @@
             android:id="@+id/total_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="300dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:text="25.00"
             android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@id/proceed_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/total_info"
             app:layout_constraintTop_toBottomOf="@id/delivery_fee_txt" />
 
         <Button
             android:id="@+id/proceed_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="36dp"
+            android:layout_marginTop="732dp"
             android:background="@drawable/proceed_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/total_info" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

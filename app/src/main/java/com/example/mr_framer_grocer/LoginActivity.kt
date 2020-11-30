@@ -20,7 +20,7 @@ import org.json.JSONObject
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     var exist = false
-    lateinit var userInfo: User
+//    lateinit var userInfo: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                                     val strResponse = response.toString()
                                     val jsonResponse  = JSONObject(strResponse)
 
-                                    userInfo = User(
+                                    Common.userInfo = User(
                                         jsonResponse.getString("name"),
                                         jsonResponse.getString("gender"),
                                         jsonResponse.getString("birth_date"),
@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
                                     )
 
                                     // verify password, if correct
-                                    if(binding.editTextTextPassword.text.toString() == userInfo.password)
+                                    if(binding.editTextTextPassword.text.toString() == Common.userInfo!!.password)
                                     {
                                         intent = Intent(this, AllCategory::class.java)
                                         finish()

@@ -17,6 +17,7 @@ import com.example.mr_framer_grocer.databinding.ActivitySignUpBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import org.json.JSONException
+import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 class SignUpActivity : AppCompatActivity() {
@@ -176,6 +177,8 @@ class SignUpActivity : AppCompatActivity() {
             Response.Listener{ response ->
                 try {
                     if (response != null) {
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
                         // user exist
                         Toast.makeText(applicationContext, "User already exist!", Toast.LENGTH_LONG).show()
 
@@ -194,6 +197,9 @@ class SignUpActivity : AppCompatActivity() {
             }, Response.ErrorListener { volleyError ->
                 binding.progress!!.visibility = View.GONE
                 // Sign in success, update UI with the signed-in user's information
+                Common.contact_no = binding.editTextPhone.text.toString()
+                Common.psw = binding.editTextTextPassword.text.toString()
+
                 val intent = Intent(applicationContext, MyProfileActivity::class.java)
                 finish()
                 startActivity(intent)

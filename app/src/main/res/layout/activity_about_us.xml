@@ -58,12 +58,11 @@
         app:layout_constraintTop_toBottomOf="@id/about_us_info" />
 
     <ExpandableListView
+        android:id="@+id/eListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="300dp"
-        android:id="@+id/eListView"
-        android:layoutDirection="rtl"
-        android:scrollbars="none"
         android:background="@color/white"
-        />
+        android:layoutDirection="rtl"
+        android:scrollbars="none" />
 </androidx.constraintlayout.widget.ConstraintLayout>

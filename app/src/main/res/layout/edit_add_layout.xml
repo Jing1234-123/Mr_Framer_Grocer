@@ -11,6 +11,7 @@
         android:hint="Enter your new address "
         android:textSize="18sp"
         android:maxLength="74"
+        android:inputType="textMultiLine"
         android:textAlignment="viewStart"
         android:imeOptions="actionDone"/>
 

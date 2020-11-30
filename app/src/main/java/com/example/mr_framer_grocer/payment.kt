@@ -96,20 +96,14 @@ class payment : AppCompatActivity() {
                                     Toast.LENGTH_LONG).show()
                             }
                         } else {
-                            Toast.makeText(applicationContext,
-                                "Please enter valid credit card number!",
-                                Toast.LENGTH_LONG).show()
+                                binding.cardNoTxt.setError("Invalid credit card number!")
                                 binding.cardNoTxt.setText("")
                         }
                     } else {
-                        Toast.makeText(applicationContext,
-                            "Please enter your credit card number!",
-                            Toast.LENGTH_LONG).show()
+                            binding.cardNoTxt.setError("Required field!")
                     }
                 } else {
-                    Toast.makeText(applicationContext,
-                        "Please enter your credit cardholder name!",
-                        Toast.LENGTH_LONG).show()
+                    binding.cardholderNameTxt.setError("Required field!")
                 }
             } else if (rb_cod.isChecked) {
                 binding.progressBar!!.setVisibility(View.VISIBLE)

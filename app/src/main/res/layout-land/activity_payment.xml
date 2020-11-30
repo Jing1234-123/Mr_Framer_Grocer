@@ -16,11 +16,11 @@
             android:id="@+id/progressBar"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/back_btn"
@@ -51,10 +51,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            app:layout_constraintHorizontal_bias="0.09"
             android:background="@drawable/payment_info"
             app:layout_constraintBottom_toTopOf="@id/payment_method_info"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.09"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/back_btn" />
@@ -64,10 +64,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintHorizontal_bias="0.09"
             android:background="@drawable/payment_method_info"
             app:layout_constraintBottom_toTopOf="@id/border_3"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.09"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/payment_info" />
@@ -127,8 +127,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="20dp"
+            android:orientation="vertical"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/border_3">
@@ -137,18 +137,18 @@
                 android:id="@+id/credit_card_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Credit Card Details"
-                android:textStyle="bold"
-                android:textSize="22sp"
                 android:layout_marginStart="70dp"
+                android:text="Credit Card Details"
+                android:textSize="22sp"
+                android:textStyle="bold"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/cardholder_name_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="70dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/cardholder_name"
                 android:textSize="18sp"
                 android:visibility="gone" />
@@ -159,9 +159,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:cursorVisible="true"
-                android:maxLength="35"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
+                android:maxLength="35"
                 android:textSize="16sp"
                 android:visibility="gone" />
 
@@ -172,7 +172,7 @@
                 android:layout_marginStart="70dp"
                 android:text="@string/card_no"
                 android:textSize="18sp"
-                android:visibility="gone"   />
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/card_no_txt"
@@ -184,7 +184,7 @@
                 android:inputType="number"
                 android:maxLength="16"
                 android:textSize="16sp"
-                android:visibility="gone"   />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/expiry_date_info"
@@ -193,7 +193,7 @@
                 android:layout_marginStart="70dp"
                 android:text="@string/expiry_date"
                 android:textSize="18sp"
-                android:visibility="gone"  />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,14 +205,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="70dp"
-                    android:visibility="gone"  />
+                    android:visibility="gone" />
 
                 <NumberPicker
                     android:id="@+id/year_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
-                    android:visibility="gone"   />
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -223,7 +223,7 @@
                 android:layout_marginLeft="70dp"
                 android:text="@string/otp"
                 android:textSize="18sp"
-                android:visibility="gone"   />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,11 +235,11 @@
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:inputType="number"
                     android:enabled="false"
+                    android:inputType="number"
                     android:maxLength="6"
                     android:textSize="16sp"
-                    android:visibility="gone"   />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/send_otp"

@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mr_framer_grocer.Adapter.MyAdapter
+import com.example.mr_framer_grocer.Database.LocalDB.Cart
 import com.example.mr_framer_grocer.Helper.MyButton
+import com.example.mr_framer_grocer.Helper.MyButtonClickListener
 import com.example.mr_framer_grocer.Helper.MySwipeHelper
-import com.example.mr_framer_grocer.Listener.MyButtonClickListener
-import com.example.mr_framer_grocer.Model.Item
 import com.example.mr_framer_grocer.databinding.ActivityMyCartBinding
-
+import com.google.android.material.snackbar.Snackbar
 
 
 class MyCartActivity : AppCompatActivity() {
@@ -22,12 +22,19 @@ class MyCartActivity : AppCompatActivity() {
     lateinit var cartAdapter: MyAdapter
     lateinit var layoutManager: LinearLayoutManager
     private lateinit var binding: ActivityMyCartBinding
-    val itemList = ArrayList<Item?>()
+    var itemList = ArrayList<Cart>()
+    var totalprice = 0f
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        generateItem()
+
+
+        binding = ActivityMyCartBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        loadCartItem()
+
 
         // if the my cart is empty
         if(itemList.isNullOrEmpty()) {
@@ -35,14 +42,14 @@ class MyCartActivity : AppCompatActivity() {
             val back_menu = findViewById<Button>(R.id.back_menu_btn)
             back_menu.setOnClickListener {
                 // Back to menu page
-                val intent = Intent(this, MainActivity::class.java)
+                finish()
+                val intent = Intent(this, AllCategory::class.java)
                 startActivity(intent)
+
             }
         }
         // if the cart have added items
         else {
-            binding = ActivityMyCartBinding.inflate(layoutInflater)
-            setContentView(binding.root)
 
             binding.cartList.setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this)
@@ -51,65 +58,133 @@ class MyCartActivity : AppCompatActivity() {
             cartAdapter = MyAdapter(this, itemList)
             binding.cartList.adapter = cartAdapter
 
+            cartAdapter.setOnDataChangeListener(object : MyAdapter.OnDataChangeListener {
+                override fun onDataChanged() {
 
-            //add swipe
-            val swipe = object : MySwipeHelper(this, binding.cartList, 200) {
-                override fun instantiateMyButton(
-                        viewHolder: RecyclerView.ViewHolder,
-                        buffer: MutableList<MyButton>
-                ) {
-                    buffer.add(
-                            MyButton(this@MyCartActivity,
-                                    "Delete",
-                                    30,
-                                    0,
-                                    Color.parseColor("#FF03DAC5"),
-                                    object : MyButtonClickListener {
+                    totalprice = 0f
 
-                                        //when click the delete button
-                                        override fun onClick(pos: Int) {
-                                            Toast.makeText(this@MyCartActivity, "DELETE ID" + pos, Toast.LENGTH_SHORT).show()
-                                        }
-                                    }
-                            ))
-                    buffer.add(
-                            MyButton(this@MyCartActivity,
-                                    "Like",
-                                    30,
-                                    R.drawable.cart_empty_heart,
-                                    Color.parseColor("#FFBB86FC"),
+                    for(i in 0..itemList.size - 1)
+                    {
+//
+                        totalprice += itemList[i].price!! * itemList[i].quantity
+                    }
 
-                                    //when click the like button
-                                    object : MyButtonClickListener {
-                                        override fun onClick(pos: Int) {
-
-                                            Toast.makeText(this@MyCartActivity, "LIKE ID" + pos, Toast.LENGTH_SHORT).show()
-                                        }
-
-                                    }
-                            ))
+                    binding.totalprice.text = getString(R.string.price, totalprice)
                 }
+            })
+
+
+            val swipe = object : MySwipeHelper(this, binding.cartList) {
+                override fun instantiateMyButton(viewHolder: RecyclerView.ViewHolder, buffer: MutableList<MyButton>) {
+                    buffer.add(MyButton(
+                            "Delete",
+                            0,
+                            Color.parseColor("#42995C"),
+                            object : MyButtonClickListener {
+                                override fun onClick(pos: Int) {
+
+                                    val tmp = cartAdapter.itemList[pos] //temporary variable
+                                    val id = cartAdapter.itemList[pos].id
+                                    totalprice -= cartAdapter.itemList[pos].price!! * cartAdapter.itemList[pos].quantity
+                                    binding.totalprice.text = getString(R.string.price, totalprice)
+                                    cartAdapter.itemList.removeAt(pos)
+                                    cartAdapter.notifyItemRemoved(pos)
+                                    cartAdapter.notifyItemRangeChanged(pos, cartAdapter.itemCount)
+                                    updateCartCount()
+
+
+                                    val snackbar =
+                                        Snackbar.make(binding.cartList, "1 item has been removed.", Snackbar.LENGTH_LONG)
+                                            .setAction(
+                                                "UNDO"
+                                            ) {
+                                                cartAdapter.itemList.add(pos, tmp)
+                                                totalprice += cartAdapter.itemList[pos].price!! * cartAdapter.itemList[pos].quantity
+                                                binding.totalprice.text = getString(R.string.price, totalprice)
+                                                updateCartCount()
+                                                cartAdapter.notifyDataSetChanged()
+
+                                            }.setCallback(object : Snackbar.Callback() {
+                                                override fun onDismissed(
+                                                    snackbar: Snackbar,
+                                                    dismissType: Int
+                                                ) {
+                                                    super.onDismissed(snackbar, dismissType)
+
+                                                    //if the dismiss type is not undo, delete the cart item from database
+                                                    if (dismissType == DISMISS_EVENT_TIMEOUT || dismissType == DISMISS_EVENT_SWIPE || dismissType == DISMISS_EVENT_CONSECUTIVE || dismissType == DISMISS_EVENT_MANUAL)
+                                                    {
+                                                        // Delete the cart item in room database
+                                                        Common.cartRepository.deleteCartItemById(id.toString())
+                                                        updateCartCount()
+                                                    }
+
+                                                }
+                                            })
+                                    snackbar.show()
+                                }
+
+                            }
+
+                    ))
+             }
+
             }
 
+                // calculate total price of all cart items
+                for(i in 0..cartAdapter.itemList.size - 1)
+                {
+                    totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
+                }
 
+                binding.totalprice.text = getString(R.string.price, totalprice)
 
+            binding.emptyCart.setOnClickListener{
+                // ask for confirmation
+                    alertDialog()
+            }
         }
     }
 
+    private fun loadCartItem() {
+        itemList = ArrayList(Common.cartRepository.getCartItems())
+    }
 
-    fun generateItem() {
-//        itemList.add(Item(item.name, item.price, item.image))
-
-        var i = 0
-        while(i<20)
-        {
-            itemList.add(Item("Tomato",
-            "RM 9.99",
-            "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-            i++
+    private fun updateCartCount() {
+        runOnUiThread {
+            binding.totalItem.text = getString(R.string.totalItem, Common.cartRepository.countCartItems())
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateCartCount()
+    }
 
+    private fun alertDialog() {
+        val dialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        dialog.setMessage("Are you sure you want to empty the cart?")
+        dialog.setTitle("Confirmation")
+
+        dialog.setNegativeButton("Yes"
+        ) { _, _ ->
+            Common.cartRepository.emptyCart()
+            // refresh the screen
+            finish()
+            val intent = Intent(this, MyCartActivity::class.java)
+            startActivity(intent)
+
+            Toast.makeText(applicationContext, "The cart is cleared", Toast.LENGTH_LONG)
+                .show()
+        }
+        dialog.setPositiveButton("Cancel")
+        { _, _ ->
+                Toast.makeText(applicationContext, "Clear action is cancelled", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        val alertDialog: android.app.AlertDialog? = dialog.create()
+        alertDialog!!.show()
+    }
 
 }

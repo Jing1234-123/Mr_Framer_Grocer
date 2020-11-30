@@ -1,71 +1,45 @@
 package com.example.mr_framer_grocer.Helper
 
-import android.content.Context
-import android.content.res.Resources
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
-import com.example.mr_framer_grocer.Listener.MyButtonClickListener
 
+class MyButton(private val text: String, private val imageResId: Int,
+               private val color: Int, private val clickListener: MyButtonClickListener) {
+    private var pos = 0
+    private var clickRegion: RectF? = null
 
-class MyButton(private  val context: Context, private val text:String,
-                private val textSize: Int, private val imageResId: Int,
-                private val color: Int, private val listener: MyButtonClickListener) {
-    private var pos: Int=0
-    private var clickRegion: RectF?=null
-    private val resources: Resources = context.resources
-
-    fun onClick(x:Float, y:Float):Boolean
-    {
-        if(clickRegion != null && clickRegion!!.contains(x,y))
-        {
-            listener.onClick(pos)
+    fun onClick(x: Float, y: Float): Boolean {
+        if (clickRegion != null && clickRegion!!.contains(x, y)) {
+            clickListener.onClick(pos)
             return true
         }
         return false
     }
 
-    fun onDraw(c:Canvas, rectF:RectF, pos:Int)
-    {
+    fun onDraw(c: Canvas, rect: RectF, pos: Int) {
         val p = Paint()
+        p.isAntiAlias = true
+        p.isSubpixelText = true
+        val corners = 20f
+        // Draw background
         p.color = color
-        c.drawRect(rectF,p)
+        c.drawRoundRect(rect,corners,corners,p)
 
+        // Draw Text
+        p.color = Color.WHITE
+        val textSize = 35f
+        p.textSize = textSize
         val r = Rect()
-        val cHeight = rectF.height()
-        val cWidth = rectF.width()
+        val cHeight = rect.height()
+        val cWidth = rect.width()
         p.textAlign = Paint.Align.LEFT
-        p.getTextBounds(text,0,text.length,r)
-        var x = 0f
-        var y = 0f
+        p.getTextBounds(text, 0, text.length, r)
+        val x: Float = cWidth / 2f - r.width() / 2f - r.left
+        val y: Float = cHeight / 2f + r.height() / 2f - r.bottom
+        c.drawText(text, rect.left + x, rect.top + y, p)
 
-        if(imageResId == 0)
-        {
-            x = cWidth/2f-r.width() / 2f - r.left.toFloat()
-            y = cHeight / 2f + r.height() / 2f - r.bottom.toFloat()
-            c.drawText(text,rectF.left + x, rectF.top+y,p)
-        }
-        else
-        {
-
-            val d = ContextCompat.getDrawable(context,imageResId)
-            val bitmap = drawableToBitmap(d)
-            c.drawBitmap(bitmap,(rectF.left+rectF.right)/2, (rectF.top+rectF.bottom)/2,p)
-
-        }
-
-        clickRegion = rectF
+        clickRegion = rect
         this.pos = pos
     }
 
-    private fun drawableToBitmap(d: Drawable?): Bitmap {
-        if(d is BitmapDrawable) return d.bitmap
-        val bitmap = Bitmap.createBitmap(d!!.intrinsicWidth,d.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        d.setBounds(0, 0,canvas.width,canvas.height)
-        d.draw(canvas)
-        return bitmap
-    }
-
 }
+

@@ -17,33 +17,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <TextView
                 android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/rect1"
-                android:src="@drawable/rect1"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="4dp"
+                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <ImageView
                 android:id="@+id/prodImage"
-                android:layout_width="395dp"
-                android:layout_height="224dp"
+                android:layout_width="335dp"
+                android:layout_height="198dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:contentDescription="@string/tomato"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.71" />
 
             <ImageView
                 android:id="@+id/cartIcon"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
@@ -65,7 +69,7 @@
                         android:id="@+id/cartItemCounter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="10sp"
                         android:textStyle="bold"
@@ -95,12 +99,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/tomato"
                 android:textColor="@color/black"
-                android:textSize="25sp"
-                android:maxWidth="150dp"
+                android:textSize="23sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView4"
                 app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
@@ -112,7 +115,7 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/price"
                 android:textColor="#09731B"
-                android:textSize="17sp"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView4"
                 app:layout_constraintTop_toBottomOf="@+id/prodName" />
 
@@ -132,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="27dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/weight"
                 android:textSize="12sp"
@@ -202,6 +205,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/expandableList" />
 
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -211,6 +215,24 @@
                 app:layout_constraintTop_toBottomOf="@id/relatedProd"
                 android:paddingBottom="70dp">
 
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="94dp"
+                    android:layout_marginTop="40dp" />
+
+
+                <TextView
+                    android:id="@+id/cnnLost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Connection Lost."
+                    android:textSize="30sp"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center"
+                    android:visibility="gone"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/relatedProdList"
                     android:layout_width="wrap_content"
@@ -218,78 +240,68 @@
                     android:orientation="horizontal"
                     android:scrollbars="none">
 
+
                 </androidx.recyclerview.widget.RecyclerView>
+
+
             </RelativeLayout>
-            <!--            <HorizontalScrollView-->
-<!--                android:id="@+id/scroll_view"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="16dp"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/relatedProd">-->
-
-<!--            <GridView-->
-<!--                android:id="@+id/related_prod_list"-->
-<!--                android:numColumns="auto_fit"-->
-
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                tools:layout_editor_absoluteX="16dp"-->
-<!--                tools:layout_editor_absoluteY="502dp"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/relatedProd" />-->
-<!--            </HorizontalScrollView>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/bottom_rect"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:background="@color/white" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/heart_button"
-        android:layout_width="67dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/bottom_rect"
-        android:layout_alignBottom="@id/bottom_rect"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="-2dp"
-        android:background="@drawable/empty_heart" />
+        <TextView
+            android:id="@+id/bottom_rect"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/add_to_cart_button"
-        android:layout_width="140dp"
-        android:layout_height="40dp"
-        android:layout_alignTop="@+id/bottom_rect"
-        android:layout_alignBottom="@id/bottom_rect"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="0dp"
-        android:layout_toEndOf="@+id/heart_button"
-        android:background="@drawable/add_to_cart" />
+        <Button
+            android:id="@+id/heart_button"
+            android:layout_width="67dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/bottom_rect"
+            android:layout_alignBottom="@id/bottom_rect"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/empty_heart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottom_rect" />
 
-    <Button
-        android:id="@+id/buy_now_button"
-        android:layout_width="140dp"
-        android:layout_height="40dp"
-        android:layout_alignTop="@+id/bottom_rect"
-        android:layout_alignBottom="@id/bottom_rect"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="-1dp"
-        android:layout_toEndOf="@+id/add_to_cart_button"
-        android:background="@drawable/buy_now" />
+        <Button
+            android:id="@+id/add_to_cart_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/bottom_rect"
+            android:layout_alignBottom="@id/bottom_rect"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@+id/heart_button"
+            android:background="@drawable/add_to_cart"
+            app:layout_constraintStart_toEndOf="@+id/heart_button"
+            app:layout_constraintTop_toTopOf="@+id/bottom_rect" />
 
+        <Button
+            android:id="@+id/buy_now_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/bottom_rect"
+            android:layout_alignBottom="@id/bottom_rect"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@+id/add_to_cart_button"
+            android:background="@drawable/buy_now"
+            app:layout_constraintStart_toEndOf="@+id/add_to_cart_button"
+            app:layout_constraintTop_toTopOf="@+id/bottom_rect" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
 

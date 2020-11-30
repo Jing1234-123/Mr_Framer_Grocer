@@ -56,8 +56,4 @@ dependencies {
     implementation "com.google.firebase:firebase-auth:20.0.1"
 //    implementation "com.wajahatkarim3.easyvalidation:easyvalidation-core:$ev_version"
     implementation "com.google.android.gms:play-services-safetynet:17.0.0"
-
-    //Verification PIN Design
-    implementation 'com.chaos.view:pinview:1.4.3'
-
 }

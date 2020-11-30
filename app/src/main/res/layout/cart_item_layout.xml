@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -7,6 +8,7 @@
     android:layout_height="100dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="13dp"
+    tools:replace="android:theme"
     android:background="@drawable/item_rect">
 
     <LinearLayout
@@ -32,6 +34,22 @@
             android:layout_weight="9"
             android:orientation="vertical">
 
+<!--            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton-->
+<!--                android:id="@+id/qty"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:background="@color/white"-->
+<!--                app:initialNumber="1"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                app:textSize="13sp">-->
+
+
+<!--            </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>-->
+
             <TextView
                 android:id="@+id/cart_item_name"
                 android:layout_width="wrap_content"
@@ -42,7 +60,9 @@
                 android:text="@string/tomato"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:maxWidth="100dp"
+                android:maxWidth="120dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,11 +70,12 @@
                 android:id="@+id/cart_item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="18dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical|start"
                 android:text="@string/price"
                 android:textAllCaps="true"
+                android:textColor="@color/green"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cart_item_name" />
@@ -63,8 +84,8 @@
                 android:id="@+id/qtyrect"
                 android:layout_width="47dp"
                 android:layout_height="32dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="36dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/qty_rect"
                 android:gravity="center"
                 android:text="@string/prodQty"
@@ -76,22 +97,17 @@
                 android:id="@+id/plusBtn"
                 android:layout_width="46dp"
                 android:layout_height="44dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginEnd="35dp"
                 android:background="@drawable/plus_qty"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/qtyrect"
-                app:layout_constraintHorizontal_bias="0.636"
-                app:layout_constraintStart_toEndOf="@+id/cart_item_name" />
+                app:layout_constraintEnd_toEndOf="@+id/qtyrect" />
 
             <Button
                 android:id="@+id/minusBtn"
                 android:layout_width="47dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginBottom="7dp"
-                android:alpha="0.5"
+                android:layout_marginStart="35dp"
                 android:background="@drawable/minus_qty"
-                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/qtyrect" />
 

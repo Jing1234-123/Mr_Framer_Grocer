@@ -1,14 +1,22 @@
 package com.example.mr_framer_grocer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.example.mr_framer_grocer.Database.EndPoints
+import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.databinding.ActivitySignUpBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
+import org.json.JSONException
 import java.util.concurrent.TimeUnit
 
 class SignUpActivity : AppCompatActivity() {
@@ -29,6 +37,7 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.loginBtn.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
+            finish()
             startActivity(intent)
         }
 
@@ -121,23 +130,26 @@ class SignUpActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        // if password not empty
                         if (binding.editTextTextPassword.text.toString().isNotEmpty()){
+                            //check psw length
                             if (binding.editTextTextPassword.text.toString().length > 5){
+                                // chk psw and confirm psw
                                 if (binding.editTextTextPasswordConfirm.text.toString() == binding.editTextTextPassword.text.toString()){
-                                    // Sign in success, update UI with the signed-in user's information
-                                    val intent = Intent(applicationContext, MyProfileActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                    Toast.makeText(applicationContext, "Please fill in your details before you proceed", Toast.LENGTH_LONG).show()
+                                    // chk whether user exist
+                                    verifyUser()
                                 }
+                                // two psw not match
                                 else{
                                     Toast.makeText(applicationContext, "Password and Confirm Password does not match", Toast.LENGTH_LONG).show()
                                 }
                             }
+                            // invalid psw length
                             else{
                                 Toast.makeText(applicationContext, "Password must be at least 6 characters", Toast.LENGTH_LONG).show()
                             }
                         }
+                        // if psw empty
                         else{
                             Toast.makeText(applicationContext, "Please enter your password (6 to 12 characters)", Toast.LENGTH_LONG).show()
                         }
@@ -157,6 +169,47 @@ class SignUpActivity : AppCompatActivity() {
                 }
     }
 
+    private fun verifyUser() {
+        binding.progress!!.visibility = View.VISIBLE
+        val jsonObjectRequest = StringRequest(
+            Request.Method.GET, EndPoints.URL_VERIFY_USER + "?contact_no=" + binding.editTextPhone.text.toString(),
+            Response.Listener{ response ->
+                try {
+                    if (response != null) {
+                        // user exist
+                        Toast.makeText(applicationContext, "User already exist!", Toast.LENGTH_LONG).show()
+
+                    } else {
+                        binding.progress!!.visibility = View.GONE
+
+                    }
+                    binding.progress!!.visibility = View.GONE
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    binding.progress!!.visibility = View.GONE
+                }
+
+                // user do not exist in database, can sign in-
+            }, Response.ErrorListener { volleyError ->
+                binding.progress!!.visibility = View.GONE
+                // Sign in success, update UI with the signed-in user's information
+                val intent = Intent(applicationContext, MyProfileActivity::class.java)
+                finish()
+                startActivity(intent)
+            })
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+
+    }
 
 
 }

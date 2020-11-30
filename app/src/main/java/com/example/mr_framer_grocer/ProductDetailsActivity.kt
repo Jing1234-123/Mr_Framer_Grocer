@@ -229,9 +229,9 @@ class ProductDetailsActivity : AppCompatActivity() {
                         }
 
                         // display 5 product from the whole product list
-                        if(prodList.size > 5)
+                        if(prodList.size > 10)
                         {
-                            for(i in 0..5)
+                            for(i in 0..10)
                             {
                                 val randomIndex = Random.nextInt(prodList.size)
                                 ramprodList.add(prodList.get(randomIndex))

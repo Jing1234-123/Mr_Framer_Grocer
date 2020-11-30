@@ -1,9 +1,9 @@
 package com.example.mr_framer_grocer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.Adapter.ProfileListAdapter
 import com.example.mr_framer_grocer.Model.ProfileModel
 import com.example.mr_framer_grocer.databinding.ActivityProfileBinding
@@ -44,8 +44,8 @@ class ProfileActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             if (position == 3){
-                val intent = Intent(this, contact_us::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, contact_us::class.java)
+//                startActivity(intent)
             }
             if (position == 4){
                 val intent = Intent(this, ChangePasswordActivity::class.java)

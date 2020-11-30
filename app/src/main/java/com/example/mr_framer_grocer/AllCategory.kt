@@ -4,6 +4,9 @@ package com.example.mr_framer_grocer
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mr_framer_grocer.Database.CartDataSource
+import com.example.mr_framer_grocer.Database.CartRepository
+import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
 import com.example.mr_framer_grocer.databinding.ActivityAllCategoryBinding
 import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 
@@ -16,6 +19,8 @@ class AllCategory : AppCompatActivity() {
         binding = ActivityAllCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //setContentView(R.layout.activity_all_category)
+
+        initDB()
 
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
@@ -55,6 +60,12 @@ class AllCategory : AppCompatActivity() {
             val intent = Intent(this, MyCartActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    // initialize database
+    private fun initDB() {
+        Common.cartDatabase = CartDatabase.invoke(this)
+        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
     }
 
 }

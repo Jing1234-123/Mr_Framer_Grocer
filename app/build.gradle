@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'com.google.gms.google-services'
+    id 'com.google.gms.google-services' //firebase
 }
 
 android {
@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //Firebase
     implementation "com.google.firebase:firebase-auth:20.0.1"
-    implementation "com.wajahatkarim3.easyvalidation:easyvalidation-core:$ev_version"
     implementation "com.google.android.gms:play-services-safetynet:17.0.0"
 }

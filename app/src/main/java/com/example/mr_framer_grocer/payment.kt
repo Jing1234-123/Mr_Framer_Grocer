@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.mr_framer_grocer.databinding.ActivityPaymentBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
@@ -14,7 +15,6 @@ import java.util.concurrent.TimeUnit
 class payment : AppCompatActivity() {
     // Binding Payment Activity
     private lateinit var binding: ActivityPaymentBinding
-
     // For OTP purpose
     lateinit var auth: FirebaseAuth
     lateinit var storedVerificationId: String
@@ -112,6 +112,7 @@ class payment : AppCompatActivity() {
                         Toast.LENGTH_LONG).show()
                 }
             } else if (rb_cod.isChecked) {
+                binding.progressBar!!.setVisibility(View.VISIBLE)
                 val intent = Intent(applicationContext, OrderSuccessful::class.java)
                 startActivity(intent)
                 finish()
@@ -183,6 +184,7 @@ class payment : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
+                    binding.progressBar!!.setVisibility(View.VISIBLE)
                     val intent = Intent(applicationContext, payment_successful::class.java)
                     startActivity(intent)
                     finish()

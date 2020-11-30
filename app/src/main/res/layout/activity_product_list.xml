@@ -4,23 +4,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/homepage"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".productList"
+    android:background="@drawable/background">
+
+    <TextView
+        android:id="@+id/cnnLost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Connection Lost."
+        android:textSize="30sp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="300dp" />
 
     <GridView
         android:id="@+id/products"
         android:layout_width="wrap_content"
-        android:layout_height="500dp"
-        android:layout_marginStart="15dp"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp"
         android:layout_marginTop="120dp"
-        android:layout_marginEnd="25dp"
+        android:paddingLeft="15dp"
         android:numColumns="auto_fit"
+        android:gravity="center"
+        android:paddingBottom="55dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.653">
+
 
     </GridView>
 
@@ -31,6 +52,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginVertical="@dimen/activity_horizontal_margin"
             android:layout_alignParentLeft="true"
@@ -70,7 +92,7 @@
         android:layout_height="28dp"
         android:layout_marginTop="70dp"
         android:layout_marginLeft="20dp"
-        android:background="@color/material_on_background_disabled"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/filter" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

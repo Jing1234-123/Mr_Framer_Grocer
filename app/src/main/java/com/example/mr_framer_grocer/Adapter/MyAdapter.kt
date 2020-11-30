@@ -1,12 +1,14 @@
 package com.example.mr_framer_grocer.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mr_framer_grocer.Common
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
+import com.example.mr_framer_grocer.ProductDetailsActivity
 import com.example.mr_framer_grocer.R
 
 
@@ -124,6 +126,22 @@ class MyAdapter(internal var context: Context, internal var itemList: MutableLis
                 mOnDataChangeListener?.onDataChanged()
             }
 
+        }
+
+        // view product details
+        holder.cart_image.setOnClickListener {
+            // if any of the product is clicked, direct to product details page
+            val intent = Intent(context, ProductDetailsActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            intent.putExtra("id", itemList[position].id)
+            intent.putExtra("name", itemList[position].name)
+            intent.putExtra("price", itemList[position].price)
+            intent.putExtra("weight", itemList[position].weight)
+            intent.putExtra("img", itemList[position].image)
+            intent.putExtra("category", itemList[position].category)
+            intent.putExtra("stock", itemList[position].stock)
+            context.startActivity(intent)
         }
 
     }

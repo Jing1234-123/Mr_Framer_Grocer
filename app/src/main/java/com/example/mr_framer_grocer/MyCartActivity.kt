@@ -35,8 +35,6 @@ class MyCartActivity : AppCompatActivity() {
 
         loadCartItem()
 
-        generateItem()
-
 
         // if the my cart is empty
         if(itemList.isNullOrEmpty()) {
@@ -44,8 +42,10 @@ class MyCartActivity : AppCompatActivity() {
             val back_menu = findViewById<Button>(R.id.back_menu_btn)
             back_menu.setOnClickListener {
                 // Back to menu page
-                val intent = Intent(this, MainActivity::class.java)
+                finish()
+                val intent = Intent(this, AllCategory::class.java)
                 startActivity(intent)
+
             }
         }
         // if the cart have added items
@@ -127,20 +127,7 @@ class MyCartActivity : AppCompatActivity() {
                             }
 
                     ))
-//                    buffer.add(MyButton(
-//                            "Like",
-//                            0,
-//                            Color.parseColor("#6abf69"),
-//                            object : MyButtonClickListener {
-//                                override fun onClick(pos: Int) {
-//                                    Toast.makeText(this@MyCartActivity, "LIKE ID" + pos, Toast.LENGTH_SHORT).show()
-//                                }
-//                            }
-//
-//                    ))
-
-
-                }
+             }
 
             }
 
@@ -161,14 +148,6 @@ class MyCartActivity : AppCompatActivity() {
 
     private fun loadCartItem() {
         itemList = ArrayList(Common.cartRepository.getCartItems())
-
-//        for(i in 0..cartList.size - 1)
-//        {
-//            // Assign value to itemList
-//            itemList.add(CartItem(cartList[i].name, cartList[i].price, cartList[i].weight,
-//                cartList[i].image, cartList[i].category, cartList[i].stock, cartList[i].quantity, cartList[i].id))
-//        }
-
     }
 
     private fun updateCartCount() {
@@ -207,34 +186,5 @@ class MyCartActivity : AppCompatActivity() {
         val alertDialog: android.app.AlertDialog? = dialog.create()
         alertDialog!!.show()
     }
-
-//    fun reloadTotalPrice()
-//    {
-//        for(i in 0..cartAdapter.itemList.size - 1)
-//        {
-//            this.totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
-//        }
-//
-//        binding.totalprice.text = getString(R.string.price, totalprice)
-//    }
-
-
-//    fun generateItem() {
-////        itemList.add(Item(item.name, item.price, item.image))
-//
-//        var i = 0
-//        while(i<20)
-//        {
-//            itemList.add(Product("Tomato",
-//                    "RM 9.99",
-//                    "(500g)",
-//                    "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Tomato-1.jpg"))
-//            i++
-//        }
-//        itemList.add(Product("Terung Pendek", "RM 3.50", "(500kg)",
-//                "https://mrfarmergrocer.com/wp-content/uploads/2020/04/Terung-Pendek-1.jpg"))
-//    }
-
-
 
 }

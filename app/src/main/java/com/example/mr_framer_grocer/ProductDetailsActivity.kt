@@ -92,14 +92,6 @@ class ProductDetailsActivity : AppCompatActivity() {
         relatedProdadapter = ProdAdapter(this, prodList)
         binding.relatedProdList.adapter = relatedProdadapter
 
-        relatedProdadapter.setOnItemChangeListener(object : ProdAdapter.OnItemChangeListener {
-            override fun onItemChanged() {
-                Toast.makeText(this@ProductDetailsActivity, "123456!", Toast.LENGTH_SHORT).show()
-                this@ProductDetailsActivity.updateCartCount()
-            }
-        })
-
-
         // handle qty plus and minus button
         binding.plusBtn.setOnClickListener { plusQty() }
         binding.minusBtn.setOnClickListener { minusQty() }
@@ -119,11 +111,6 @@ class ProductDetailsActivity : AppCompatActivity() {
             val intent = Intent(this, MyCartActivity::class.java)
             startActivity(intent)
         }
-
-
-//
-//        updateCartCount()
-
 
         // when the user click the empty heart, chg the heart to filled heart
         binding.heartButton.setOnClickListener {
@@ -156,7 +143,24 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Added successfully!", Toast.LENGTH_SHORT).show()
             } catch (ex: Exception) {
-                Toast.makeText(this, "Item already added.", Toast.LENGTH_SHORT).show()
+                val cartItem = Common.cartRepository.getCartItemsById(Common.id!!)
+
+                if(cartItem[0].quantity + quantity > cartItem[0].stock)
+                {
+                    Toast.makeText(this, "Quantity reach maximum.", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    val newCart = Cart(Common.id!!.toInt(), Common.name, Common.price, Common.weight
+                        ,Common.image, Common.category, Common.stock,cartItem[0].quantity+quantity)
+
+                    Common.cartRepository.updateCart(newCart)
+
+                    Toast.makeText(this, "Quantity +$quantity", Toast.LENGTH_SHORT).show()
+                }
+
+
+
             }
 
             updateCartCount()
@@ -240,14 +244,23 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                         val adapter = ProdAdapter(this@ProductDetailsActivity, ramprodList)
                         binding.relatedProdList.adapter = adapter
+                        adapter.setOnItemChangeListener(object : ProdAdapter.OnItemChangeListener {
+                            override fun onItemChanged() {
+                                updateCartCount()
+                            }
+                        })
 
                     } else {
                         Toast.makeText(applicationContext, "Nothing found in the database", Toast.LENGTH_LONG).show()
+                        binding.progress.visibility = View.GONE
+                        binding.cnnLost.visibility = View.VISIBLE
                     }
                     binding.progress.visibility = View.GONE
+                    binding.cnnLost.visibility = View.GONE
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     binding.progress.visibility = View.GONE
+                    binding.cnnLost.visibility = View.VISIBLE
                 }
 
             }, Response.ErrorListener { volleyError ->

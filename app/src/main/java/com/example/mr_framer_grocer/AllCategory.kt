@@ -1,3 +1,4 @@
+
 package com.example.mr_framer_grocer
 
 import android.content.Intent
@@ -46,6 +47,12 @@ class AllCategory : AppCompatActivity() {
         binding.eggsTab.setOnClickListener{
             val intent = Intent(this, productList::class.java)
             intent.putExtra("category", "Eggs")
+            startActivity(intent)
+        }
+
+        // proceed to my cart page
+        binding.fab.setOnClickListener{
+            val intent = Intent(this, MyCartActivity::class.java)
             startActivity(intent)
         }
     }

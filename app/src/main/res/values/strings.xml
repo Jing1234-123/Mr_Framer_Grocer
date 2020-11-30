@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">Mr.Farmer Grocer</string>
 
+    <!-- Jh Text-->
     <!-- Content Description-->
     <string name="rect1">rect1</string>
     <string name="rect2">rect2</string>
     <string name="cart">cart</string>
     <string name="prodQty">1</string>
     <string name="heart">heart</string>
-
-    <!-- Text-->
     <string name="tomato">Tomato</string>
     <string name="price">RM %1$.2f</string>
     <string name="weight">(%1$s)</string>
@@ -20,10 +19,28 @@
     <string name="my_cart">My Cart</string>
 
 
+    <!-- Ms-->
+    <string name="my_fav">Favourite</string>
 
+
+    <!-- CL-->
+    <string name="door_delivery">Door Delivery</string>
+    <string name="self_pickup">Self-Pickup</string>
+    <string name="credit_card">Credit/Debit Card</string>
+    <string name="cod">Cash on Delivery</string>
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="card_no">Card Number</string>
+    <string name="expiry_date">Expiration Date(MM/YYYY)</string>
+    <string name="cvv">CVV</string>
+    <string name="otp">One Time Password(OTP)</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_tabbed_category">TabbedCategory</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="expand_all" />
+
+
+    <!--TW-->
+
+
 </resources>

@@ -222,6 +222,17 @@
                     android:layout_height="94dp"
                     android:layout_marginTop="40dp" />
 
+
+                <TextView
+                    android:id="@+id/cnnLost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Connection Lost."
+                    android:textSize="30sp"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center"
+                    android:visibility="gone"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/relatedProdList"
                     android:layout_width="wrap_content"

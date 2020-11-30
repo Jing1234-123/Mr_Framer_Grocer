@@ -40,6 +40,7 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
 
         // view product details
         holder.prod_image.setOnClickListener {
+
             // if any of the product is clicked, direct to product details page
             val intent = Intent(context, ProductDetailsActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -55,15 +56,17 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
         }
 
         // add to cart
-        holder.cart_btn.setOnClickListener{
+        holder.cart_btn.setOnClickListener {
             try {
-                val cartItem = Cart(itemList[position].id!!.toInt(),
-               itemList[position].name,
-               itemList[position].price,
-                itemList[position].weight,
-                itemList[position].img,
-                itemList[position].category,
-                itemList[position].stock, 1)
+                val cartItem = Cart(
+                    itemList[position].id!!.toInt(),
+                    itemList[position].name,
+                    itemList[position].price,
+                    itemList[position].weight,
+                    itemList[position].img,
+                    itemList[position].category,
+                    itemList[position].stock, 1
+                )
 
                 //Add to DB
                 Common.cartRepository.insertToCart(cartItem)
@@ -73,20 +76,33 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
                 Toast.makeText(context, "Added successfully!", Toast.LENGTH_SHORT).show()
 
             } catch (ex: Exception) {
-                Toast.makeText(context, "Item already added.", Toast.LENGTH_SHORT).show()
+                val cartItem = Common.cartRepository.getCartItemsById(itemList[position].id!!)
+
+                if (cartItem[0].quantity + 1 > cartItem[0].stock) {
+                    Toast.makeText(context, "Quantity reach maximum.", Toast.LENGTH_SHORT).show()
+                } else {
+                    val newCart = Cart(
+                        itemList[position].id!!.toInt(),
+                        itemList[position].name,
+                        itemList[position].price,
+                        itemList[position].weight,
+                        itemList[position].img,
+                        itemList[position].category,
+                        itemList[position].stock, cartItem[0].quantity + 1
+                    )
+
+                    Common.cartRepository.updateCart(newCart)
+
+                    Toast.makeText(context, "Quantity +1", Toast.LENGTH_SHORT).show()
+                }
             }
 
-
-            if(mOnItemChangeListener != null){
+            if (mOnItemChangeListener != null) {
                 mOnItemChangeListener?.onItemChanged()
             }
-
         }
 
-
     }
-
-
 
     interface OnItemChangeListener {
         fun onItemChanged()

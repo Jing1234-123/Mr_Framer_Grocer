@@ -13,22 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mr_Framer_Grocer">
 
-        <activity
-            android:name=".SplashScreenActivity"
-            android:theme="@style/SplashScreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".contact_us" />
         <activity android:name=".Testing" />
         <activity android:name=".MyCartActivity" />
         <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".productList" />
         <activity android:name=".BottomNavBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".AllCategory"/>
+        <activity android:name=".MainActivity"/>
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/SplashScreenTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

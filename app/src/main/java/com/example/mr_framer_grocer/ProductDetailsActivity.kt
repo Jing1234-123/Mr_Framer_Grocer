@@ -19,7 +19,6 @@ import com.example.mr_framer_grocer.Database.CartDataSource
 import com.example.mr_framer_grocer.Database.CartRepository
 import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
-import com.example.mr_framer_grocer.Database.LocalDB.CartDAO
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.Product
@@ -37,17 +36,20 @@ class ProductDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductDetailsBinding
 
     // Product details
+    private var id: String? = null
+    private var name: String? = null
+    private var price = 0f
+    private var weight: String? = null
+    private var image:  String? = null
+    private var category: String? = null
+    private var stock = 0
 
-    private lateinit var todoDao: CartDAO
-
-    var cartitemNum = 0
     var quantity = 1
 
     //expandable list
     private lateinit var listViewAdapter: CustomExpandableListAdapter
     private lateinit var titleList: List<String>
     private lateinit var listDetail: HashMap<String, List<String>>
-//    private lateinit var cartItem: Cart()
     private var add_cart_item: Product? = null
 
     // Related Product List
@@ -65,21 +67,21 @@ class ProductDetailsActivity : AppCompatActivity() {
         //get product details
         val bundle = intent.extras
 
-        Common.id = bundle!!.getString("id")
-        Common.name = bundle.getString("name")
-        Common.price = bundle.getFloat("price")
-        Common.weight = bundle.getString("weight")
-        Common.image = bundle.getString("img")
-        Common.category = bundle.getString("category")
-        Common.stock = bundle.getInt("stock")
+        id = bundle!!.getString("id")
+        name = bundle.getString("name")
+        price = bundle.getFloat("price")
+        weight = bundle.getString("weight")
+        image = bundle.getString("img")
+        category = bundle.getString("category")
+        stock = bundle.getInt("stock")
 
         // put info into view
-        binding.prodName.text = Common.name
-        binding.price.text = this.getString(R.string.price, Common.price)
-        binding.weight.text = this.getString(R.string.weight, Common.weight)
-        binding.stock.text = this.getString(R.string.stock,Common.stock)
+        binding.prodName.text = name
+        binding.price.text = this.getString(R.string.price, price)
+        binding.weight.text = this.getString(R.string.weight, weight)
+        binding.stock.text = this.getString(R.string.stock,stock)
         // load image using url link in string format
-        Picasso.get().load(Common.image).into(binding.prodImage)
+        Picasso.get().load(image).into(binding.prodImage)
 
         // initiate the cart
         initDB()
@@ -93,7 +95,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         binding.relatedProdList.adapter = relatedProdadapter
 
         // if stock is 0
-        if(Common.stock == 0)
+        if(stock == 0)
         {
             binding.plusBtn.isEnabled = false
             binding.plusBtn.alpha = 0.5f
@@ -101,6 +103,8 @@ class ProductDetailsActivity : AppCompatActivity() {
             binding.minusBtn.alpha = 0.5f
             binding.addToCartButton.isEnabled = false
             binding.addToCartButton.alpha = 0.5f
+            binding.buyNowButton.isEnabled = false
+            binding.buyNowButton.alpha = 0.5f
         }
 
         // handle qty plus and minus button
@@ -144,8 +148,8 @@ class ProductDetailsActivity : AppCompatActivity() {
             // Add item to the local cart database(SQLite)
             //Create new cart item
             try {
-                val cartItem = Cart(Common.id!!.toInt(), Common.name, Common.price, Common.weight
-               ,Common.image, Common.category, Common.stock, quantity)
+                val cartItem = Cart(id!!.toInt(), name, price, weight
+               ,image, category, stock, quantity)
 
                 //Add to DB
                 Common.cartRepository.insertToCart(cartItem)
@@ -154,7 +158,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Added successfully!", Toast.LENGTH_SHORT).show()
             } catch (ex: Exception) {
-                val cartItem = Common.cartRepository.getCartItemsById(Common.id!!)
+                val cartItem = Common.cartRepository.getCartItemsById(id!!)
 
                 if(cartItem[0].quantity + quantity > cartItem[0].stock)
                 {
@@ -162,8 +166,8 @@ class ProductDetailsActivity : AppCompatActivity() {
                 }
                 else
                 {
-                    val newCart = Cart(Common.id!!.toInt(), Common.name, Common.price, Common.weight
-                        ,Common.image, Common.category, Common.stock,cartItem[0].quantity+quantity)
+                    val newCart = Cart(id!!.toInt(), name, price, weight
+                        ,image, category, stock,cartItem[0].quantity+quantity)
 
                     Common.cartRepository.updateCart(newCart)
 
@@ -176,6 +180,18 @@ class ProductDetailsActivity : AppCompatActivity() {
 
             updateCartCount()
 
+        }
+
+
+        // buy now
+        binding.buyNowButton.setOnClickListener{
+            val intent = Intent(this, Delivery::class.java)
+            intent.putExtra("method", "buynow" )
+            intent.putExtra("subtotal", price*quantity)
+            intent.putExtra("prodID", id)
+            intent.putExtra("newstock", (stock-quantity).toString())
+
+            startActivity(intent)
         }
 
     }
@@ -205,7 +221,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         binding.progress.visibility = View.VISIBLE
         val jsonObjectRequest = StringRequest(
-            Request.Method.GET, EndPoints.URL_READ_R_PROD + "?category=" + Common.category,
+            Request.Method.GET, EndPoints.URL_READ_R_PROD + "?category=" + category,
             Response.Listener{ response ->
                 try {
                     if (response != null) {
@@ -304,7 +320,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             binding.plusBtn.alpha = 1.0f
             qty++
 
-            if (qty == Common.stock) {
+            if (qty == stock) {
                 binding.plusBtn.isEnabled = false
                 binding.plusBtn.alpha = 0.5f
             }
@@ -367,7 +383,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         )
 
         val info2: MutableList<String> = ArrayList()
-        info2.add("Weight\t\t${Common.weight}")
+        info2.add("Weight\t\t${weight}")
 
         listDetail[titleList[0]] = info1
         listDetail[titleList[1]] = info2

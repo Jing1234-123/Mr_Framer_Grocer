@@ -1,14 +1,20 @@
 package com.example.mr_framer_grocer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.example.mr_framer_grocer.Database.EndPoints
+import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.databinding.ActivityPaymentBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
+import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 class Payment : AppCompatActivity() {
@@ -56,8 +62,8 @@ class Payment : AppCompatActivity() {
         new_total.text = total
 
         // Declaring variables for validation purpose
-        var rb_credit_card = binding.radioCreditCard
-        var rb_cod = binding.radioCod
+        val rb_credit_card = binding.radioCreditCard
+        val rb_cod = binding.radioCod
 
         // Retrieve phone number using intent from Delivery Activity
         // Standardise phone number format
@@ -65,7 +71,7 @@ class Payment : AppCompatActivity() {
         binding.sendOtp.setOnClickListener {
             val intent = intent
             val phoneno = intent.getStringExtra("Phone_No").toString()
-            var phoneNo = "+6$phoneno"
+            val phoneNo = "+6$phoneno"
             binding.otpTxt.isEnabled = true     // Enable OTP edittext if user select "Send OTP" button
 
             if (!phoneNo.isEmpty()) {
@@ -105,10 +111,36 @@ class Payment : AppCompatActivity() {
                     binding.cardholderNameTxt.setError("Required field!")
                 }
             } else if (rb_cod.isChecked) {
-                binding.progressBar!!.setVisibility(View.VISIBLE)
+                // payment successful
+                val bundle = intent.extras
+                val method = bundle!!.getString("method")
+                binding.progressBar.visibility = View.VISIBLE
+
+                // if come from buy now
+                if(method == "buynow")
+                {
+                    val newstock = bundle.getString("newstock")
+                    val id = bundle.getString("id")
+                    resetStockNum(id, newstock)
+                    binding.progressBar.visibility = View.GONE
+                }
+                // if come from mycart, clear the cart after payment successful
+                else
+                {
+                    val cartItem = Common.cartRepository.getCartItems()
+                    for(i in 0 until cartItem.size)
+                    {
+                        resetStockNum(cartItem[i].id.toString(), cartItem[i].stock.toString())
+
+                    }
+                    binding.progressBar.visibility = View.GONE
+                    Common.cartRepository.emptyCart()
+                }
+
                 val intent = Intent(applicationContext, OrderSuccessful::class.java)
                 startActivity(intent)
                 finish()
+
             } else {
                 Toast.makeText(applicationContext,
                     "Please choose one of the payment method!",
@@ -177,7 +209,35 @@ class Payment : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    binding.progressBar!!.setVisibility(View.VISIBLE)
+                    binding.progressBar.setVisibility(View.VISIBLE)
+
+                    // payment successful
+                    val bundle = intent.extras
+                    val method = bundle!!.getString("method")
+                    binding.progressBar.visibility = View.VISIBLE
+
+                    // if come from buy now
+                    if(method == "buynow")
+                    {
+                        val newstock = bundle.getString("newstock")
+                        val id = bundle.getString("id")
+                        resetStockNum(id, newstock)
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    // if come from mycart, clear the cart after payment successful
+                    else
+                    {
+                        val cartItem = Common.cartRepository.getCartItems()
+                        for(i in 0 until cartItem.size)
+                        {
+                            resetStockNum(cartItem[i].id.toString(), cartItem[i].stock.toString())
+
+                        }
+                        binding.progressBar.visibility = View.GONE
+                        Common.cartRepository.emptyCart()
+                    }
+
+
                     val intent = Intent(applicationContext, PaymentSuccessful::class.java)
                     startActivity(intent)
                     finish()
@@ -194,6 +254,52 @@ class Payment : AppCompatActivity() {
                     }
                 }
             }
+    }
+
+    private fun resetStockNum(id: String?, newstock: String?) {
+
+            val url = EndPoints.URL_UPDATESTOCK + "?stock=" + newstock + "&id=" + id
+
+            val jsonObjectRequest = JsonObjectRequest(
+                Request.Method.GET, url, null,
+                { response ->
+                    // Process the JSON
+                    try{
+                        if(response != null){
+                            val strResponse = response.toString()
+                            val jsonResponse  = JSONObject(strResponse)
+//                            val success: String = jsonResponse.get("success").toString()
+
+//                            if(success.equals("1")){
+//                                Toast.makeText(applicationContext, "Updated successfully!", Toast.LENGTH_LONG).show()
+//
+//                            }else{
+//                                Toast.makeText(applicationContext, "Fail to update", Toast.LENGTH_LONG).show()
+//                            }
+
+                        }
+                    }catch (e:Exception){
+                        Log.d("Main", "Response: %s".format(e.message.toString()))
+
+
+                    }
+                },
+                { error ->
+                    Log.d("Main", "Response: %s".format(error.message.toString()))
+
+                }
+            )
+
+            //Volley request policy, only one time request
+            jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                0, //no retry
+                1f
+            )
+
+            // Access the RequestQueue through your singleton class.
+            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+
     }
 
     // Enable the layout if user select credit card for the payment method

@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mr_framer_grocer.Adapter.MyAdapter
+import com.example.mr_framer_grocer.Database.CartDataSource
+import com.example.mr_framer_grocer.Database.CartRepository
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
+import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
 import com.example.mr_framer_grocer.Helper.MyButton
 import com.example.mr_framer_grocer.Helper.MyButtonClickListener
 import com.example.mr_framer_grocer.Helper.MySwipeHelper
@@ -33,6 +36,8 @@ class MyCartActivity : AppCompatActivity() {
         binding = ActivityMyCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // initiate the cart
+        initDB()
         loadCartItem()
 
 
@@ -143,6 +148,14 @@ class MyCartActivity : AppCompatActivity() {
                 // ask for confirmation
                 alertDialog()
             }
+
+            // buy now
+            binding.chkoutbutton.setOnClickListener{
+                val intent = Intent(this, Delivery::class.java)
+                intent.putExtra("method", "cart" )
+                intent.putExtra("subtotal", totalprice)
+                startActivity(intent)
+            }
         }
     }
 
@@ -187,6 +200,9 @@ class MyCartActivity : AppCompatActivity() {
         alertDialog!!.show()
     }
 
-
+    private fun initDB() {
+        Common.cartDatabase = CartDatabase.invoke(this)
+        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
+    }
 
 }

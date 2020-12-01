@@ -25,7 +25,7 @@ class MyCartActivity : AppCompatActivity() {
     var itemList = ArrayList<Cart>()
     var totalprice = 0f
 
-//tt
+    //tt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -77,71 +77,71 @@ class MyCartActivity : AppCompatActivity() {
             val swipe = object : MySwipeHelper(this, binding.cartList) {
                 override fun instantiateMyButton(viewHolder: RecyclerView.ViewHolder, buffer: MutableList<MyButton>) {
                     buffer.add(MyButton(
-                            "Delete",
-                            0,
-                            Color.parseColor("#42995C"),
-                            object : MyButtonClickListener {
-                                override fun onClick(pos: Int) {
+                        "Delete",
+                        0,
+                        Color.parseColor("#42995C"),
+                        object : MyButtonClickListener {
+                            override fun onClick(pos: Int) {
 
-                                    val tmp = cartAdapter.itemList[pos] //temporary variable
-                                    val id = cartAdapter.itemList[pos].id
-                                    totalprice -= cartAdapter.itemList[pos].price!! * cartAdapter.itemList[pos].quantity
-                                    binding.totalprice.text = getString(R.string.price, totalprice)
-                                    cartAdapter.itemList.removeAt(pos)
-                                    cartAdapter.notifyItemRemoved(pos)
-                                    cartAdapter.notifyItemRangeChanged(pos, cartAdapter.itemCount)
-                                    updateCartCount()
+                                val tmp = cartAdapter.itemList[pos] //temporary variable
+                                val id = cartAdapter.itemList[pos].id
+                                totalprice -= cartAdapter.itemList[pos].price!! * cartAdapter.itemList[pos].quantity
+                                binding.totalprice.text = getString(R.string.price, totalprice)
+                                cartAdapter.itemList.removeAt(pos)
+                                cartAdapter.notifyItemRemoved(pos)
+                                cartAdapter.notifyItemRangeChanged(pos, cartAdapter.itemCount)
+                                updateCartCount()
 
 
-                                    val snackbar =
-                                        Snackbar.make(binding.cartList, "1 item has been removed.", Snackbar.LENGTH_LONG)
-                                            .setAction(
-                                                "UNDO"
+                                val snackbar =
+                                    Snackbar.make(binding.cartList, "1 item has been removed.", Snackbar.LENGTH_LONG)
+                                        .setAction(
+                                            "UNDO"
+                                        ) {
+                                            cartAdapter.itemList.add(pos, tmp)
+                                            totalprice += cartAdapter.itemList[pos].price!! * cartAdapter.itemList[pos].quantity
+                                            binding.totalprice.text = getString(R.string.price, totalprice)
+                                            updateCartCount()
+                                            cartAdapter.notifyDataSetChanged()
+
+                                        }.setCallback(object : Snackbar.Callback() {
+                                            override fun onDismissed(
+                                                snackbar: Snackbar,
+                                                dismissType: Int
                                             ) {
-                                                cartAdapter.itemList.add(pos, tmp)
-                                                totalprice += cartAdapter.itemList[pos].price!! * cartAdapter.itemList[pos].quantity
-                                                binding.totalprice.text = getString(R.string.price, totalprice)
-                                                updateCartCount()
-                                                cartAdapter.notifyDataSetChanged()
+                                                super.onDismissed(snackbar, dismissType)
 
-                                            }.setCallback(object : Snackbar.Callback() {
-                                                override fun onDismissed(
-                                                    snackbar: Snackbar,
-                                                    dismissType: Int
-                                                ) {
-                                                    super.onDismissed(snackbar, dismissType)
-
-                                                    //if the dismiss type is not undo, delete the cart item from database
-                                                    if (dismissType == DISMISS_EVENT_TIMEOUT || dismissType == DISMISS_EVENT_SWIPE || dismissType == DISMISS_EVENT_CONSECUTIVE || dismissType == DISMISS_EVENT_MANUAL)
-                                                    {
-                                                        // Delete the cart item in room database
-                                                        Common.cartRepository.deleteCartItemById(id.toString())
-                                                        updateCartCount()
-                                                    }
-
+                                                //if the dismiss type is not undo, delete the cart item from database
+                                                if (dismissType == DISMISS_EVENT_TIMEOUT || dismissType == DISMISS_EVENT_SWIPE || dismissType == DISMISS_EVENT_CONSECUTIVE || dismissType == DISMISS_EVENT_MANUAL)
+                                                {
+                                                    // Delete the cart item in room database
+                                                    Common.cartRepository.deleteCartItemById(id.toString())
+                                                    updateCartCount()
                                                 }
-                                            })
-                                    snackbar.show()
-                                }
 
+                                            }
+                                        })
+                                snackbar.show()
                             }
 
+                        }
+
                     ))
-             }
+                }
 
             }
 
-                // calculate total price of all cart items
-                for(i in 0..cartAdapter.itemList.size - 1)
-                {
-                    totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
-                }
+            // calculate total price of all cart items
+            for(i in 0..cartAdapter.itemList.size - 1)
+            {
+                totalprice += cartAdapter.itemList[i].price!! * cartAdapter.itemList[i].quantity
+            }
 
-                binding.totalprice.text = getString(R.string.price, totalprice)
+            binding.totalprice.text = getString(R.string.price, totalprice)
 
             binding.emptyCart.setOnClickListener{
                 // ask for confirmation
-                    alertDialog()
+                alertDialog()
             }
         }
     }
@@ -168,7 +168,7 @@ class MyCartActivity : AppCompatActivity() {
 
         dialog.setNegativeButton("Yes"
         ) { _, _ ->
-            Common.cartRepository.emptyCart()
+            com.example.mr_framer_grocer.Common.cartRepository.emptyCart()
             // refresh the screen
             finish()
             val intent = Intent(this, MyCartActivity::class.java)
@@ -179,12 +179,14 @@ class MyCartActivity : AppCompatActivity() {
         }
         dialog.setPositiveButton("Cancel")
         { _, _ ->
-                Toast.makeText(applicationContext, "Clear action is cancelled", Toast.LENGTH_LONG)
-                    .show()
-            }
+            Toast.makeText(applicationContext, "Clear action is cancelled", Toast.LENGTH_LONG)
+                .show()
+        }
 
         val alertDialog: android.app.AlertDialog? = dialog.create()
         alertDialog!!.show()
     }
+
+
 
 }

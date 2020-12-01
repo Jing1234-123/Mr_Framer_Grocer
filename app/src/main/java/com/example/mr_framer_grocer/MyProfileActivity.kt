@@ -50,7 +50,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         spinner?.onItemSelectedListener = this
 
         val bundle = intent.extras
-        if(bundle!!.getString("edit_profile") == "1")
+        if(bundle!!.getString("edit_profile") == "yes")
         {
             getUserInfo()
         }
@@ -78,7 +78,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                     if (binding.editTextAddress.text.toString().isNotEmpty()) {
 
                         // user edit profile
-                        if(bundle.getString("edit_profile") == "1")
+                        if(bundle.getString("edit_profile") == "yes")
                         {
                             updateUserInfo()
 

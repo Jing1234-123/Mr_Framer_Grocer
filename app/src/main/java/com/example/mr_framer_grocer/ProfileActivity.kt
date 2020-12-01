@@ -19,7 +19,7 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.textViewEditProfile.setOnClickListener {
             intent = Intent(this, MyProfileActivity::class.java)
-            intent.putExtra("edit_profile", 1)
+            intent.putExtra("edit_profile", "yes")
             startActivity(intent)
         }
 

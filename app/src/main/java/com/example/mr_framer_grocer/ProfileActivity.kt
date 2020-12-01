@@ -1,21 +1,32 @@
 package com.example.mr_framer_grocer
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.Adapter.ProfileListAdapter
 import com.example.mr_framer_grocer.Model.ProfileModel
 import com.example.mr_framer_grocer.databinding.ActivityProfileBinding
+import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+
+    lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        preferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+
+        val phone = preferences.getString("PHONE", "")
+        phoneTv.text = phone
+
 
         binding.textViewEditProfile.setOnClickListener {
             intent = Intent(this, MyProfileActivity::class.java)
@@ -53,6 +64,10 @@ class ProfileActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             if (position == 5){
+                val editor: SharedPreferences.Editor = preferences.edit()
+                editor.clear()
+                editor.apply()
+
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()

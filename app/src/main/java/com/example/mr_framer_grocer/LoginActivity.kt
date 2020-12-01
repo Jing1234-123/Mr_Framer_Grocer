@@ -1,6 +1,8 @@
 package com.example.mr_framer_grocer
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -13,6 +15,7 @@ import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.User
 import com.example.mr_framer_grocer.databinding.ActivityLoginBinding
+import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -20,12 +23,23 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     var userInfo: User? = null
     var phoneno: String? = null
+    lateinit var sharedPreferences: SharedPreferences
+    var isRemembered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+        isRemembered = sharedPreferences.getBoolean("LOGIN", false)
+
+        if (isRemembered){
+            intent = Intent(this, AllCategory::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         phoneno = binding.editTextTextPassword.text.toString().trim()
 
@@ -41,6 +55,18 @@ class LoginActivity : AppCompatActivity() {
                         // verify password, if correct
                         if(binding.editTextTextPassword.text.toString() == userInfo!!.password)
                         {
+                            val phone: String = editTextPhone.text.toString()
+                            //val login: Boolean = true
+
+                            //val action:Int = 1
+
+                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                            editor.putString("PHONE", phone)
+                            editor.putBoolean("LOGIN", true)
+                            editor.apply()
+
+                            Toast.makeText(applicationContext, "Login successful", Toast.LENGTH_LONG).show()
+
                             Common.contact_no = binding.editTextPhone.text.toString()
                             Common.psw = binding.editTextTextPassword.text.toString()
                             intent = Intent(this, AllCategory::class.java)

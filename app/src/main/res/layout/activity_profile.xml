@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/profile_icon" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/phoneTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tze Wei"

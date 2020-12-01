@@ -1,7 +1,9 @@
 
 package com.example.mr_framer_grocer
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.Database.CartDataSource
@@ -14,11 +16,11 @@ import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 class AllCategory : AppCompatActivity() {
     private lateinit var binding: ActivityAllCategoryBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAllCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setContentView(R.layout.activity_all_category)
 
         initDB()
 

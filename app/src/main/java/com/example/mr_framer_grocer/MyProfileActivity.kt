@@ -125,7 +125,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         val month = datePicker.month + 1
         val year = datePicker.year
 
-        birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
+        birth_date =  checkDigit(day) + "/" + checkDigit(month).toString() + "/" + year
 
         val url = EndPoints.URL_UPDATE_USER + "?name=" + binding.editTextName.text.toString() +
                 "&gender=" + items + "&birth_date=" + birth_date +
@@ -186,6 +186,16 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         val strResponse = response.toString()
                         val jsonResponse  = JSONObject(strResponse)
 
+//                        userInfo = User(
+//                            jsonResponse.getString("name"),
+//                            jsonResponse.getString("gender"),
+//                            jsonResponse.getString("birth_date"),
+//                            jsonResponse.getString("contact_no"),
+//                            jsonResponse.getString("email"),
+//                            jsonResponse.getString("address"),
+//                            jsonResponse.getString("password")
+//                        )
+
                         binding.editTextName.setText(jsonResponse.getString("name"), TextView.BufferType.EDITABLE)
                         binding.contact.setText(jsonResponse.getString("contact_no"), TextView.BufferType.EDITABLE)
                         binding.editTextEmail.setText(jsonResponse.getString("email"), TextView.BufferType.EDITABLE)
@@ -199,7 +209,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                             spinner?.onItemSelectedListener = this
                         }
 
-                        //set date picker
+                        // set birth_date picker
                         val date = jsonResponse.getString("birth_date")
                         val separated = date.split("/");
                        binding.datePickerBirthDate.init(separated[0].toInt(),separated[1].toInt(),separated[2].toInt(),null)

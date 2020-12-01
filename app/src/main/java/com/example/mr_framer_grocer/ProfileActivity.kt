@@ -24,8 +24,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         //listView
-        var listView = findViewById<ListView>(R.id.listview_profile)
-        var list = mutableListOf<ProfileModel>()
+        val listView = findViewById<ListView>(R.id.listview_profile)
+        val list = mutableListOf<ProfileModel>()
 
         //add items into listView
         list.add(ProfileModel(item_name = "My Favourite", photo = R.drawable.my_favourite))

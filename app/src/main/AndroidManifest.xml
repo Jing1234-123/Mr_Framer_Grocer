@@ -12,17 +12,19 @@
         android:roundIcon="@drawable/main_logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mr_Framer_Grocer">
-        <activity android:name=".OrderSuccessful"></activity>
+        <activity android:name=".OrderSuccessful"/>
         <activity android:name=".PaymentSuccessful" />
         <activity android:name=".Payment" />
         <activity android:name=".Delivery" />
         <activity android:name=".ContactUs" />
         <activity android:name=".AboutUs" />
         <activity android:name=".MyCartActivity" />
-        <activity android:name=".ChangePasswordActivity" /> <!-- MeiSiew -->
+        <activity android:name=".ChangePasswordActivity" />
+        <!-- MeiSiew -->
         <activity android:name=".AllCategory" />
         <activity android:name=".productList" />
-        <activity android:name=".ProductDetailsActivity" /> <!-- TzeWei -->
+        <activity android:name=".ProductDetailsActivity" />
+        <!-- TzeWei -->
         <activity android:name=".LoginActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".PasswordChangedSuccessful" />
@@ -30,7 +32,8 @@
         <activity android:name=".PasswordResetSuccessful" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".SignUpActivity" /> <!-- ChiaLing -->
+        <activity android:name=".SignUpActivity" />
+        <!-- ChiaLing -->
         <activity android:name=".MainActivity" />
         <activity
             android:name=".SplashScreenActivity"

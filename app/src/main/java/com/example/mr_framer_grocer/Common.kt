@@ -10,13 +10,7 @@ class Common {
         lateinit var cartRepository: CartRepository
 
         //
-        var id: String? = null
-        var name: String? = null
-        var price = 0f
-        var weight: String? = null
-        var image:  String? = null
-        var category: String? = null
-        var stock = 0
+
 
         // user
         var contact_no: String? = null

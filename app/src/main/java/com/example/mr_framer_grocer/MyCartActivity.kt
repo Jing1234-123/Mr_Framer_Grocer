@@ -25,7 +25,7 @@ class MyCartActivity : AppCompatActivity() {
     var itemList = ArrayList<Cart>()
     var totalprice = 0f
 
-
+//tt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

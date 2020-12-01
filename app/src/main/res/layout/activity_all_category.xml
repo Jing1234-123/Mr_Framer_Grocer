@@ -1,232 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homepage"
     tools:context=".AllCategory">
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_alignParentTop="true"
+        android:paddingBottom="55dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logo" />
+        <ImageView
+            android:id="@+id/all_cat_logo"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="90dp"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/all_cat"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="top"
-                android:text="Categories"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/all_cat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="130dp"
+            android:text="Categories"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/all_cat_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.04000002" />
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="81dp"
-            android:background="@color/white"
-            android:layout_marginLeft="35dp"
-            android:layout_marginBottom="5dp"
+        <Button
+            android:id="@+id/vegeTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:visibility="visible">
+            android:background="@drawable/vegetable_cat"
+            app:layout_constraintBottom_toTopOf="@id/fruitsTab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/all_cat" />
 
-            <Button
-                android:id="@+id/vegeTab"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_alignParentBottom="true"
-                android:background="#00000000"
-                android:padding="20dp"
-                 />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/carrot" />
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="150dp"
-                android:layout_marginTop="25dp"
-                android:text="Vegetables"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="italic" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="81dp"
-            android:background="@color/white"
-            android:layout_marginLeft="35dp"
-            android:layout_marginBottom="5dp"
+        <Button
+            android:id="@+id/fruitsTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:visibility="visible">
+            android:background="@drawable/fruits_cat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vegeTab" />
 
-            <Button
-                android:id="@+id/fruitsTab"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
-                android:background="#00000000"
-                android:padding="20dp"
-              />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="180dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/grapes" />
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="25dp"
-                android:text="Fruits"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="italic" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="81dp"
-            android:background="@color/white"
-            android:layout_marginLeft="35dp"
-            android:layout_marginBottom="5dp"
+        <Button
+            android:id="@+id/seafoodsTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:visibility="visible">
+            android:background="@drawable/seafoods_cat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fruitsTab" />
 
-            <Button
-                android:id="@+id/seafoodsTab"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
-                android:background="#00000000"
-                android:padding="20dp"
-                 />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/prawns" />
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="150dp"
-                android:layout_marginTop="25dp"
-                android:text="Seafoods"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="italic" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="81dp"
-            android:background="@color/white"
-            android:layout_marginLeft="35dp"
-            android:layout_marginBottom="5dp"
+        <Button
+            android:id="@+id/chickensTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:visibility="visible">
+            android:background="@drawable/chickens_cat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/seafoodsTab"
+            app:layout_constraintBottom_toTopOf="@id/eggsTab"/>
 
-            <Button
-                android:id="@+id/chickensTab"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
-                android:background="#00000000"
-                android:padding="20dp"
-                />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="180dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/chicken" />
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="25dp"
-                android:text="Chickens"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="italic" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="81dp"
-            android:background="@color/white"
-            android:layout_marginLeft="35dp"
-            android:layout_marginBottom="5dp"
+        <Button
+            android:id="@+id/eggsTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:visibility="visible">
-
-            <Button
-                android:id="@+id/eggsTab"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
-                android:background="#00000000"
-                android:padding="20dp"
-                 />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/eggs" />
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="150dp"
-                android:layout_marginTop="25dp"
-                android:text="Eggs"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="italic" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
+            android:background="@drawable/eggs_cat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chickensTab"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:keepScreenOn="true">
+        android:keepScreenOn="true"
+        android:id="@+id/down_nav_layout">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"

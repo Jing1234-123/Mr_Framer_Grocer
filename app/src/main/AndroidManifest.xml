@@ -3,6 +3,7 @@
     package="com.example.mr_framer_grocer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,24 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mr_Framer_Grocer">
-        <activity android:name=".ChangePasswordActivity"></activity>
-        <!-- MeiSiew -->
-        <activity android:name=".AllCategory" />
-        <activity android:name=".productList" /> <!-- JingHui -->
-        <activity android:name=".MyCartActivity" />
-        <activity android:name=".ProductDetailsActivity" /> <!-- TzeWei -->
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MyProfileActivity" />
-        <activity android:name=".PasswordChangedSuccessful" />
-        <activity android:name=".PasswordRecoveryActivity" />
-        <activity android:name=".PasswordResetSuccessful" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".SignUpActivity" /> <!-- ChiaLing -->
-        <activity android:name=".MainActivity" />
+
         <activity
             android:name=".SplashScreenActivity"
-            android:theme="@style/SplashScreenTheme">
+            android:theme="@style/SplashScreenTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".contact_us" />
+        <activity android:name=".Testing" />
+        <activity android:name=".MyCartActivity" />
+        <activity android:name=".ProductDetailsActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

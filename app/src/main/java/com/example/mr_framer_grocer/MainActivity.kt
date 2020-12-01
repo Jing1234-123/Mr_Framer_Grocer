@@ -5,19 +5,15 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.Model.Product
-import com.example.mr_framer_grocer.databinding.ActivityAboutUsBinding
-
 
 class MainActivity : AppCompatActivity() {
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        intent = Intent(this, TestingCheckout::class.java)
-        startActivity(intent)
-
-//        setContentView(R.layout.activity_main)
-//
 //        val button: Button = findViewById(R.id.button2)
 //        button.setOnClickListener{
 //

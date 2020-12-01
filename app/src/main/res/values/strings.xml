@@ -17,6 +17,14 @@
     <string name="totalItem">%1$d item(s)</string>
     <string name="total">Total:</string>
     <string name="my_cart">My Cart</string>
+    <string name="emptyCart"><u>Clear the Cart</u></string>
+
+
+    <!--Database-->
+    <string name="url_server">https://mr-farmer-grocer.000webhostapp.com/api/</string>
+    <string name="url_user_read">user/read.php</string>
+    <string name="url_product_read">product/read.php</string>
+    <string name="url_user_create">user/create.php</string>
 
 
     <!-- Chia Ling -->

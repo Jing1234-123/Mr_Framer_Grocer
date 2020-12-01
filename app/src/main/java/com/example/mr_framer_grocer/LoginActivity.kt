@@ -14,6 +14,7 @@ import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.User
 import com.example.mr_framer_grocer.databinding.ActivityLoginBinding
+import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -68,12 +69,15 @@ class LoginActivity : AppCompatActivity() {
                                     else
                                     {
                                         binding.progress!!.visibility = View.GONE
-                                        Toast.makeText(applicationContext, "Incorrect password!", Toast.LENGTH_LONG).show() }
+                                        /*Toast.makeText(applicationContext, "Incorrect password!", Toast.LENGTH_LONG).show()*/
+                                        editTextTextPassword.setError("Password incorrect")
+                                    }
 
 
                                 } else {
                                     binding.progress!!.visibility = View.GONE
-                                    Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG).show()
+                                    /*Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG).show()*/
+                                    editTextPhone.setError("User not exist")
 
                                 }
 
@@ -82,12 +86,14 @@ class LoginActivity : AppCompatActivity() {
                             } catch (e: JSONException) {
                                 e.printStackTrace()
                                 binding.progress!!.visibility = View.GONE
-                                Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG).show()
+                                /*Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG).show()*/
+                                editTextPhone.setError("User not exist")
                             }
 
                         }, Response.ErrorListener { volleyError ->
                             binding.progress!!.visibility = View.GONE
-                            Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG).show()})
+                            /*Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG).show()*/
+                            editTextPhone.setError("User not exist")})
 
                     //Volley request policy, only one time request
                     jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
@@ -101,19 +107,24 @@ class LoginActivity : AppCompatActivity() {
                 }
                 // if password is empty
                 else
-                { Toast.makeText(applicationContext, "Please enter your password", Toast.LENGTH_LONG).show() }
+                { /*Toast.makeText(applicationContext, "Please enter your password", Toast.LENGTH_LONG).show()*/
+                    editTextTextPassword.setError("Password empty")
+                }
             }
             // if phone number is empty
             else
-            { Toast.makeText(applicationContext, "Please enter your phone number", Toast.LENGTH_LONG).show()}
+            { /*Toast.makeText(applicationContext, "Please enter your phone number", Toast.LENGTH_LONG).show()*/
+                editTextPhone.setError("Phone number empty")
+            }
         }
 
 
 
         binding.signUpBtn.setOnClickListener {
             intent = Intent(this, SignUpActivity::class.java)
-            finish()
+
             startActivity(intent)
+            finish()
         }
 
         binding.textViewForgotPassword.setOnClickListener {

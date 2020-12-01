@@ -57,9 +57,11 @@ class AllCategory : AppCompatActivity() {
 
         // proceed to my cart page
         binding.fab.setOnClickListener{
-            val intent = Intent(this, MyCartActivity::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
     // initialize database

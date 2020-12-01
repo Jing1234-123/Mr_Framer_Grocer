@@ -186,16 +186,6 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         val strResponse = response.toString()
                         val jsonResponse  = JSONObject(strResponse)
 
-//                        userInfo = User(
-//                            jsonResponse.getString("name"),
-//                            jsonResponse.getString("gender"),
-//                            jsonResponse.getString("birth_date"),
-//                            jsonResponse.getString("contact_no"),
-//                            jsonResponse.getString("email"),
-//                            jsonResponse.getString("address"),
-//                            jsonResponse.getString("password")
-//                        )
-
                         binding.editTextName.setText(jsonResponse.getString("name"), TextView.BufferType.EDITABLE)
                         binding.contact.setText(jsonResponse.getString("contact_no"), TextView.BufferType.EDITABLE)
                         binding.editTextEmail.setText(jsonResponse.getString("email"), TextView.BufferType.EDITABLE)
@@ -209,6 +199,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                             spinner?.onItemSelectedListener = this
                         }
 
+                        //set date picker
                         val date = jsonResponse.getString("birth_date")
                         val separated = date.split("/");
                        binding.datePickerBirthDate.init(separated[0].toInt(),separated[1].toInt(),separated[2].toInt(),null)

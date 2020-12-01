@@ -84,6 +84,25 @@ class ProductDetailsActivity : AppCompatActivity() {
         // initiate the cart
         initDB()
 
+        loadRelatedProd()
+        binding.relatedProdList.setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.relatedProdList.layoutManager = layoutManager
+
+        relatedProdadapter = ProdAdapter(this, prodList)
+        binding.relatedProdList.adapter = relatedProdadapter
+
+        // if stock is 0
+        if(Common.stock == 0)
+        {
+            binding.plusBtn.isEnabled = false
+            binding.plusBtn.alpha = 0.5f
+            binding.minusBtn.isEnabled = false
+            binding.minusBtn.alpha = 0.5f
+            binding.addToCartButton.isEnabled = false
+            binding.addToCartButton.alpha = 0.5f
+        }
+
         // handle qty plus and minus button
         binding.plusBtn.setOnClickListener { plusQty() }
         binding.minusBtn.setOnClickListener { minusQty() }
@@ -103,13 +122,6 @@ class ProductDetailsActivity : AppCompatActivity() {
             val intent = Intent(this, MyCartActivity::class.java)
             startActivity(intent)
         }
-
-        binding.relatedProdList.setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.relatedProdList.layoutManager = layoutManager
-        loadRelatedProd()
-        relatedProdadapter = ProdAdapter(this, prodList)
-        binding.relatedProdList.adapter = relatedProdadapter
 
         // when the user click the empty heart, chg the heart to filled heart
         binding.heartButton.setOnClickListener {
@@ -142,12 +154,30 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Added successfully!", Toast.LENGTH_SHORT).show()
             } catch (ex: Exception) {
-                Toast.makeText(this, "Item already added.", Toast.LENGTH_SHORT).show()
+                val cartItem = Common.cartRepository.getCartItemsById(Common.id!!)
+
+                if(cartItem[0].quantity + quantity > cartItem[0].stock)
+                {
+                    Toast.makeText(this, "Quantity reach maximum.", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    val newCart = Cart(Common.id!!.toInt(), Common.name, Common.price, Common.weight
+                        ,Common.image, Common.category, Common.stock,cartItem[0].quantity+quantity)
+
+                    Common.cartRepository.updateCart(newCart)
+
+                    Toast.makeText(this, "Quantity +$quantity", Toast.LENGTH_SHORT).show()
+                }
+
+
+
             }
 
-        updateCartCount()
+            updateCartCount()
 
         }
+
     }
 
     private fun updateCartCount() {
@@ -170,7 +200,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
     }
 
-    // get related products based on category from myphpadmin database
+    // get related products based on category from server database
     private fun loadRelatedProd() {
 
         binding.progress.visibility = View.VISIBLE
@@ -210,9 +240,9 @@ class ProductDetailsActivity : AppCompatActivity() {
                         }
 
                         // display 5 product from the whole product list
-                        if(prodList.size > 5)
+                        if(prodList.size > 10)
                         {
-                            for(i in 0..5)
+                            for(i in 0..10)
                             {
                                 val randomIndex = Random.nextInt(prodList.size)
                                 ramprodList.add(prodList.get(randomIndex))
@@ -225,14 +255,23 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                         val adapter = ProdAdapter(this@ProductDetailsActivity, ramprodList)
                         binding.relatedProdList.adapter = adapter
+                        adapter.setOnItemChangeListener(object : ProdAdapter.OnItemChangeListener {
+                            override fun onItemChanged() {
+                                updateCartCount()
+                            }
+                        })
 
                     } else {
                         Toast.makeText(applicationContext, "Nothing found in the database", Toast.LENGTH_LONG).show()
+                        binding.progress.visibility = View.GONE
+                        binding.cnnLost.visibility = View.VISIBLE
                     }
                     binding.progress.visibility = View.GONE
+                    binding.cnnLost.visibility = View.GONE
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     binding.progress.visibility = View.GONE
+                    binding.cnnLost.visibility = View.VISIBLE
                 }
 
             }, Response.ErrorListener { volleyError ->

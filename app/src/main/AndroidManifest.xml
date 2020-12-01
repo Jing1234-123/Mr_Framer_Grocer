@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mr_framer_grocer">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,7 +12,13 @@
         android:roundIcon="@drawable/main_logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mr_Framer_Grocer">
-        <activity android:name=".MyCartActivity"></activity>
+        <activity android:name=".OrderSuccessful"></activity>
+        <activity android:name=".PaymentSuccessful" />
+        <activity android:name=".Payment" />
+        <activity android:name=".Delivery" />
+        <activity android:name=".ContactUs" />
+        <activity android:name=".AboutUs" />
+        <activity android:name=".MyCartActivity" />
         <activity android:name=".ChangePasswordActivity" /> <!-- MeiSiew -->
         <activity android:name=".AllCategory" />
         <activity android:name=".productList" />

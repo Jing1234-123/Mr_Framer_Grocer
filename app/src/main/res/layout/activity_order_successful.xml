@@ -4,21 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp"
-    tools:context=".PaymentSuccessful">
+    tools:context=".OrderSuccessful">
 
     <ImageView
-        android:id="@+id/payment_successful_msg"
+        android:id="@+id/order_successful_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/payment_successful_msg"
+        android:background="@drawable/order_successful_msg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.421" />
-
 
     <Button
         android:id="@+id/done_btn"
@@ -30,6 +28,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/payment_successful_msg" />
+        app:layout_constraintTop_toBottomOf="@id/order_successful_msg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

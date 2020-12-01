@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/main_logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mr_Framer_Grocer">
-        <activity android:name=".AboutUs"/>
+        <activity android:name=".AboutUs"/>/'.
         <activity android:name=".OrderSuccessful" />
         <activity android:name=".TestingCheckout" />
         <activity

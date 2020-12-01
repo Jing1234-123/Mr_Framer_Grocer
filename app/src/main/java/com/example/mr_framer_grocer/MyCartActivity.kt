@@ -35,7 +35,7 @@ class MyCartActivity : AppCompatActivity() {
 
         loadCartItem()
 
-        //generateItem()
+        generateItem()
 
 
         // if the my cart is empty

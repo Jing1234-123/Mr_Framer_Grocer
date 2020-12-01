@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -7,6 +8,7 @@
     android:layout_height="100dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="13dp"
+    tools:replace="android:theme"
     android:background="@drawable/item_rect">
 
     <LinearLayout
@@ -31,6 +33,22 @@
             android:layout_height="match_parent"
             android:layout_weight="9"
             android:orientation="vertical">
+
+<!--            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton-->
+<!--                android:id="@+id/qty"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:background="@color/white"-->
+<!--                app:initialNumber="1"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                app:textSize="13sp">-->
+
+
+<!--            </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>-->
 
             <TextView
                 android:id="@+id/cart_item_name"
@@ -89,12 +107,9 @@
                 android:layout_width="47dp"
                 android:layout_height="46dp"
                 android:layout_marginStart="35dp"
-                android:alpha="0.5"
                 android:background="@drawable/minus_qty"
-                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/qtyrect" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

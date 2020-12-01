@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">Mr.Farmer Grocer</string>
 
-    <!-- Content Description-->
+    <!-- Jing Hui -->
     <string name="rect1">rect1</string>
     <string name="rect2">rect2</string>
     <string name="cart">cart</string>
     <string name="prodQty">1</string>
     <string name="heart">heart</string>
 
-    <!-- Text-->
     <string name="tomato">Tomato</string>
     <string name="price">RM %1$.2f</string>
     <string name="weight">(%1$s)</string>
@@ -18,15 +17,9 @@
     <string name="totalItem">%1$d item(s)</string>
     <string name="total">Total:</string>
     <string name="my_cart">My Cart</string>
-    <string name="emptyCart"><u>Clear the Cart</u></string>
 
 
-    <!--Database-->
-    <string name="url_server">https://mr-farmer-grocer.000webhostapp.com/api/</string>
-    <string name="url_user_read">user/read.php</string>
-    <string name="url_product_read">product/read.php</string>
-    <string name="url_user_create">user/create.php</string>
-
+    <!-- Chia Ling -->
     <string name="door_delivery">Door Delivery</string>
     <string name="self_pickup">Self-Pickup</string>
     <string name="credit_card">Credit/Debit Card</string>
@@ -37,6 +30,10 @@
     <string name="cvv">CVV</string>
     <string name="otp">One Time Password(OTP)</string>
 
+    <!-- Mei Siew -->
+    <string name="my_fav">Favourite</string>
+
+    <!-- Tze Wei -->
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

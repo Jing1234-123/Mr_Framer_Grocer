@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class payment : AppCompatActivity() {
-    //hello
     // Binding Payment Activity
     private lateinit var binding: ActivityPaymentBinding
     // For OTP purpose

@@ -38,8 +38,8 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.loginBtn.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
-            finish()
             startActivity(intent)
+            finish()
         }
 
         auth = FirebaseAuth.getInstance()
@@ -203,7 +203,7 @@ class SignUpActivity : AppCompatActivity() {
                 Common.psw = binding.editTextTextPassword.text.toString()
 
                 val intent = Intent(applicationContext, MyProfileActivity::class.java)
-                intent.putExtra("edit_profile", 0)
+                intent.putExtra("edit_profile", "no")
                 finish()
                 startActivity(intent)
             })

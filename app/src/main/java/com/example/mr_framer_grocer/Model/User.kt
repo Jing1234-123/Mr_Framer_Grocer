@@ -9,6 +9,7 @@ class User {
     var address: String? = null
     var password: String? = null
 
+
     constructor(name: String?, gender: String?, birthDate: String?, contact: String?, email: String?, address: String?, password: String?){
         this.name = name
         this.gender = gender
@@ -18,4 +19,5 @@ class User {
         this.address = address
         this.password = password
     }
+    
 }

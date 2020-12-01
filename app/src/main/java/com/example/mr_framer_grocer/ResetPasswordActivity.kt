@@ -18,6 +18,12 @@ class ResetPasswordActivity : AppCompatActivity() {
         binding.saveChanges.setOnClickListener {
             if (binding.editTextNewPass.text.toString().isNotEmpty()){
                 if (binding.editTextConfirmPass.text.toString() == binding.editTextNewPass.text.toString()){
+
+                    //update password
+
+
+
+
                     intent = Intent(this, PasswordResetSuccessful::class.java)
                     startActivity(intent)
                 }

@@ -22,10 +22,18 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         binding.saveChanges.setOnClickListener {
             if (binding.editTextCurrentPass.text.toString().isNotEmpty()){
+                /* check current password correct */
+
+
+
                 if(binding.editTextNewPass.text.toString().isNotEmpty()){
                     if(binding.editTextNewPass.text.toString().length > 5){
                         if (binding.editTextConfirmPass.text.toString() == binding.editTextNewPass.text.toString()){
                             //update database
+
+
+
+
                             intent = Intent(this, PasswordChangedSuccessful::class.java)
                             startActivity(intent)
                         }

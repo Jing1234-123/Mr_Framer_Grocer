@@ -96,6 +96,7 @@
         android:layout_marginTop="22dp"
         android:background="@drawable/input_passw"
         android:backgroundTint="@color/white"
+
         android:ems="10"
         android:maxLength="12"
         android:hint="Password"

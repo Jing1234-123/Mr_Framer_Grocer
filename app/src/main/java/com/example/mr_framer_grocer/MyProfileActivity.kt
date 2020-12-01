@@ -44,16 +44,16 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         // set phone number
         binding.contact.text = Common.contact_no
 
-
-
-
-
-
         spinner = binding.genderSpinner
         arrayAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
         spinner?.adapter = arrayAdapter
         spinner?.onItemSelectedListener = this
 
+        val bundle = intent.extras
+        if(bundle!!.getString("edit_profile") == "yes")
+        {
+            getUserInfo()
+        }
         //get data from intent
 //        var intent = intent
 //        var phoneNo = intent.getStringExtra("Phone")
@@ -76,11 +76,12 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
 
                     if (binding.editTextAddress.text.toString().isNotEmpty()) {
-                        val bundle = intent.extras
+
                         // user edit profile
-                        if(bundle!!.getString("edit_profile") == "1")
+                        if(bundle.getString("edit_profile") == "yes")
                         {
-                            getUserInfo()
+                            updateUserInfo()
+
                         }
                         //user create new profile
                         else{
@@ -117,6 +118,64 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
     }
 
+    private fun updateUserInfo() {
+        // get date in string
+        val datePicker = binding.datePickerBirthDate
+        val day = datePicker.dayOfMonth
+        val month = datePicker.month + 1
+        val year = datePicker.year
+
+        birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
+
+        val url = EndPoints.URL_UPDATE_USER + "?name=" + binding.editTextName.text.toString() +
+                "&gender=" + items + "&birth_date=" + birth_date +
+                "&contact_no=" + Common.contact_no + "&email=" + binding.editTextEmail.text.toString()+
+                "&address=" + binding.editTextAddress.text.toString()+ "&password=" + Common.psw
+
+
+        binding.progress.visibility = View.VISIBLE
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                // Process the JSON
+                try{
+                    if(response != null){
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
+                        val success: String = jsonResponse.get("success").toString()
+
+                        if(success.equals("1")){
+                            Toast.makeText(applicationContext, "Updated successfully!", Toast.LENGTH_LONG).show()
+
+                        }else{
+                            Toast.makeText(applicationContext, "Fail to update", Toast.LENGTH_LONG).show()
+                        }
+                        binding.progress.visibility = View.GONE
+                    }
+                }catch (e:Exception){
+                    Log.d("Main", "Response: %s".format(e.message.toString()))
+                    binding.progress.visibility = View.GONE
+
+                }
+            },
+            { error ->
+                Log.d("Main", "Response: %s".format(error.message.toString()))
+                binding.progress.visibility = View.GONE
+            }
+        )
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+    }
+
     private fun getUserInfo() {
         binding.progress.visibility = View.VISIBLE
         val jsonObjectRequest = StringRequest(
@@ -150,14 +209,9 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                             spinner?.onItemSelectedListener = this
                         }
 
-//                        val c: Calendar = Calendar.getInstance()
-//                        val mYear: Int = c.get(Calendar.YEAR)
-//                        val mMonth: Int = c.get(Calendar.MONTH)
-//                        val mDay: Int = c.get(Calendar.DAY_OF_MONTH)
-//
-//                        val dialog =
-//                            DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay)
-//                        dialog.show()
+                        val date = jsonResponse.getString("birth_date")
+                        val separated = date.split("/");
+                       binding.datePickerBirthDate.init(separated[0].toInt(),separated[1].toInt(),separated[2].toInt(),null)
 
 
                     } else {

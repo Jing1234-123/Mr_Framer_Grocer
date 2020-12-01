@@ -48,132 +48,146 @@ class LoginActivity : AppCompatActivity() {
             if (binding.editTextPhone.text.toString().isNotEmpty()) {
                 // if password is not empty
                 if (binding.editTextTextPassword.text.toString().isNotEmpty()) {
-//                       val exist = verifyUser()
-//
-//                    if(exist)
-//                    {
-//                        // verify password, if correct
-//                        if(binding.editTextTextPassword.text.toString() == userInfo!!.password)
-//                        {
-//                            val phone: String = editTextPhone.text.toString()
-//                            //val login: Boolean = true
-//
-//                            //val action:Int = 1
-//
-//                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-//                            editor.putString("PHONE", phone)
-//                            editor.putBoolean("LOGIN", true)
-//                            editor.apply()
-//
-//                            Toast.makeText(applicationContext, "Login successful", Toast.LENGTH_LONG).show()
-//
-//                            Common.contact_no = binding.editTextPhone.text.toString()
-//                            Common.psw = binding.editTextTextPassword.text.toString()
-//                            intent = Intent(this, AllCategory::class.java)
-//
-//                            finish()
-//                            startActivity(intent)
-//                        }
-//                        // if password is wrong
-//                        else
-//                        {
-//                            binding.progress!!.visibility = View.GONE
-//                            Toast.makeText(applicationContext, "Incorrect password!", Toast.LENGTH_LONG).show() }
-//                    }
+                    val exist = verifyUser()
 
+                    if (exist) {
+                        // verify password, if correct
+                        if (binding.editTextTextPassword.text.toString() == userInfo!!.password) {
+                            val phone: String = editTextPhone.text.toString()
+                            //val login: Boolean = true
 
-                    //verify user in database
-                    binding.progress!!.visibility = View.VISIBLE
-                    val jsonObjectRequest = StringRequest(
-                        Request.Method.GET,
-                        EndPoints.URL_VERIFY_USER + "?contact_no=" + binding.editTextPhone.text.toString(),
-                        Response.Listener { response ->
-                            try {
-                                if (response != null) {
-                                    // get data in JSON format
-                                    val strResponse = response.toString()
-                                    val jsonResponse = JSONObject(strResponse)
+                            //val action:Int = 1
 
-                                    Common.userInfo = User(
-                                        jsonResponse.getString("name"),
-                                        jsonResponse.getString("gender"),
-                                        jsonResponse.getString("birth_date"),
-                                        jsonResponse.getString("contact_no"),
-                                        jsonResponse.getString("email"),
-                                        jsonResponse.getString("address"),
-                                        jsonResponse.getString("password")
-                                    )
+                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                            editor.putString("PHONE", phone)
+                            editor.putBoolean("LOGIN", true)
+                            editor.apply()
 
-                                    // verify password, if correct
-                                    if (binding.editTextTextPassword.text.toString() == Common.userInfo!!.password) {
-                                        val phone: String = editTextPhone.text.toString()
-                                        val editor: SharedPreferences.Editor =
-                                            sharedPreferences.edit()
-                                        editor.putString("PHONE", phone)
-                                        editor.putBoolean("LOGIN", true)
-                                        editor.apply()
+                            Toast.makeText(
+                                applicationContext,
+                                "Login successful",
+                                Toast.LENGTH_LONG
+                            ).show()
 
-                                        Toast.makeText(
-                                            applicationContext,
-                                            "Login successful",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                        Common.contact_no = binding.editTextPhone.text.toString()
-                                        Common.psw = binding.editTextTextPassword.text.toString()
-                                        intent = Intent(this, AllCategory::class.java)
+                            Common.contact_no = binding.editTextPhone.text.toString()
+                            Common.psw = binding.editTextTextPassword.text.toString()
+                            intent = Intent(this, AllCategory::class.java)
 
-                                        finish()
-                                        startActivity(intent)
-                                    }
-                                    // if password is wrong
-                                    else {
-                                        binding.progress!!.visibility = View.GONE
-                                        Toast.makeText(
-                                            applicationContext,
-                                            "Incorrect password!",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
-
-
-                                } else {
-                                    binding.progress!!.visibility = View.GONE
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "User not exist",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-
-                                }
-
-                                binding.progress!!.visibility = View.GONE
-
-                            } catch (e: JSONException) {
-                                e.printStackTrace()
-                                binding.progress!!.visibility = View.GONE
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Connectiob Lost!",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-
-                        },
-                        Response.ErrorListener { volleyError ->
+                            finish()
+                            startActivity(intent)
+                        }
+                        // if password is wrong
+                        else {
                             binding.progress!!.visibility = View.GONE
-                            Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG)
-                                .show()
-                        })
+                            Toast.makeText(
+                                applicationContext,
+                                "Incorrect password!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                    else{
+                        binding.progress!!.visibility = View.GONE
+                        Toast.makeText(
+                            applicationContext,
+                            "Cannot",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
 
-                    //Volley request policy, only one time request
-                    jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
-                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                        0, //no retry
-                        1f
-                    )
 
-                    // Access the RequestQueue through your singleton class.
-                    MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+//                    //verify user in database
+//                    binding.progress!!.visibility = View.VISIBLE
+//                    val jsonObjectRequest = StringRequest(
+//                        Request.Method.GET,
+//                        EndPoints.URL_VERIFY_USER + "?contact_no=" + binding.editTextPhone.text.toString(),
+//                        Response.Listener { response ->
+//                            try {
+//                                if (response != null) {
+//                                    // get data in JSON format
+//                                    val strResponse = response.toString()
+//                                    val jsonResponse = JSONObject(strResponse)
+//
+//                                    Common.userInfo = User(
+//                                        jsonResponse.getString("name"),
+//                                        jsonResponse.getString("gender"),
+//                                        jsonResponse.getString("birth_date"),
+//                                        jsonResponse.getString("contact_no"),
+//                                        jsonResponse.getString("email"),
+//                                        jsonResponse.getString("address"),
+//                                        jsonResponse.getString("password")
+//                                    )
+//
+//                                    // verify password, if correct
+//                                    if (binding.editTextTextPassword.text.toString() == Common.userInfo!!.password) {
+//                                        val phone: String = editTextPhone.text.toString()
+//                                        val editor: SharedPreferences.Editor =
+//                                            sharedPreferences.edit()
+//                                        editor.putString("PHONE", phone)
+//                                        editor.putBoolean("LOGIN", true)
+//                                        editor.apply()
+//
+//                                        Toast.makeText(
+//                                            applicationContext,
+//                                            "Login successful",
+//                                            Toast.LENGTH_LONG
+//                                        ).show()
+//                                        Common.contact_no = binding.editTextPhone.text.toString()
+//                                        Common.psw = binding.editTextTextPassword.text.toString()
+//                                        intent = Intent(this, AllCategory::class.java)
+//
+//                                        finish()
+//                                        startActivity(intent)
+//                                    }
+//                                    // if password is wrong
+//                                    else {
+//                                        binding.progress!!.visibility = View.GONE
+//                                        Toast.makeText(
+//                                            applicationContext,
+//                                            "Incorrect password!",
+//                                            Toast.LENGTH_LONG
+//                                        ).show()
+//                                    }
+//
+//
+//                                } else {
+//                                    binding.progress!!.visibility = View.GONE
+//                                    Toast.makeText(
+//                                        applicationContext,
+//                                        "User not exist",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
+//
+//                                }
+//
+//                                binding.progress!!.visibility = View.GONE
+//
+//                            } catch (e: JSONException) {
+//                                e.printStackTrace()
+//                                binding.progress!!.visibility = View.GONE
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Connectiob Lost!",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+//                            }
+//
+//                        },
+//                        Response.ErrorListener { volleyError ->
+//                            binding.progress!!.visibility = View.GONE
+//                            Toast.makeText(applicationContext, "User not exist", Toast.LENGTH_LONG)
+//                                .show()
+//                        })
+//
+//                    //Volley request policy, only one time request
+//                    jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+//                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+//                        0, //no retry
+//                        1f
+//                    )
+//
+//                    // Access the RequestQueue through your singleton class.
+//                    MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
                 }
 
                 // if password is empty
@@ -211,7 +225,7 @@ class LoginActivity : AppCompatActivity() {
 //                val phoneno = findViewById<TextView>(R.id.editTextPhone).text.toString().trim()
                 val phoneNo = "+6$phoneno"
 
-                val exist = verifyUser()
+                var exist = verifyUser()
 
                 if(exist)
                 {
@@ -278,8 +292,8 @@ class LoginActivity : AppCompatActivity() {
 
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
-
         return exist
+
     }
 
 

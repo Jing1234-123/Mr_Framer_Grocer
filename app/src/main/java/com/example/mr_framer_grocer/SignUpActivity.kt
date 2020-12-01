@@ -172,6 +172,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun verifyUser() {
         binding.progress!!.visibility = View.VISIBLE
+
         val jsonObjectRequest = StringRequest(
             Request.Method.GET, EndPoints.URL_VERIFY_USER + "?contact_no=" + binding.editTextPhone.text.toString(),
             Response.Listener{ response ->
@@ -202,6 +203,7 @@ class SignUpActivity : AppCompatActivity() {
                 Common.psw = binding.editTextTextPassword.text.toString()
 
                 val intent = Intent(applicationContext, MyProfileActivity::class.java)
+                intent.putExtra("edit_profile", 0)
                 finish()
                 startActivity(intent)
             })

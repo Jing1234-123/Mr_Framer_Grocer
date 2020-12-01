@@ -4,18 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.User
 import com.example.mr_framer_grocer.databinding.ActivityMyProfileBinding
+import org.json.JSONException
 import org.json.JSONObject
 
 
@@ -28,6 +28,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private lateinit var binding: ActivityMyProfileBinding
     var items: String? = null
     var birth_date: String? = null
+    private lateinit var userInfo: User
 
 
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -43,14 +44,9 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         // set phone number
         binding.contact.text = Common.contact_no
 
-        // get date in string
-        val datePicker = binding.datePickerBirthDate
 
-        val day = datePicker.dayOfMonth
-        val month = datePicker.month + 1
-        val year = datePicker.year
 
-        birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
+
 
 
         spinner = binding.genderSpinner
@@ -80,11 +76,21 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
 
                     if (binding.editTextAddress.text.toString().isNotEmpty()) {
-                        // insert user data
-                        createUser()
-                        intent = Intent(this, ProfileActivity::class.java)
-                        finish()
-                        startActivity(intent)
+                        val bundle = intent.extras
+                        // user edit profile
+                        if(bundle!!.getString("edit_profile") == "1")
+                        {
+                            getUserInfo()
+                        }
+                        //user create new profile
+                        else{
+                            // insert user data
+                            createUser()
+                            intent = Intent(this, ProfileActivity::class.java)
+                            finish()
+                            startActivity(intent)
+                        }
+
                     } else {
                         Toast.makeText(
                             applicationContext,
@@ -111,7 +117,87 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
     }
 
+    private fun getUserInfo() {
+        binding.progress.visibility = View.VISIBLE
+        val jsonObjectRequest = StringRequest(
+            Request.Method.GET, EndPoints.URL_VERIFY_USER + "?contact_no=" + Common.contact_no.toString(),
+            Response.Listener{ response ->
+                try {
+                    if (response != null) {
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
+
+                        userInfo = User(
+                            jsonResponse.getString("name"),
+                            jsonResponse.getString("gender"),
+                            jsonResponse.getString("birth_date"),
+                            jsonResponse.getString("contact_no"),
+                            jsonResponse.getString("email"),
+                            jsonResponse.getString("address"),
+                            jsonResponse.getString("password")
+                        )
+
+                        binding.editTextName.setText(jsonResponse.getString("name"), TextView.BufferType.EDITABLE)
+                        binding.contact.setText(jsonResponse.getString("contact_no"), TextView.BufferType.EDITABLE)
+                        binding.editTextEmail.setText(jsonResponse.getString("email"), TextView.BufferType.EDITABLE)
+                        binding.editTextAddress.setText(jsonResponse.getString("address"), TextView.BufferType.EDITABLE)
+
+                        if(jsonResponse.getString("gender") == "Female")
+                        {
+                            itemList = arrayOf("Female", "Male")
+                            arrayAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
+                            spinner?.adapter = arrayAdapter
+                            spinner?.onItemSelectedListener = this
+                        }
+
+//                        val c: Calendar = Calendar.getInstance()
+//                        val mYear: Int = c.get(Calendar.YEAR)
+//                        val mMonth: Int = c.get(Calendar.MONTH)
+//                        val mDay: Int = c.get(Calendar.DAY_OF_MONTH)
+//
+//                        val dialog =
+//                            DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay)
+//                        dialog.show()
+
+
+                    } else {
+                        binding.progress.visibility = View.GONE
+
+                    }
+                    binding.progress.visibility = View.GONE
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    binding.progress.visibility = View.GONE
+                }
+
+                // user do not exist in database, can sign in-
+            }, Response.ErrorListener { volleyError ->
+                binding.progress.visibility = View.GONE
+                Toast.makeText(applicationContext, "User not exist!", Toast.LENGTH_LONG).show()
+            })
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+
+    }
+
     private fun createUser() {
+        // get date in string
+        val datePicker = binding.datePickerBirthDate
+        val day = datePicker.dayOfMonth
+        val month = datePicker.month + 1
+        val year = datePicker.year
+
+        birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
+
         val url = EndPoints.URL_CREATE_USER + "?name=" + binding.editTextName.text.toString() +
         "&gender=" + items + "&birth_date=" + birth_date +
                 "&contact_no=" + Common.contact_no + "&email=" + binding.editTextEmail.text.toString()+

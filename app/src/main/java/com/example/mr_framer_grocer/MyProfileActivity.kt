@@ -186,15 +186,15 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         val strResponse = response.toString()
                         val jsonResponse  = JSONObject(strResponse)
 
-                        userInfo = User(
-                            jsonResponse.getString("name"),
-                            jsonResponse.getString("gender"),
-                            jsonResponse.getString("birth_date"),
-                            jsonResponse.getString("contact_no"),
-                            jsonResponse.getString("email"),
-                            jsonResponse.getString("address"),
-                            jsonResponse.getString("password")
-                        )
+//                        userInfo = User(
+//                            jsonResponse.getString("name"),
+//                            jsonResponse.getString("gender"),
+//                            jsonResponse.getString("birth_date"),
+//                            jsonResponse.getString("contact_no"),
+//                            jsonResponse.getString("email"),
+//                            jsonResponse.getString("address"),
+//                            jsonResponse.getString("password")
+//                        )
 
                         binding.editTextName.setText(jsonResponse.getString("name"), TextView.BufferType.EDITABLE)
                         binding.contact.setText(jsonResponse.getString("contact_no"), TextView.BufferType.EDITABLE)

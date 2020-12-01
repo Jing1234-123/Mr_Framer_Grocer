@@ -58,7 +58,9 @@ class LoginActivity : AppCompatActivity() {
                                     // verify password, if correct
                                     if(binding.editTextTextPassword.text.toString() == Common.userInfo!!.password)
                                     {
+                                        Common.contact_no = binding.editTextPhone.text.toString()
                                         intent = Intent(this, AllCategory::class.java)
+
                                         finish()
                                         startActivity(intent)
                                     }

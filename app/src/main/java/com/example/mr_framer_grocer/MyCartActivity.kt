@@ -143,6 +143,13 @@ class MyCartActivity : AppCompatActivity() {
                 // ask for confirmation
                 alertDialog()
             }
+
+            binding.chkoutbutton.setOnClickListener{
+                val intent = Intent(this, Delivery::class.java)
+                intent.putExtra("method", "cart" )
+                intent.putExtra("subtotal", totalprice)
+                startActivity(intent)
+            }
         }
     }
 

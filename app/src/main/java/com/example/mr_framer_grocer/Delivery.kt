@@ -29,7 +29,7 @@ class Delivery : AppCompatActivity() {
         binding = ActivityDeliveryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showEditAddDialog()
-
+//
         val bundle = intent.extras
 
         subtotal = bundle!!.getFloat("subtotal").toString()

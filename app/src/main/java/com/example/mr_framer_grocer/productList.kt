@@ -147,6 +147,8 @@ class productList : AppCompatActivity() {
             prodView.findViewById<TextView>(R.id.price).text = context.getString(R.string.price, product.price)
             prodView.findViewById<TextView>(R.id.weight).text = context.getString(R.string.weight, product.weight)
 
+            prodView.findViewById<TextView>(R.id.cartbtn).isEnabled = product.stock != 0
+
             prodView.findViewById<ImageView>(R.id.prod_img).setOnClickListener{
                 // if any of the product is clicked, direct to product details page
                 val intent = Intent(context, ProductDetailsActivity::class.java)

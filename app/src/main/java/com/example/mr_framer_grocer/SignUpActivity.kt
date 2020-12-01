@@ -179,6 +179,7 @@ class SignUpActivity : AppCompatActivity() {
                     if (response != null) {
                         val strResponse = response.toString()
                         val jsonResponse  = JSONObject(strResponse)
+
                         // user exist
                         Toast.makeText(applicationContext, "User already exist!", Toast.LENGTH_LONG).show()
 

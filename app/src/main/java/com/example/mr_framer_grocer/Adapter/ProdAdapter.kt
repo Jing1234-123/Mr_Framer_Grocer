@@ -38,6 +38,9 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
         holder.prod_price.text = context.getString(R.string.price, itemList[position].price)
         holder.prod_weight.text = context.getString(R.string.weight, itemList[position].weight)
 
+        // if stock is 0, disable add to cart
+        holder.cart_btn.isEnabled = itemList[position].stock != 0
+
         // view product details
         holder.prod_image.setOnClickListener {
 

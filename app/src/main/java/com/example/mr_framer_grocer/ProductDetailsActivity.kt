@@ -92,6 +92,17 @@ class ProductDetailsActivity : AppCompatActivity() {
         relatedProdadapter = ProdAdapter(this, prodList)
         binding.relatedProdList.adapter = relatedProdadapter
 
+        // if stock is 0
+        if(Common.stock == 0)
+        {
+            binding.plusBtn.isEnabled = false
+            binding.plusBtn.alpha = 0.5f
+            binding.minusBtn.isEnabled = false
+            binding.minusBtn.alpha = 0.5f
+            binding.addToCartButton.isEnabled = false
+            binding.addToCartButton.alpha = 0.5f
+        }
+
         // handle qty plus and minus button
         binding.plusBtn.setOnClickListener { plusQty() }
         binding.minusBtn.setOnClickListener { minusQty() }

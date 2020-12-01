@@ -27,6 +27,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private  var itemList = arrayOf("Male", "Female")
     private lateinit var binding: ActivityMyProfileBinding
     var items: String? = null
+    var birth_date: String? = null
 
 
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -42,7 +43,17 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         // set phone number
         binding.contact.text = Common.contact_no
 
-        spinner = findViewById(R.id.genderSpinner)
+        // get date in string
+        val datePicker = binding.datePickerBirthDate
+
+        val day = datePicker.dayOfMonth
+        val month = datePicker.month + 1
+        val year = datePicker.year
+
+        birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
+
+
+        spinner = binding.genderSpinner
         arrayAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
         spinner?.adapter = arrayAdapter
         spinner?.onItemSelectedListener = this
@@ -72,6 +83,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         // insert user data
                         createUser()
                         intent = Intent(this, ProfileActivity::class.java)
+                        finish()
                         startActivity(intent)
                     } else {
                         Toast.makeText(
@@ -101,8 +113,8 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun createUser() {
         val url = EndPoints.URL_CREATE_USER + "?name=" + binding.editTextName.text.toString() +
-        "&gender=" + items + "&birth_date" + binding.datePickerBirthDate.toString() +
-                "&contact_no=" + Common.contact_no + "&email" + binding.editTextEmail.text.toString()+
+        "&gender=" + items + "&birth_date=" + birth_date +
+                "&contact_no=" + Common.contact_no + "&email=" + binding.editTextEmail.text.toString()+
                 "&address=" + binding.editTextAddress.text.toString()+ "&password=" + Common.psw
 
         binding.progress.visibility = View.VISIBLE
@@ -158,5 +170,11 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
          items= parent?.getItemAtPosition(position) as String
         Toast.makeText(applicationContext, "$items", Toast.LENGTH_LONG).show()
+    }
+
+
+    // add 0 to day&month if only one digit
+    private fun checkDigit(number: Int): String? {
+        return if (number <= 9) "0$number" else number.toString()
     }
 }

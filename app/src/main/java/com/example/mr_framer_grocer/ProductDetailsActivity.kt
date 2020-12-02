@@ -21,6 +21,7 @@ import com.example.mr_framer_grocer.Database.LocalDB.CartDataSource
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
 import com.example.mr_framer_grocer.Database.LocalDB.CartRepository
 import com.example.mr_framer_grocer.Database.MySingleton
+import com.example.mr_framer_grocer.Database.favRoom.Fav
 import com.example.mr_framer_grocer.Model.Product
 import com.example.mr_framer_grocer.databinding.ActivityProductDetailsBinding
 import com.google.gson.Gson
@@ -128,17 +129,35 @@ class ProductDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val favItem = Common.favRepository.getFavItems()
+
+        for(i in 0 until favItem.size)
+        {
+            if(id == favItem[i].id.toString())
+              binding.heartButton.setBackgroundResource(R.drawable.filled_heart)
+
+        }
+
         // when the user click the empty heart, chg the heart to filled heart
         binding.heartButton.setOnClickListener {
             // if the current heart is empty, chg to fill heart and add item to favourite and vice versa
             if (binding.heartButton.background.constantState == resources.getDrawable(R.drawable.empty_heart).constantState){
                 // LIKE
                 binding.heartButton.setBackgroundResource(R.drawable.filled_heart)
+                val newFav = Fav(
+                    id!!.toInt(), name, price, weight, image, category)
+
+                // add to database
+                Common.favRepository.addToFav(newFav)
+                Log.d("fav_table", Gson().toJson(newFav))
                 Toast.makeText(this, "Added to Favourite", Toast.LENGTH_SHORT).show()
             }
             else{
                 // DISLIKE
                 binding.heartButton.setBackgroundResource(R.drawable.empty_heart)
+
+                // remove from database
+                Common.favRepository.delById(id!!.toInt())
                 Toast.makeText(this, "Removed from Favourite", Toast.LENGTH_SHORT).show()
             }
 

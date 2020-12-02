@@ -45,6 +45,7 @@ class productList : AppCompatActivity() {
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
+        bottomNavigationView.menu.getItem(0).isEnabled = false
         bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
             when (item.itemId) {
                 R.id.miHome -> {
@@ -177,6 +178,16 @@ class productList : AppCompatActivity() {
             prodView.findViewById<TextView>(R.id.weight).text = context.getString(R.string.weight, product.weight)
 
             val cartBtn = prodView.findViewById<Button>(R.id.add_to_cart_button)
+            val favBtn = prodView.findViewById<Button>(R.id.favBtn)
+
+            val favItem = Common.favRepository.getFavItems()
+
+            for(i in 0 until favItem.size)
+            {
+                if(product.id == favItem[i].id.toString())
+                    favBtn.setBackgroundResource(R.drawable.filled_heart)
+
+            }
 
             if(product.stock == 0)
             {
@@ -248,7 +259,6 @@ class productList : AppCompatActivity() {
             }
 
             // add to fav
-            val favBtn = prodView.findViewById<Button>(R.id.favBtn)
             favBtn.setOnClickListener {
                 if(favBtn.background.constantState == context.getDrawable(R.drawable.empty_heart)!!.constantState)
                 {
@@ -317,4 +327,9 @@ class productList : AppCompatActivity() {
         }
         return true
     }*/
+
+    override fun onResume() {
+        super.onResume()
+        binding.bottomNavigationView.background = null
+    }
 }

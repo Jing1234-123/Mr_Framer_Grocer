@@ -15,6 +15,7 @@ import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.ProfileModel
 import com.example.mr_framer_grocer.databinding.ActivityProfileBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.json.JSONObject
 
 class ProfileActivity : AppCompatActivity() {
@@ -27,6 +28,25 @@ class ProfileActivity : AppCompatActivity() {
 
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.background = null
+        bottomNavigationView.menu.getItem(1).isEnabled = false
+        bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
+            when (item.itemId) {
+                R.id.miHome -> {
+                    val intent = Intent(this, AllCategory::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+                R.id.miProfile -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+            }
+            return@setOnNavigationItemSelectedListener true
+        }
 
         preferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 

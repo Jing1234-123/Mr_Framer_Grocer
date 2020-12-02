@@ -126,7 +126,7 @@ class productList : AppCompatActivity() {
                 }
 
             }, Response.ErrorListener { volleyError ->
-                Toast.makeText(this, "Database not found!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Connection Lost!", Toast.LENGTH_SHORT).show()
                 binding.progress.visibility = View.GONE })
 
         //Volley request policy, only one time request

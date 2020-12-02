@@ -124,6 +124,16 @@ class Payment : AppCompatActivity() {
                     val stock = bundle.getInt("newstock")
                     val newstock = stock.toString()
                     val id = bundle.getString("prodID")
+                    val cartItem = Common.cartRepository.getCartItems()
+
+                    for(i in 0 until cartItem.size)
+                    {
+                        if(id!!.toInt() == cartItem[i].id)
+                        {
+                            Common.cartRepository.deleteCartItemById(id)
+                        }
+
+                    }
                     resetStockNum(id, newstock)
                     binding.progressBar.visibility = View.GONE
                 }

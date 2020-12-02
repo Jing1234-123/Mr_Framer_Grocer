@@ -29,8 +29,6 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var storedVerificationId: String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-    lateinit var sharedPreferences: SharedPreferences
-    var isRemembered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,18 +36,6 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-        isRemembered = sharedPreferences.getBoolean("LOGIN", false)
-
-        if (isRemembered) {
-            Common.contact_no = sharedPreferences.getString("PHONE", "")
-            Common.psw = sharedPreferences.getString("PASSWORD", "")
-            sharedPreferences.getString("NAME", "")
-
-            intent = Intent(this, AllCategory::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         binding.loginBtn.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
@@ -67,6 +53,7 @@ class SignUpActivity : AppCompatActivity() {
 
             if (editTextPhone.text.toString().isNotEmpty()) {
                 Toast.makeText(applicationContext, "OTP button has been pressed", Toast.LENGTH_LONG).show()
+                editTextPhone.isEnabled = false
                 sendVerificationcode(phoneNo)
             } else {
                 editTextPhone.setError("Phone Number Empty")
@@ -100,6 +87,7 @@ class SignUpActivity : AppCompatActivity() {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
                 Toast.makeText(applicationContext, "Authentication Failed!", Toast.LENGTH_LONG).show()
+                editTextPhone.isEnabled = true
             }
 
             override fun onCodeSent(
@@ -195,6 +183,7 @@ class SignUpActivity : AppCompatActivity() {
                         // user exist
                         Toast.makeText(applicationContext, "User already exist!", Toast.LENGTH_LONG).show()
                         editTextOTP.text.clear()
+                        binding.editTextPhone.isEnabled = true
                         binding.editTextOTP.isEnabled = false
                         editTextTextPassword.text.clear()
                         editTextTextPasswordConfirm.text.clear()
@@ -216,13 +205,6 @@ class SignUpActivity : AppCompatActivity() {
                 // Sign in success, update UI with the signed-in user's information
                 Common.contact_no = binding.editTextPhone.text.toString()
                 Common.psw = binding.editTextTextPassword.text.toString()
-
-                /*val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString("PHONE", Common.contact_no)
-                editor.putString("PASSWORD", Common.psw)
-                editor.putString("NAME", userInfo!!.name)
-                editor.putBoolean("LOGIN", true)
-                editor.apply()*/
 
                 val intent = Intent(applicationContext, MyProfileActivity::class.java)
                 intent.putExtra("edit_profile", "no")

@@ -32,8 +32,8 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private  var itemList = arrayOf("Male", "Female")
     private lateinit var binding: ActivityMyProfileBinding
     var items: String? = null
-    lateinit var preferences: SharedPreferences
 
+    lateinit var sharedPreferences: SharedPreferences
 
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
@@ -43,7 +43,8 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        preferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+
 
         // set phone number
         binding.contact.text = Common.contact_no
@@ -77,6 +78,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             getUserInfo()
         }
 
+
         binding.backArrow.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
@@ -106,20 +108,16 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         }
 
                     } else {
-                        Toast.makeText(
-                            applicationContext,
-                            "Please fill in your address",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        editTextAddress.setError("Address cannot be empty")
                     }
                 }
                 else{
-                    Toast.makeText(applicationContext, "Invalid email address", Toast.LENGTH_LONG).show()
+                    editTextEmail.setError("Invalid Email Address")
                 }
 
             }
             else{
-                Toast.makeText(applicationContext, "Please fill in your name", Toast.LENGTH_LONG).show()
+                editTextName.setError("Name cannot be empty")
             }
         }
     }
@@ -249,6 +247,16 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
                         if(success.equals("1")){
                             Toast.makeText(applicationContext, "Record saved", Toast.LENGTH_LONG).show()
+
+                            Common.name = binding.editTextName.text.toString()
+
+                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+                            editor.putString("PHONE", Common.contact_no)
+                            editor.putString("PASSWORD", Common.psw)
+                            editor.putString("NAME", Common.name)
+                            editor.putBoolean("LOGIN", true)
+                            editor.apply()
 
                         }else{
                             Toast.makeText(applicationContext, "Record not saved", Toast.LENGTH_LONG).show()

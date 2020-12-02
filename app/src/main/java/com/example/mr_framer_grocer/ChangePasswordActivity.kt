@@ -37,15 +37,20 @@ class ChangePasswordActivity : AppCompatActivity() {
 
                     if (binding.editTextNewPass.text.toString().isNotEmpty()) {
                         if (binding.editTextNewPass.text.toString().length > 5) {
-                            if (binding.editTextConfirmPass.text.toString() == binding.editTextNewPass.text.toString()) {
-                                //update database
-                                updatePsw()
+                            if(binding.editTextNewPass.text.toString() != binding.editTextCurrentPass.text.toString()) {
+                                if (binding.editTextConfirmPass.text.toString() == binding.editTextNewPass.text.toString()) {
+                                    //update database
+                                    updatePsw()
 
-                                intent = Intent(this, PasswordChangedSuccessful::class.java)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                editTextConfirmPass.setError("Password and Confirm Password does not match")
+                                    intent = Intent(this, PasswordChangedSuccessful::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    editTextConfirmPass.setError("Password and Confirm Password does not match")
+                                }
+                            }
+                            else{
+                                editTextNewPass.setError("New Password is same with Current Password")
                             }
                         } else {
                             editTextNewPass.setError("New password must be at least 6 characters")

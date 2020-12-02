@@ -134,7 +134,7 @@ class MyAdapter(internal var context: Context, internal var itemList: MutableLis
             val intent = Intent(context, ProductDetailsActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-            intent.putExtra("id", itemList[position].id)
+            intent.putExtra("id", itemList[position].id.toString())
             intent.putExtra("name", itemList[position].name)
             intent.putExtra("price", itemList[position].price)
             intent.putExtra("weight", itemList[position].weight)

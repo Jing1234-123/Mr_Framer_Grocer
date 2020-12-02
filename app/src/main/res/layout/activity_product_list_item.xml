@@ -24,8 +24,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/favButton"
+        <Button
+            android:id="@+id/favBtn"
             android:layout_width="25dp"
             android:layout_height="27dp"
             android:layout_marginTop="5dp"
@@ -33,7 +33,7 @@
             android:contentDescription="@string/heart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/halfheart"
+            android:src="@drawable/filled_heart"
             android:background="#FFFFFF"/>
 
         <TextView

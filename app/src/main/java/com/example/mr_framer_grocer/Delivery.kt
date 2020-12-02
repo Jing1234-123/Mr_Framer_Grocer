@@ -29,18 +29,19 @@ class Delivery : AppCompatActivity() {
         binding = ActivityDeliveryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showEditAddDialog()
-//
+
         val bundle = intent.extras
 
-        subtotal = bundle!!.getFloat("subtotal").toString()
-       val method = bundle.getString("method")
+        val sttl = bundle!!.getFloat("subtotal")
+        binding.subtotalTxt.text = this.getString(R.string.subtotal,sttl)
+        binding.totalTxt.text = this.getString(R.string.subtotal,sttl)
 
+        subtotal = sttl.toString()
+        val method = bundle.getString("method")
 
-        // user infor
+        // user info
         getUserInfo()
-        binding.customerName.text = userInfo.name
-        binding.customerAddress.text = userInfo.address
-        binding.custPhoneNumber.text = userInfo.contact
+
 
         // Up button to Previous Activity
         val back = binding.backBtn
@@ -70,11 +71,13 @@ class Delivery : AppCompatActivity() {
                 if(method == "buynow")
                 {
                     intent.putExtra("prodID", bundle.getString("prodID"))
+                    intent.putExtra("newstock", bundle.getInt("newstock"))
+
                 }
                 startActivity(intent)
             } else if (rb_self_pickup.isChecked) {
                 val phoneNo = binding.custPhoneNumber.text.toString()
-                val subtotal = binding.subtotalTxt.text.toString()
+                subtotal = binding.subtotalTxt.text.toString()
                 val delivery_fee = binding.deliveryFeeTxt.text.toString()
                 val total = binding.totalTxt.text.toString()
                 val intent = Intent(this@Delivery, Payment::class.java)
@@ -86,6 +89,7 @@ class Delivery : AppCompatActivity() {
                 if(method == "buynow")
                 {
                     intent.putExtra("prodID", bundle.getString("prodID"))
+                    intent.putExtra("newstock", bundle.getInt("newstock"))
                 }
                 startActivity(intent)
             } else {
@@ -132,8 +136,8 @@ class Delivery : AppCompatActivity() {
 
     // Prompt dialog if user select "Door Delivery" as delivery method
     fun onDoorDeliveryClicked(view: View) {
-        val subtotal = binding.subtotalTxt.text.toString()
-        val subttl: Float = subtotal.toFloat()
+        subtotal = binding.subtotalTxt.text.toString()
+        val subttl: Float = subtotal!!.toFloat()
         val total = binding.totalTxt.text.toString()
         var ttl: Float = total.toFloat()
 
@@ -171,8 +175,8 @@ class Delivery : AppCompatActivity() {
 
     // Make sure no delivery charges will be apply if user request for self-pickup
     fun onSelfPickupClicked(view: View) {
-        val subtotal = binding.subtotalTxt.text.toString()
-        val subttl: Float = subtotal.toFloat()
+        subtotal = binding.subtotalTxt.text.toString()
+        val subttl: Float = subtotal!!.toFloat()
         val total = binding.totalTxt.text.toString()
         var ttl: Float = total.toFloat()
 
@@ -184,7 +188,6 @@ class Delivery : AppCompatActivity() {
     }
 
     fun getUserInfo(){
-        var exist = false
         //verify user in database
         binding.progress!!.visibility = View.VISIBLE
         val jsonObjectRequest = StringRequest(
@@ -206,7 +209,9 @@ class Delivery : AppCompatActivity() {
                             jsonResponse.getString("password")
                         )
 
-                        exist = true
+                        binding.customerName.text = userInfo.name
+                        binding.customerAddress.text = userInfo.address
+                        binding.custPhoneNumber.text = userInfo.contact
 
                     } else {
                         binding.progress!!.visibility = View.GONE

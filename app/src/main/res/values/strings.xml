@@ -29,6 +29,7 @@
     <string name="expiry_date">Expiration Date(MM/YYYY)</string>
     <string name="cvv">CVV</string>
     <string name="otp">One Time Password(OTP)</string>
+    <string name="subtotal">%1$.2f</string>
 
     <!-- Mei Siew -->
     <string name="my_fav">Favourite</string>

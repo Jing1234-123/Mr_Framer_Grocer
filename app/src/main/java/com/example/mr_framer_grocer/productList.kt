@@ -2,12 +2,15 @@ package com.example.mr_framer_grocer
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -17,6 +20,10 @@ import com.bumptech.glide.Glide
 import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
 import com.example.mr_framer_grocer.Database.MySingleton
+import com.example.mr_framer_grocer.Database.favRoom.Fav
+import com.example.mr_framer_grocer.Database.favRoom.FavDataSource
+import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
+import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 import com.example.mr_framer_grocer.Model.Product
 import com.example.mr_framer_grocer.databinding.ActivityProductListBinding
 import com.google.gson.Gson
@@ -39,10 +46,13 @@ class productList : AppCompatActivity() {
         setContentView(binding.root)
 
         bottomNavigationView.background = null
-        bottomNavigationView.menu.getItem(1).isEnabled = false
+        val item = bottomNavigationView.menu.getItem(1)
+        val downnav = onOptionsItemSelected(item)
+        initFavDB()
 
         val bundle = intent.extras
         category = bundle!!.getString("category")
+
 
 
         // set respective category
@@ -118,7 +128,7 @@ class productList : AppCompatActivity() {
                 }
 
             }, Response.ErrorListener { volleyError ->
-                Toast.makeText(this, "Database not found!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Connection Lost!", Toast.LENGTH_SHORT).show()
                 binding.progress.visibility = View.GONE })
 
         //Volley request policy, only one time request
@@ -136,6 +146,7 @@ class productList : AppCompatActivity() {
     // Product List Adapter
     class ProductAdapters(var context: Context, var prodList: ArrayList<Product>) : BaseAdapter() {
 
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val product = this.prodList[position]
             val inflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -147,7 +158,18 @@ class productList : AppCompatActivity() {
             prodView.findViewById<TextView>(R.id.price).text = context.getString(R.string.price, product.price)
             prodView.findViewById<TextView>(R.id.weight).text = context.getString(R.string.weight, product.weight)
 
-            prodView.findViewById<Button>(R.id.add_to_cart_button).isEnabled = product.stock != 0
+            val cartBtn = prodView.findViewById<Button>(R.id.add_to_cart_button)
+
+            if(product.stock == 0)
+            {
+                cartBtn.isEnabled = false
+                cartBtn.alpha = 0.5f
+            }
+            else{
+                cartBtn.isEnabled = true
+                cartBtn.alpha = 1.0f
+            }
+
 
             prodView.findViewById<ImageView>(R.id.prod_img).setOnClickListener{
                 // if any of the product is clicked, direct to product details page
@@ -163,6 +185,7 @@ class productList : AppCompatActivity() {
                 intent.putExtra("stock",product.stock)
                 context.startActivity(intent)
             }
+
 
             // add to cart
             prodView.findViewById<Button>(R.id.add_to_cart_button).setOnClickListener {
@@ -206,6 +229,34 @@ class productList : AppCompatActivity() {
                 }
             }
 
+            // add to fav
+            val favBtn = prodView.findViewById<Button>(R.id.favBtn)
+            favBtn.setOnClickListener {
+                if(favBtn.background.constantState == context.getDrawable(R.drawable.empty_heart)!!.constantState)
+                {
+                    favBtn.setBackgroundResource(R.drawable.filled_heart)
+                    val newFav = Fav(
+                        product.id!!.toInt(),
+                        product.name,
+                        product.price,
+                        product.weight,
+                        product.img,
+                        product.category)
+
+                    // add to database
+                    Common.favRepository.addToFav(newFav)
+                    Log.d("fav_table", Gson().toJson(newFav))
+                    Toast.makeText(context, "Added to Favorite", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    favBtn.setBackgroundResource(R.drawable.empty_heart)
+                    // remove from database
+                    Common.favRepository.delById(product.id!!.toInt())
+                    Toast.makeText(context, "Removed from Favorite", Toast.LENGTH_SHORT).show()
+                }
+            }
+
             return prodView
         }
 
@@ -223,4 +274,24 @@ class productList : AppCompatActivity() {
 
     }
 
+    private fun initFavDB() {
+        Common.favDatabase = FavDatabase.invoke(this)
+        Common.favRepository = FavRepository.getInstance(FavDataSource.getInstance(Common.favDatabase.favDao()))
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.miHome -> {
+                val intent = Intent(this, AllCategory::class.java)
+                this.startActivity(intent)
+            }
+            R.id.miProfile -> {
+                val intent = Intent(this, ProfileActivity::class.java)
+                this.startActivity(intent)
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
 }

@@ -1,14 +1,15 @@
 
 package com.example.mr_framer_grocer
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.Database.CartDataSource
 import com.example.mr_framer_grocer.Database.CartRepository
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
+import com.example.mr_framer_grocer.Database.favRoom.FavDataSource
+import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
+import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 import com.example.mr_framer_grocer.databinding.ActivityAllCategoryBinding
 import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 
@@ -22,7 +23,10 @@ class AllCategory : AppCompatActivity() {
         binding = ActivityAllCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // cart db
         initDB()
+        //fav db
+        initFavDB()
 
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
@@ -63,13 +67,17 @@ class AllCategory : AppCompatActivity() {
             startActivity(intent)
         }
 
-
     }
 
     // initialize database
     private fun initDB() {
         Common.cartDatabase = CartDatabase.invoke(this)
         Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
+    }
+
+    private fun initFavDB() {
+        Common.favDatabase = FavDatabase.invoke(this)
+        Common.favRepository = FavRepository.getInstance(FavDataSource.getInstance(Common.favDatabase.favDao()))
     }
 
 }

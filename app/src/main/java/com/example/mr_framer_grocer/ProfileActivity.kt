@@ -24,8 +24,9 @@ class ProfileActivity : AppCompatActivity() {
 
         preferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
-        val phone = preferences.getString("PHONE", "")
-        phoneTv.text = phone
+        val name = preferences.getString("NAME", "")
+        //nameTextView.text = name
+        nameTextView.text = name
 
 
         binding.textViewEditProfile.setOnClickListener {

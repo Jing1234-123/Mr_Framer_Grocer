@@ -1,6 +1,4 @@
-package com.example.mr_framer_grocer.Database
-
-import com.example.mr_framer_grocer.Database.LocalDB.Cart
+package com.example.mr_framer_grocer.Database.LocalDB
 
 interface ICartDataSource {
     fun getCartItems(): List<Cart>

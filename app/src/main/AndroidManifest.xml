@@ -24,6 +24,8 @@
         <activity android:name=".AllCategory" />
         <activity android:name=".productList" />
         <activity android:name=".ProductDetailsActivity" />
+        <activity android:name=".MyFav" />
+        <activity android:name=".BottomNavBar" />
         <!-- TzeWei -->
         <activity android:name=".LoginActivity" />
         <activity android:name=".MyProfileActivity" />

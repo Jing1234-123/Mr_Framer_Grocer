@@ -29,5 +29,9 @@ class FavDataSource(private var favDao: FavDao):  IFavDataSource{
         favDao.delById(itemId)
     }
 
+    override fun emptyFav() {
+        favDao.emptyFav()
+    }
+
 
 }

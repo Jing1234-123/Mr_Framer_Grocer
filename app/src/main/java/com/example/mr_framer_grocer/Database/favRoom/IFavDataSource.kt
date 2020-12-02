@@ -1,8 +1,5 @@
 package com.example.mr_framer_grocer.Database.favRoom
 
-import androidx.room.Delete
-import androidx.room.Query
-
 interface IFavDataSource {
 
     fun getFavItems():List<Fav>
@@ -15,4 +12,5 @@ interface IFavDataSource {
 
     fun delById(itemId: Int)
 
+    fun emptyFav()
 }

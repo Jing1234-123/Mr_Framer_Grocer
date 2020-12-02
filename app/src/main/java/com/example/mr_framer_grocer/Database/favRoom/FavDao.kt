@@ -1,6 +1,9 @@
 package com.example.mr_framer_grocer.Database.favRoom
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 
 @Dao
 interface FavDao {
@@ -18,5 +21,8 @@ interface FavDao {
 
     @Delete
     fun deleteFavItem(fav: Fav)
+
+    @Query("DELETE FROM Fav")
+    fun emptyFav()
 
 }

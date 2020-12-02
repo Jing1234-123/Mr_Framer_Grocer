@@ -12,12 +12,16 @@ import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import com.example.mr_framer_grocer.Database.CartDataSource
-import com.example.mr_framer_grocer.Database.CartRepository
 import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
+import com.example.mr_framer_grocer.Database.LocalDB.CartDataSource
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
+import com.example.mr_framer_grocer.Database.LocalDB.CartRepository
 import com.example.mr_framer_grocer.Database.MySingleton
+import com.example.mr_framer_grocer.Database.favRoom.Fav
+import com.example.mr_framer_grocer.Database.favRoom.FavDataSource
+import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
+import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 import com.example.mr_framer_grocer.Model.User
 import com.example.mr_framer_grocer.databinding.ActivityLoginBinding
 import kotlinx.android.synthetic.main.activity_login.*
@@ -39,20 +43,23 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initDB()
+        initFavDB()
+
         sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("LOGIN", false)
 
         if (isRemembered) {
             Common.contact_no = sharedPreferences.getString("PHONE", "")
             Common.psw = sharedPreferences.getString("PASSWORD", "")
-            sharedPreferences.getString("NAME", "")
+            Common.name = sharedPreferences.getString("NAME", "")
 
             intent = Intent(this, AllCategory::class.java)
             startActivity(intent)
             finish()
         }
 
-        //phoneno = binding.editTextTextPassword.text.toString().trim()
+//        phoneno = binding.editTextTextPassword.text.toString().trim()
 
         binding.loginButton.setOnClickListener {
             // if phone number not empty
@@ -85,7 +92,6 @@ class LoginActivity : AppCompatActivity() {
                 verifyUser(2)
             }
             else{
-
                 /*Toast.makeText(applicationContext, "Please enter your phone number", Toast.LENGTH_LONG).show()*/
                 editTextPhone.setError("Phone Number Empty")
             }
@@ -121,6 +127,7 @@ class LoginActivity : AppCompatActivity() {
                             if (binding.editTextTextPassword.text.toString() == userInfo!!.password) {
                                 Common.contact_no = editTextPhone.text.toString()
                                 Common.psw = editTextTextPassword.text.toString()
+                                Common.name = userInfo!!.name
                                 //val login: Boolean = true
 
                                 //val action:Int = 1
@@ -128,16 +135,17 @@ class LoginActivity : AppCompatActivity() {
                                 val editor: SharedPreferences.Editor = sharedPreferences.edit()
                                 editor.putString("PHONE", Common.contact_no)
                                 editor.putString("PASSWORD", Common.psw)
-                                editor.putString("NAME", userInfo!!.name)
+                                editor.putString("NAME", Common.name)
                                 editor.putBoolean("LOGIN", true)
                                 editor.apply()
 
                                 Toast.makeText(applicationContext, "Login successful", Toast.LENGTH_LONG).show()
 
                                 // get cart item
-                                initDB()
                                 Common.cartRepository.emptyCart()
                                 getCartItem()
+                                Common.favRepository.emptyFav()
+                                getFavItem()
 
                                 intent = Intent(this, AllCategory::class.java)
 
@@ -149,7 +157,6 @@ class LoginActivity : AppCompatActivity() {
                                 binding.progress!!.visibility = View.GONE
 //                                Toast.makeText(applicationContext, "Incorrect password!", Toast.LENGTH_LONG).show()
                                 editTextTextPassword.setError("Password Incorrect")
-                                editTextTextPassword.text.clear()
                             }
                         }
                         //if change password button
@@ -219,6 +226,54 @@ class LoginActivity : AppCompatActivity() {
                             )
                             Common.cartRepository.insertToCart(cartitem)
                         }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }, Response.ErrorListener { volleyError ->
+                Log.d("Main", "Response: 0")})
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+    }
+
+    private fun getFavItem() {
+
+        val jsonObjectRequest = StringRequest(
+            Request.Method.GET, EndPoints.URL_READ_FAVITEM + "?contact_no=" + Common.contact_no,
+            Response.Listener{ response ->
+                try {
+                    if (response != null) {
+                        // get data in JSON format
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
+                        val jsonArray: JSONArray = jsonResponse.getJSONArray("records")
+                        val size: Int = jsonArray.length()
+
+                        for (i in 0..size - 1) {
+                            val objectProd = jsonArray.getJSONObject(i)
+                            val favitem = Fav(
+                                objectProd.getString("id").toInt(),
+                                objectProd.getString("name"),
+                                objectProd.getString("price").toFloat(),
+                                objectProd.getString("weight"),
+                                objectProd.getString("image"),
+                                objectProd.getString("category")
+                            )
+
+                            Common.favRepository.addToFav(favitem)
+                        }
+
                     }
 
                 } catch (e: JSONException) {
@@ -241,6 +296,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initDB() {
         Common.cartDatabase = CartDatabase.invoke(this)
-        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
+        Common.cartRepository = CartRepository.getInstance(
+            CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
+    }
+
+    private fun initFavDB() {
+        Common.favDatabase = FavDatabase.invoke(this)
+        Common.favRepository = FavRepository.getInstance(FavDataSource.getInstance(Common.favDatabase.favDao()))
     }
 }

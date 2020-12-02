@@ -1,7 +1,7 @@
 package com.example.mr_framer_grocer
 
-import com.example.mr_framer_grocer.Database.CartRepository
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
+import com.example.mr_framer_grocer.Database.LocalDB.CartRepository
 import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
 import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 
@@ -17,5 +17,6 @@ class Common {
         // user
         var contact_no: String? = null
         var psw:String? = null
+        var name:String? = null
     }
 }

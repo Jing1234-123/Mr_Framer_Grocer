@@ -1,7 +1,9 @@
 package com.example.mr_framer_grocer
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -30,6 +32,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private  var itemList = arrayOf("Male", "Female")
     private lateinit var binding: ActivityMyProfileBinding
     var items: String? = null
+    lateinit var preferences: SharedPreferences
 
 
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -39,6 +42,8 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        preferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
         // set phone number
         binding.contact.text = Common.contact_no
@@ -75,6 +80,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         binding.backArrow.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.saveButton.setOnClickListener {
@@ -139,6 +145,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
                         if(success.equals("1")){
                             Toast.makeText(applicationContext, "Updated successfully!", Toast.LENGTH_LONG).show()
+                            Common.name = binding.editTextName.text.toString()
 
                         }else{
                             Toast.makeText(applicationContext, "Fail to update", Toast.LENGTH_LONG).show()

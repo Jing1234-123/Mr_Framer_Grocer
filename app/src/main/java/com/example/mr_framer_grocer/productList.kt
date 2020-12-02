@@ -25,7 +25,6 @@ import com.example.mr_framer_grocer.Model.Product
 import com.example.mr_framer_grocer.databinding.ActivityProductListBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -91,6 +90,11 @@ class productList : AppCompatActivity() {
         }
 
         // back button
+        binding.backbtn.setOnClickListener{
+            val intent = Intent(this, AllCategory::class.java)
+            finish()
+            startActivity(intent)
+        }
 
     }
 

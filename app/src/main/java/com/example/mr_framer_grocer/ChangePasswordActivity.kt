@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.databinding.ActivityChangePasswordBinding
+import kotlinx.android.synthetic.main.activity_change_password.*
 import org.json.JSONObject
 
 class ChangePasswordActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         binding.backArrow.setOnClickListener {
             intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.saveChanges.setOnClickListener {
@@ -41,39 +43,24 @@ class ChangePasswordActivity : AppCompatActivity() {
 
                                 intent = Intent(this, PasswordChangedSuccessful::class.java)
                                 startActivity(intent)
+                                finish()
                             } else {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "New Password and Confirmed Password does not match",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                editTextConfirmPass.setError("Password and Confirm Password does not match")
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "New password must be at least 6 characters",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            editTextNewPass.setError("New password must be at least 6 characters")
                         }
                     } else {
-                        Toast.makeText(
-                            applicationContext,
-                            "Please enter your new password",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        editTextNewPass.setError("New Password is Empty")
                     }
                 }
                 else{
-                    Toast.makeText(
-                        applicationContext,
-                        "Current password incorrect!",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    editTextCurrentPass.setError("Current Password is Incorrect")
                 }
             }
 
             else{
-                Toast.makeText(applicationContext, "Please enter your current password", Toast.LENGTH_LONG).show()
+                editTextCurrentPass.setError("Current Password is Empty")
             }
         }
     }
@@ -95,7 +82,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                         val success: String = jsonResponse.get("success").toString()
 
                         if(success.equals("1")){
-                            Toast.makeText(applicationContext, "Changed password successfully!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, "Password change successful!", Toast.LENGTH_LONG).show()
 
                         }else{
                             Toast.makeText(applicationContext, "Fail to change password", Toast.LENGTH_LONG).show()

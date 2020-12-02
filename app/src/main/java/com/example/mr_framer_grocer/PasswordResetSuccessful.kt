@@ -17,6 +17,7 @@ class PasswordResetSuccessful : AppCompatActivity() {
         binding.loginBtn.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

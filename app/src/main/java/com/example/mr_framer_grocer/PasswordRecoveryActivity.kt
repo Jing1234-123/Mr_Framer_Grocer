@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.mr_framer_grocer.databinding.ActivityPasswordRecoveryBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
+import kotlinx.android.synthetic.main.activity_password_recovery.*
 import java.util.concurrent.TimeUnit
 
 class PasswordRecoveryActivity : AppCompatActivity() {
@@ -38,16 +39,15 @@ class PasswordRecoveryActivity : AppCompatActivity() {
         var phoneNo = intent.getStringExtra("Phone")
 
         //textView
-        var phoneNum = findViewById<TextView>(R.id.textViewPhoneNumber)
+        //var phoneNum = findViewById<TextView>(R.id.textViewPhoneNumber)
         //setText
-        phoneNum.text = phoneNo
+        binding.textViewPhoneNumber.text = phoneNo
 
         binding.textViewPhoneNumber.setOnClickListener {
-            var phoneNumber = phoneNum.text.toString().trim()
-
-            binding.recoveryCode.isEnabled = true
+            var phoneNumber = textViewPhoneNumber.text.toString().trim()
 
             if (!phoneNumber.isEmpty()) {
+                Toast.makeText(applicationContext, "Sending Recovery Code", Toast.LENGTH_LONG).show()
                 sendVerificationcode(phoneNumber)
             } else {
                 Toast.makeText(
@@ -57,7 +57,6 @@ class PasswordRecoveryActivity : AppCompatActivity() {
                 ).show()
             }
         }
-
 
         binding.proceedButton.setOnClickListener {
             var code = binding.recoveryCode.text.toString()
@@ -104,6 +103,7 @@ class PasswordRecoveryActivity : AppCompatActivity() {
                 storedVerificationId = verificationId
                 resendToken = token
                 Toast.makeText(applicationContext, "OTP code has been sent to your device!", Toast.LENGTH_LONG).show()
+                binding.recoveryCode.isEnabled = true
             }
         }
     }

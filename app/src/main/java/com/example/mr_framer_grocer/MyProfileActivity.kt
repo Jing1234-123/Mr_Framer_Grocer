@@ -51,15 +51,15 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         // set date Calendar
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
+        val month = c.get(Calendar.MONTH)+1
         val day = c.get(Calendar.DAY_OF_MONTH)
 
 
         //show day picker dialog on click
         select_birthDateBtn.setOnClickListener {
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{view, mYear, mMonth, mDay ->
-                mMonth+1
-                birthDate.setText(""+ mDay +"/"+ mMonth +"/"+ mYear)
+                val mmMonth = mMonth + 1//mMonth += 1
+                birthDate.setText(""+ mDay +"/"+ mmMonth +"/"+ mYear)
             }, year, month, day)
 
             dpd.datePicker.maxDate = c.getTimeInMillis()

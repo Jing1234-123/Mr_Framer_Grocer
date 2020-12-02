@@ -1,6 +1,8 @@
 package com.example.mr_framer_grocer
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +18,7 @@ import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.databinding.ActivitySignUpBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
@@ -26,15 +29,27 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var storedVerificationId: String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-    /*lateinit var et_cardholder_name: EditText
-    lateinit var et_card_num:EditText
-    lateinit var otp_btn:Button*/
+    lateinit var sharedPreferences: SharedPreferences
+    var isRemembered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+        isRemembered = sharedPreferences.getBoolean("LOGIN", false)
+
+        if (isRemembered) {
+            Common.contact_no = sharedPreferences.getString("PHONE", "")
+            Common.psw = sharedPreferences.getString("PASSWORD", "")
+            sharedPreferences.getString("NAME", "")
+
+            intent = Intent(this, AllCategory::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         binding.loginBtn.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
@@ -49,16 +64,12 @@ class SignUpActivity : AppCompatActivity() {
             /*val intent = intent*/
             var phoneno = findViewById<TextView>(R.id.editTextPhone).text.toString().trim()
             var phoneNo = "+6$phoneno"
-            binding.editTextOTP.isEnabled = true
 
-            if (!phoneNo.isEmpty()) {
+            if (editTextPhone.text.toString().isNotEmpty()) {
+                Toast.makeText(applicationContext, "OTP button has been pressed", Toast.LENGTH_LONG).show()
                 sendVerificationcode(phoneNo)
             } else {
-                Toast.makeText(
-                        applicationContext,
-                        "Please enter phone number",
-                        Toast.LENGTH_LONG
-                ).show()
+                editTextPhone.setError("Phone Number Empty")
             }
         }
 
@@ -68,11 +79,7 @@ class SignUpActivity : AppCompatActivity() {
             if (code.isNotEmpty()) {
                 verifyVerficationCode(code)
             } else {
-                Toast.makeText(
-                        applicationContext,
-                        "Please enter the OTP sent to your device.",
-                        Toast.LENGTH_LONG
-                ).show()
+                editTextOTP.setError("Please enter the OTP sent to your device")
             }
         }
 
@@ -108,6 +115,7 @@ class SignUpActivity : AppCompatActivity() {
                 storedVerificationId = verificationId
                 resendToken = token
                 Toast.makeText(applicationContext, "OTP code has been sent to your device!", Toast.LENGTH_LONG).show()
+                binding.editTextOTP.isEnabled = true
             }
         }
     }
@@ -142,17 +150,20 @@ class SignUpActivity : AppCompatActivity() {
                                 }
                                 // two psw not match
                                 else{
-                                    Toast.makeText(applicationContext, "Password and Confirm Password does not match", Toast.LENGTH_LONG).show()
+                                    //Toast.makeText(applicationContext, "Password and Confirm Password does not match", Toast.LENGTH_LONG).show()
+                                    editTextTextPasswordConfirm.setError("Password and Confirm Password does not match")
                                 }
                             }
                             // invalid psw length
                             else{
-                                Toast.makeText(applicationContext, "Password must be at least 6 characters", Toast.LENGTH_LONG).show()
+                                //Toast.makeText(applicationContext, "Password must be at least 6 characters", Toast.LENGTH_LONG).show()
+                                editTextTextPassword.setError("Password must be at least 6 characters")
                             }
                         }
                         // if psw empty
                         else{
-                            Toast.makeText(applicationContext, "Please enter your password (6 to 12 characters)", Toast.LENGTH_LONG).show()
+                            editTextTextPassword.setError("Password Empty")
+                            //Toast.makeText(applicationContext, "Please enter your password (6 to 12 characters)", Toast.LENGTH_LONG).show()
                         }
 
                     } else {
@@ -183,6 +194,10 @@ class SignUpActivity : AppCompatActivity() {
 
                         // user exist
                         Toast.makeText(applicationContext, "User already exist!", Toast.LENGTH_LONG).show()
+                        editTextOTP.text.clear()
+                        binding.editTextOTP.isEnabled = false
+                        editTextTextPassword.text.clear()
+                        editTextTextPasswordConfirm.text.clear()
 
                     } else {
                         binding.progress!!.visibility = View.GONE
@@ -202,6 +217,13 @@ class SignUpActivity : AppCompatActivity() {
                 Common.contact_no = binding.editTextPhone.text.toString()
                 Common.psw = binding.editTextTextPassword.text.toString()
 
+                /*val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                editor.putString("PHONE", Common.contact_no)
+                editor.putString("PASSWORD", Common.psw)
+                editor.putString("NAME", userInfo!!.name)
+                editor.putBoolean("LOGIN", true)
+                editor.apply()*/
+
                 val intent = Intent(applicationContext, MyProfileActivity::class.java)
                 intent.putExtra("edit_profile", "no")
                 finish()
@@ -219,6 +241,4 @@ class SignUpActivity : AppCompatActivity() {
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
 
     }
-
-
 }

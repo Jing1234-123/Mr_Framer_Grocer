@@ -23,6 +23,7 @@ import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
 import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 import com.example.mr_framer_grocer.Model.Product
 import com.example.mr_framer_grocer.databinding.ActivityProductListBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 import org.json.JSONArray
@@ -42,7 +43,25 @@ class productList : AppCompatActivity() {
         binding = ActivityProductListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.background = null
+        bottomNavigationView.menu.getItem(1).isEnabled = false
+        bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
+            when (item.itemId) {
+                R.id.miHome -> {
+                    val intent = Intent(this, AllCategory::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+                R.id.miProfile -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+            }
+            return@setOnNavigationItemSelectedListener true
+        }
+
         initFavDB()
 
         val bundle = intent.extras
@@ -280,7 +299,7 @@ class productList : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.miHome -> {
                 val intent = Intent(this, AllCategory::class.java)
@@ -293,5 +312,5 @@ class productList : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
-    }
+    }*/
 }

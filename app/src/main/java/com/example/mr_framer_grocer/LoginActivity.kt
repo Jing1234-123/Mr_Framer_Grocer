@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        phoneno = binding.editTextTextPassword.text.toString().trim()
+        //phoneno = binding.editTextTextPassword.text.toString().trim()
 
         binding.loginButton.setOnClickListener {
             // if phone number not empty
@@ -63,31 +63,20 @@ class LoginActivity : AppCompatActivity() {
                 }
                 // if password is empty
                 else {
-                    /*Toast.makeText(
-                        applicationContext,
-                        "Please enter your password",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()*/
                     editTextTextPassword.setError("Password Empty")
                 }
             }
             // if phone number is empty
             else
             {
-                /*Toast.makeText(
-                    applicationContext,
-                    "Please enter your phone number",
-                    Toast.LENGTH_LONG
-                ).show()*/
                 editTextPhone.setError("Phone Number Empty")
             }
         }
 
         binding.signUpBtn.setOnClickListener {
             intent = Intent(this, SignUpActivity::class.java)
-            finish()
             startActivity(intent)
+            finish()
         }
 
         binding.textViewForgotPassword.setOnClickListener {
@@ -160,12 +149,14 @@ class LoginActivity : AppCompatActivity() {
                                 binding.progress!!.visibility = View.GONE
 //                                Toast.makeText(applicationContext, "Incorrect password!", Toast.LENGTH_LONG).show()
                                 editTextTextPassword.setError("Password Incorrect")
+                                editTextTextPassword.text.clear()
                             }
                         }
                         //if change password button
                         else{
                             intent = Intent(this, PasswordRecoveryActivity::class.java)
-                            val phoneNo = "+6$phoneno"
+                            var phone =  binding.editTextPhone.text.toString().trim()
+                            val phoneNo = "+6$phone"
                             intent.putExtra("Phone", phoneNo)
                             startActivity(intent)
                         }
@@ -228,7 +219,6 @@ class LoginActivity : AppCompatActivity() {
                             )
                             Common.cartRepository.insertToCart(cartitem)
                         }
-
                     }
 
                 } catch (e: JSONException) {

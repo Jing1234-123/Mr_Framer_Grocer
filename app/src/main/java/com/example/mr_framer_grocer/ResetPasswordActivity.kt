@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.databinding.ActivityResetPasswordBinding
+import kotlinx.android.synthetic.main.activity_reset_password.*
 import org.json.JSONObject
 
 class ResetPasswordActivity : AppCompatActivity() {
@@ -30,17 +31,17 @@ class ResetPasswordActivity : AppCompatActivity() {
                     updatePsw()
                     intent = Intent(this, PasswordResetSuccessful::class.java)
                     startActivity(intent)
+                    finish()
                 }
                 else{
-                    Toast.makeText(applicationContext, "New Password and Confirmed Password does not match", Toast.LENGTH_LONG).show()
+                    editTextConfirmPass.setError("Password and Confirm Password does not match")
                 }
             }
             else{
-                Toast.makeText(applicationContext, "Please enter new password", Toast.LENGTH_LONG).show()
+                editTextNewPass.setError("New Password is Empty")
             }
         }
     }
-
 
     private fun updatePsw() {
         val url = EndPoints.URL_UPDATEPSW_USER + "?password=" + binding.editTextNewPass.text.toString() +

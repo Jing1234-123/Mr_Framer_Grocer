@@ -17,6 +17,7 @@ class PasswordChangedSuccessful : AppCompatActivity() {
         binding.doneBtn.setOnClickListener {
             intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

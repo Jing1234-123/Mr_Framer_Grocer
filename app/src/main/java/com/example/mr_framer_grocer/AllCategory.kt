@@ -67,7 +67,6 @@ class AllCategory : AppCompatActivity() {
             startActivity(intent)
         }
 
-
     }
 
     // initialize database

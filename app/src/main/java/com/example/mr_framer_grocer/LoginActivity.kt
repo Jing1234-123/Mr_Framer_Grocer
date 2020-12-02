@@ -44,6 +44,9 @@ class LoginActivity : AppCompatActivity() {
 
         if (isRemembered) {
             Common.contact_no = sharedPreferences.getString("PHONE", "")
+            Common.psw = sharedPreferences.getString("PASSWORD", "")
+            sharedPreferences.getString("NAME", "")
+
             intent = Intent(this, AllCategory::class.java)
             startActivity(intent)
             finish()
@@ -60,24 +63,26 @@ class LoginActivity : AppCompatActivity() {
                 }
                 // if password is empty
                 else {
-                    Toast.makeText(
+                    /*Toast.makeText(
                         applicationContext,
                         "Please enter your password",
                         Toast.LENGTH_LONG
                     )
-                        .show()
+                        .show()*/
+                    editTextTextPassword.setError("Password Empty")
                 }
             }
-                // if phone number is empty
-                else
-                {
-                    Toast.makeText(
-                        applicationContext,
-                        "Please enter your phone number",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            // if phone number is empty
+            else
+            {
+                /*Toast.makeText(
+                    applicationContext,
+                    "Please enter your phone number",
+                    Toast.LENGTH_LONG
+                ).show()*/
+                editTextPhone.setError("Phone Number Empty")
             }
+        }
 
         binding.signUpBtn.setOnClickListener {
             intent = Intent(this, SignUpActivity::class.java)
@@ -92,7 +97,8 @@ class LoginActivity : AppCompatActivity() {
             }
             else{
 
-                Toast.makeText(applicationContext, "Please enter your phone number", Toast.LENGTH_LONG).show()
+                /*Toast.makeText(applicationContext, "Please enter your phone number", Toast.LENGTH_LONG).show()*/
+                editTextPhone.setError("Phone Number Empty")
             }
         }
     }
@@ -124,20 +130,20 @@ class LoginActivity : AppCompatActivity() {
                         {
                             // verify password, if correct
                             if (binding.editTextTextPassword.text.toString() == userInfo!!.password) {
-                                val phone: String = editTextPhone.text.toString()
+                                Common.contact_no = editTextPhone.text.toString()
+                                Common.psw = editTextTextPassword.text.toString()
                                 //val login: Boolean = true
 
                                 //val action:Int = 1
 
                                 val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                                editor.putString("PHONE", phone)
+                                editor.putString("PHONE", Common.contact_no)
+                                editor.putString("PASSWORD", Common.psw)
+                                editor.putString("NAME", userInfo!!.name)
                                 editor.putBoolean("LOGIN", true)
                                 editor.apply()
 
                                 Toast.makeText(applicationContext, "Login successful", Toast.LENGTH_LONG).show()
-
-                                Common.contact_no = binding.editTextPhone.text.toString()
-                                Common.psw = binding.editTextTextPassword.text.toString()
 
                                 // get cart item
                                 initDB()
@@ -152,7 +158,8 @@ class LoginActivity : AppCompatActivity() {
                             // if password is wrong
                             else {
                                 binding.progress!!.visibility = View.GONE
-                                Toast.makeText(applicationContext, "Incorrect password!", Toast.LENGTH_LONG).show()
+//                                Toast.makeText(applicationContext, "Incorrect password!", Toast.LENGTH_LONG).show()
+                                editTextTextPassword.setError("Password Incorrect")
                             }
                         }
                         //if change password button

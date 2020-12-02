@@ -16,6 +16,5 @@ class Common {
         // user
         var contact_no: String? = null
         var psw:String? = null
-
     }
 }

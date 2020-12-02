@@ -1,5 +1,6 @@
 package com.example.mr_framer_grocer
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,8 +16,10 @@ import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.User
 import com.example.mr_framer_grocer.databinding.ActivityMyProfileBinding
+import kotlinx.android.synthetic.main.activity_my_profile.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 
 class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -27,7 +30,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private  var itemList = arrayOf("Male", "Female")
     private lateinit var binding: ActivityMyProfileBinding
     var items: String? = null
-    var birth_date: String? = null
+    //var birth_date: String? = null
     private lateinit var userInfo: User
 
 
@@ -49,14 +52,32 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         spinner?.adapter = arrayAdapter
         spinner?.onItemSelectedListener = this
 
+        // set date Calendar
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+
+        //show day picker dialog on click
+        select_birthDateBtn.setOnClickListener {
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{view, mYear, mMonth, mDay ->
+                mMonth+1
+                birthDate.setText(""+ mDay +"/"+ mMonth +"/"+ mYear)
+            }, year, month, day)
+
+            dpd.datePicker.maxDate = c.getTimeInMillis()
+            dpd.show()
+        }
+
         val bundle = intent.extras
         if(bundle!!.getString("edit_profile") == "yes")
         {
             getUserInfo()
         }
         //get data from intent
-//        var intent = intent
-//        var phoneNo = intent.getStringExtra("Phone")
+        //var intent = intent
+        //var phoneNo = intent.getStringExtra("Phone")
 
         //textView
 //        var phoneNum = findViewById<TextView>(R.id.contact)
@@ -70,8 +91,8 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         binding.saveButton.setOnClickListener {
             if (binding.editTextName.text.toString().isNotEmpty()){
-               /* if(binding.editTextPhone.text.toString().isNotEmpty()){*/
-                   /* if(binding.editTextPhone.text.toString().length<10){*/
+                /* if(binding.editTextPhone.text.toString().isNotEmpty()){*/
+                /* if(binding.editTextPhone.text.toString().length<10){*/
                 if(binding.editTextEmail.text.toString().matches(emailPattern.toRegex())) {
 
 
@@ -103,10 +124,10 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 else{
                     Toast.makeText(applicationContext, "Invalid email address", Toast.LENGTH_LONG).show()
                 }
-                    /*}
-                    else{
-                        Toast.makeText(applicationContext, "Please enter a valid contact number", Toast.LENGTH_LONG).show()
-                    }*/
+                /*}
+                else{
+                    Toast.makeText(applicationContext, "Please enter a valid contact number", Toast.LENGTH_LONG).show()
+                }*/
                 /* }
                  else{
                      Toast.makeText(applicationContext, "Please fill in your contact number", Toast.LENGTH_LONG).show()
@@ -120,15 +141,17 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun updateUserInfo() {
         // get date in string
-        val datePicker = binding.datePickerBirthDate
+
+
+        /*val datePicker = binding.datePickerBirthDate
         val day = datePicker.dayOfMonth
         val month = datePicker.month + 1
-        val year = datePicker.year
+        val year = datePicker.year*/
 
-        birth_date =  checkDigit(day) + "/" + checkDigit(month).toString() + "/" + year
+        //birth_date =  checkDigit(day) + "/" + checkDigit(month).toString() + "/" + year
 
         val url = EndPoints.URL_UPDATE_USER + "?name=" + binding.editTextName.text.toString() +
-                "&gender=" + items + "&birth_date=" + birth_date +
+                "&gender=" + items + "&birth_date=" + binding.birthDate +
                 "&contact_no=" + Common.contact_no + "&email=" + binding.editTextEmail.text.toString()+
                 "&address=" + binding.editTextAddress.text.toString()+ "&password=" + Common.psw
 
@@ -197,6 +220,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 //                        )
 
                         binding.editTextName.setText(jsonResponse.getString("name"), TextView.BufferType.EDITABLE)
+                        binding.birthDate.setText(jsonResponse.getString("birth_date"), TextView.BufferType.EDITABLE)
                         binding.contact.setText(jsonResponse.getString("contact_no"), TextView.BufferType.EDITABLE)
                         binding.editTextEmail.setText(jsonResponse.getString("email"), TextView.BufferType.EDITABLE)
                         binding.editTextAddress.setText(jsonResponse.getString("address"), TextView.BufferType.EDITABLE)
@@ -210,9 +234,9 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         }
 
                         // set birth_date picker
-                        val date = jsonResponse.getString("birth_date")
+                        /*val date = jsonResponse.getString("birth_date")
                         val separated = date.split("/");
-                       binding.datePickerBirthDate.init(separated[0].toInt(),separated[1].toInt(),separated[2].toInt(),null)
+                       binding.datePickerBirthDate.init(separated[0].toInt(),separated[1].toInt(),separated[2].toInt(),null)*/
 
 
                     } else {
@@ -246,15 +270,15 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun createUser() {
         // get date in string
-        val datePicker = binding.datePickerBirthDate
+        /*val datePicker = binding.datePickerBirthDate
         val day = datePicker.dayOfMonth
         val month = datePicker.month + 1
-        val year = datePicker.year
+        val year = datePicker.year*/
 
-        birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
+        //birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
 
         val url = EndPoints.URL_CREATE_USER + "?name=" + binding.editTextName.text.toString() +
-        "&gender=" + items + "&birth_date=" + birth_date +
+                "&gender=" + items + "&birth_date=" + binding.birthDate.text.toString() +
                 "&contact_no=" + Common.contact_no + "&email=" + binding.editTextEmail.text.toString()+
                 "&address=" + binding.editTextAddress.text.toString()+ "&password=" + Common.psw
 
@@ -300,8 +324,6 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
-
-
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -309,10 +331,9 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-         items= parent?.getItemAtPosition(position) as String
-        Toast.makeText(applicationContext, "$items", Toast.LENGTH_LONG).show()
+        items= parent?.getItemAtPosition(position) as String
+        //Toast.makeText(applicationContext, "$items", Toast.LENGTH_LONG).show()
     }
-
 
     // add 0 to day&month if only one digit
     private fun checkDigit(number: Int): String? {

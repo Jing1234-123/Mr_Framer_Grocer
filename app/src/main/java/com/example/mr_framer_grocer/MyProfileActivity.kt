@@ -30,13 +30,9 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private  var itemList = arrayOf("Male", "Female")
     private lateinit var binding: ActivityMyProfileBinding
     var items: String? = null
-    //var birth_date: String? = null
-    private lateinit var userInfo: User
 
 
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-
-    //val birthDate = findViewById<DatePicker>(R.id.datePicker_birthDate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,26 +71,16 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         {
             getUserInfo()
         }
-        //get data from intent
-        //var intent = intent
-        //var phoneNo = intent.getStringExtra("Phone")
-
-        //textView
-//        var phoneNum = findViewById<TextView>(R.id.contact)
-//        //setText
-//        phoneNum.text = phoneNo
 
         binding.backArrow.setOnClickListener {
-            intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
         binding.saveButton.setOnClickListener {
             if (binding.editTextName.text.toString().isNotEmpty()){
-                /* if(binding.editTextPhone.text.toString().isNotEmpty()){*/
-                /* if(binding.editTextPhone.text.toString().length<10){*/
-                if(binding.editTextEmail.text.toString().matches(emailPattern.toRegex())) {
 
+                if(binding.editTextEmail.text.toString().matches(emailPattern.toRegex())) {
 
                     if (binding.editTextAddress.text.toString().isNotEmpty()) {
 
@@ -102,13 +88,13 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         if(bundle.getString("edit_profile") == "yes")
                         {
                             updateUserInfo()
-
                         }
+
                         //user create new profile
-                        else{
+                        if(bundle.getString("edit_profile") == "no"){
                             // insert user data
                             createUser()
-                            intent = Intent(this, ProfileActivity::class.java)
+                            val intent = Intent(this, ProfileActivity::class.java)
                             finish()
                             startActivity(intent)
                         }
@@ -124,14 +110,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 else{
                     Toast.makeText(applicationContext, "Invalid email address", Toast.LENGTH_LONG).show()
                 }
-                /*}
-                else{
-                    Toast.makeText(applicationContext, "Please enter a valid contact number", Toast.LENGTH_LONG).show()
-                }*/
-                /* }
-                 else{
-                     Toast.makeText(applicationContext, "Please fill in your contact number", Toast.LENGTH_LONG).show()
-                 }*/
+
             }
             else{
                 Toast.makeText(applicationContext, "Please fill in your name", Toast.LENGTH_LONG).show()
@@ -140,21 +119,11 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     private fun updateUserInfo() {
-        // get date in string
-
-
-        /*val datePicker = binding.datePickerBirthDate
-        val day = datePicker.dayOfMonth
-        val month = datePicker.month + 1
-        val year = datePicker.year*/
-
-        //birth_date =  checkDigit(day) + "/" + checkDigit(month).toString() + "/" + year
 
         val url = EndPoints.URL_UPDATE_USER + "?name=" + binding.editTextName.text.toString() +
-                "&gender=" + items + "&birth_date=" + binding.birthDate +
+                "&gender=" + items + "&birth_date=" + binding.birthDate.text.toString() +
                 "&contact_no=" + Common.contact_no + "&email=" + binding.editTextEmail.text.toString()+
                 "&address=" + binding.editTextAddress.text.toString()+ "&password=" + Common.psw
-
 
         binding.progress.visibility = View.VISIBLE
 
@@ -202,22 +171,12 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private fun getUserInfo() {
         binding.progress.visibility = View.VISIBLE
         val jsonObjectRequest = StringRequest(
-            Request.Method.GET, EndPoints.URL_VERIFY_USER + "?contact_no=" + Common.contact_no.toString(),
+            Request.Method.GET, EndPoints.URL_VERIFY_USER + "?contact_no=" + Common.contact_no,
             Response.Listener{ response ->
                 try {
                     if (response != null) {
                         val strResponse = response.toString()
                         val jsonResponse  = JSONObject(strResponse)
-
-//                        userInfo = User(
-//                            jsonResponse.getString("name"),
-//                            jsonResponse.getString("gender"),
-//                            jsonResponse.getString("birth_date"),
-//                            jsonResponse.getString("contact_no"),
-//                            jsonResponse.getString("email"),
-//                            jsonResponse.getString("address"),
-//                            jsonResponse.getString("password")
-//                        )
 
                         binding.editTextName.setText(jsonResponse.getString("name"), TextView.BufferType.EDITABLE)
                         binding.birthDate.setText(jsonResponse.getString("birth_date"), TextView.BufferType.EDITABLE)
@@ -232,12 +191,6 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                             spinner?.adapter = arrayAdapter
                             spinner?.onItemSelectedListener = this
                         }
-
-                        // set birth_date picker
-                        /*val date = jsonResponse.getString("birth_date")
-                        val separated = date.split("/");
-                       binding.datePickerBirthDate.init(separated[0].toInt(),separated[1].toInt(),separated[2].toInt(),null)*/
-
 
                     } else {
                         binding.progress.visibility = View.GONE
@@ -269,13 +222,6 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     private fun createUser() {
-        // get date in string
-        /*val datePicker = binding.datePickerBirthDate
-        val day = datePicker.dayOfMonth
-        val month = datePicker.month + 1
-        val year = datePicker.year*/
-
-        //birth_date = checkDigit(month).toString() + "/" + checkDigit(day) + "/" + year
 
         val url = EndPoints.URL_CREATE_USER + "?name=" + binding.editTextName.text.toString() +
                 "&gender=" + items + "&birth_date=" + binding.birthDate.text.toString() +
@@ -335,8 +281,5 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         //Toast.makeText(applicationContext, "$items", Toast.LENGTH_LONG).show()
     }
 
-    // add 0 to day&month if only one digit
-    private fun checkDigit(number: Int): String? {
-        return if (number <= 9) "0$number" else number.toString()
-    }
+
 }

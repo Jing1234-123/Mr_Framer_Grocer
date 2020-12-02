@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -46,8 +43,6 @@ class productList : AppCompatActivity() {
         setContentView(binding.root)
 
         bottomNavigationView.background = null
-        val item = bottomNavigationView.menu.getItem(1)
-        val downnav = onOptionsItemSelected(item)
         initFavDB()
 
         val bundle = intent.extras
@@ -279,6 +274,11 @@ class productList : AppCompatActivity() {
         Common.favRepository = FavRepository.getInstance(FavDataSource.getInstance(Common.favDatabase.favDao()))
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.bottom_nav_menu, menu)
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

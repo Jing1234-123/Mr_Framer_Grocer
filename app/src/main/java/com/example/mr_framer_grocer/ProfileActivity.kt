@@ -4,12 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
 import com.example.mr_framer_grocer.Adapter.ProfileListAdapter
+import com.example.mr_framer_grocer.Database.EndPoints
+import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.ProfileModel
 import com.example.mr_framer_grocer.databinding.ActivityProfileBinding
 import kotlinx.android.synthetic.main.activity_profile.*
+import org.json.JSONObject
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -27,7 +34,6 @@ class ProfileActivity : AppCompatActivity() {
         val name = preferences.getString("NAME", "")
         //nameTextView.text = name
         nameTextView.text = name
-
 
         binding.textViewEditProfile.setOnClickListener {
             intent = Intent(this, MyProfileActivity::class.java)
@@ -69,6 +75,8 @@ class ProfileActivity : AppCompatActivity() {
                 editor.clear()
                 editor.apply()
 
+                // reset cart item in database
+                resetCartDB()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -91,5 +99,92 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
         }*/
 
+    }
+
+
+    private fun resetCartDB() {
+
+        val url = EndPoints.URL_DELETE_CARTITEM + "?contact_no=" + Common.contact_no
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                // Process the JSON
+                try{
+                    if(response != null){
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
+                        val success: String = jsonResponse.get("success").toString()
+
+                        if(success.equals("1")){
+                            val cartItem = Common.cartRepository.getCartItems()
+                            for(i in 0 until cartItem.size)
+                            {
+                                insertCartItem(cartItem[i].id, cartItem[i].quantity)
+                            }
+                        }
+
+                    }
+                }catch (e:Exception){
+                    Log.d("Main", "Response: %s".format(e.message.toString()))
+
+
+                }
+            },
+            { error ->
+                Log.d("Main", "Response: %s".format(error.message.toString()))
+
+            }
+        )
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+
+    }
+
+    private fun insertCartItem(id: Int?, quantity:Int?) {
+        val url = EndPoints.URL_INSERT_CARTITEM + "?id=" + id + "&contact_no=" + Common.contact_no +
+                "&quantity=" + quantity
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                // Process the JSON
+                try{
+                    if(response != null){
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
+                        val success: String = jsonResponse.get("success").toString()
+                        Log.d("Main", "Response: %s".format(success))
+
+                    }
+                }catch (e:Exception){
+                    Log.d("Main", "Response: %s".format(e.message.toString()))
+
+
+                }
+            },
+            { error ->
+                Log.d("Main", "Response: %s".format(error.message.toString()))
+
+            }
+        )
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
     }
 }

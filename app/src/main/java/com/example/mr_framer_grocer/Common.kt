@@ -6,6 +6,7 @@ import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
 import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 
 class Common {
+
     companion object{
         lateinit var cartDatabase: CartDatabase
         lateinit var cartRepository: CartRepository

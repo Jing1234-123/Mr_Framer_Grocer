@@ -11,6 +11,7 @@ import com.example.mr_framer_grocer.Database.favRoom.FavDataSource
 import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
 import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 import com.example.mr_framer_grocer.databinding.ActivityAllCategoryBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 
 
@@ -27,8 +28,24 @@ class AllCategory : AppCompatActivity() {
         //fav db
         initFavDB()
 
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
+        bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
+            when (item.itemId) {
+                R.id.miHome -> {
+                    val intent = Intent(this, AllCategory::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+                R.id.miProfile -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+            }
+            return@setOnNavigationItemSelectedListener true
+        }
 
         binding.vegeTab.setOnClickListener{
             val intent = Intent(this, productList::class.java)

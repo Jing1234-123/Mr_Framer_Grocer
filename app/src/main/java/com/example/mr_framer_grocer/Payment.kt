@@ -42,11 +42,12 @@ class Payment : AppCompatActivity() {
         binding.yearPicker.maxValue = 2050
         binding.yearPicker.wrapSelectorWheel = false
 
-        // Up button to Delivery Activity
+        // Up button to My Cart Activity
         val back = binding.backBtn
         back.setOnClickListener {
-            intent = Intent(this, Delivery::class.java)
+            intent = Intent(this, MyCartActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         // Retrieving value using intent from Delivery Activity
@@ -295,13 +296,7 @@ class Payment : AppCompatActivity() {
                             val jsonResponse  = JSONObject(strResponse)
                             val success: String = jsonResponse.get("success").toString()
 
-                            if(success.equals("1")){
-                                Toast.makeText(applicationContext, "Updated successfully!", Toast.LENGTH_LONG).show()
-
-                            }else{
-                                Toast.makeText(applicationContext, "Fail to update", Toast.LENGTH_LONG).show()
-                            }
-
+                            Log.d("TAG","Update successful!")
                         }
                     }catch (e:Exception){
                         Log.d("Main", "Response: %s".format(e.message.toString()))

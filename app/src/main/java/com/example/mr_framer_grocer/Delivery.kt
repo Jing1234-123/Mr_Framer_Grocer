@@ -45,8 +45,9 @@ class Delivery : AppCompatActivity() {
         // Up button to Previous Activity
         val back = binding.backBtn
         back.setOnClickListener {
-            intent = Intent(this, AllCategory::class.java) /////////////////------------->>>>>>>>>>>>>>>> HERE
+            intent = Intent(this, MyCartActivity::class.java) /////////////////------------->>>>>>>>>>>>>>>> HERE
             startActivity(intent)
+            finish()
         }
 
         // Declaring variables for validation purpose
@@ -74,6 +75,7 @@ class Delivery : AppCompatActivity() {
 
                 }
                 startActivity(intent)
+                finish()
             } else if (rb_self_pickup.isChecked) {
                 val phoneNo = binding.custPhoneNumber.text.toString()
                 subtotal = binding.subtotalTxt.text.toString()
@@ -91,6 +93,7 @@ class Delivery : AppCompatActivity() {
                     intent.putExtra("newstock", bundle.getInt("newstock"))
                 }
                 startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(applicationContext,
                     "Please choose one of the delivery method!",

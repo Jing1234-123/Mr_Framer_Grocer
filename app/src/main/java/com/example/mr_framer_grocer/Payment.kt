@@ -151,6 +151,7 @@ class Payment : AppCompatActivity() {
                 }
 
                 val intent = Intent(applicationContext, OrderSuccessful::class.java)
+                //intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 startActivity(intent)
                 finish()
             } else {

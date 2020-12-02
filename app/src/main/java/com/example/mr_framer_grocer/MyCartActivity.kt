@@ -149,7 +149,7 @@ class MyCartActivity : AppCompatActivity() {
                 alertDialog()
             }
 
-            // buy now
+//             buy now
             binding.chkoutbutton.setOnClickListener{
                 val intent = Intent(this, Delivery::class.java)
                 intent.putExtra("method", "cart" )

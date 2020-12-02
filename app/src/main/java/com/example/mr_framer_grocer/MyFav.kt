@@ -1,5 +1,6 @@
 package com.example.mr_framer_grocer
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +9,12 @@ import com.example.mr_framer_grocer.Adapter.FavAdapter
 import com.example.mr_framer_grocer.Database.favRoom.Fav
 import com.example.mr_framer_grocer.databinding.ActivityMyFavBinding
 
+
 class MyFav : AppCompatActivity() {
 
     lateinit var favAdapter: FavAdapter
     lateinit var layoutManager: LinearLayoutManager
-    private lateinit var binding: ActivityMyFavBinding
+    private lateinit var binding:ActivityMyFavBinding
     var favListItem = ArrayList<Fav>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +25,12 @@ class MyFav : AppCompatActivity() {
         setContentView(binding.root)
 
         loadFavItem()
+
+        binding.backBtn!!.setOnClickListener {
+            intent= Intent(this, ProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
+            startActivity(intent)
+            finish()
+        }
 
         // if fav list has nothing
         if(favListItem.isNullOrEmpty()) {

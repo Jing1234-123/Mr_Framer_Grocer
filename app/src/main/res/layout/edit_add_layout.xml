@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:hint="Enter your new address "
         android:imeOptions="actionDone"
-        android:inputType="textMultiLine"
+        android:inputType="textPostalAddress"
         android:maxLength="100"
         android:textAlignment="viewStart"
         android:textSize="18sp" />

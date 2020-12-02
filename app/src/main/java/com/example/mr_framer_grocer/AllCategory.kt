@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 
 
 class AllCategory : AppCompatActivity() {
-    private lateinit var binding: ActivityAllCategoryBinding
+    private lateinit var binding:ActivityAllCategoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +79,7 @@ class AllCategory : AppCompatActivity() {
 
         // proceed to my cart page
         binding.fab.setOnClickListener{
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, MyCartActivity::class.java)
             startActivity(intent)
         }
 

@@ -43,7 +43,7 @@
                 android:text="@string/tomato"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:maxWidth="100dp"
+                android:maxWidth="200dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

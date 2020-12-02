@@ -147,7 +147,18 @@ class productList : AppCompatActivity() {
             prodView.findViewById<TextView>(R.id.price).text = context.getString(R.string.price, product.price)
             prodView.findViewById<TextView>(R.id.weight).text = context.getString(R.string.weight, product.weight)
 
-            prodView.findViewById<TextView>(R.id.cartbtn).isEnabled = product.stock != 0
+            val cartBtn = prodView.findViewById<Button>(R.id.add_to_cart_button)
+
+            if(product.stock == 0)
+            {
+                cartBtn.isEnabled = false
+                cartBtn.alpha = 0.5f
+            }
+            else{
+                cartBtn.isEnabled = true
+                cartBtn.alpha = 1.0f
+            }
+
 
             prodView.findViewById<ImageView>(R.id.prod_img).setOnClickListener{
                 // if any of the product is clicked, direct to product details page
@@ -163,6 +174,7 @@ class productList : AppCompatActivity() {
                 intent.putExtra("stock",product.stock)
                 context.startActivity(intent)
             }
+
 
             // add to cart
             prodView.findViewById<Button>(R.id.add_to_cart_button).setOnClickListener {

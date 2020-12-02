@@ -111,6 +111,8 @@ class Payment : AppCompatActivity() {
                     binding.cardholderNameTxt.setError("Required field!")
                 }
             } else if (rb_cod.isChecked) {
+
+
                 // payment successful
                 val bundle = intent.extras
                 val method = bundle!!.getString("method")
@@ -119,8 +121,9 @@ class Payment : AppCompatActivity() {
                 // if come from buy now
                 if(method == "buynow")
                 {
-                    val newstock = bundle.getString("newstock")
-                    val id = bundle.getString("id")
+                    val stock = bundle.getInt("newstock")
+                    val newstock = stock.toString()
+                    val id = bundle.getString("prodID")
                     resetStockNum(id, newstock)
                     binding.progressBar.visibility = View.GONE
                 }
@@ -130,7 +133,7 @@ class Payment : AppCompatActivity() {
                     val cartItem = Common.cartRepository.getCartItems()
                     for(i in 0 until cartItem.size)
                     {
-                        resetStockNum(cartItem[i].id.toString(), cartItem[i].stock.toString())
+                        resetStockNum(cartItem[i].id.toString(), (cartItem[i].stock-cartItem[i].quantity).toString())
 
                     }
                     binding.progressBar.visibility = View.GONE
@@ -140,7 +143,6 @@ class Payment : AppCompatActivity() {
                 val intent = Intent(applicationContext, OrderSuccessful::class.java)
                 startActivity(intent)
                 finish()
-
             } else {
                 Toast.makeText(applicationContext,
                     "Please choose one of the payment method!",
@@ -219,8 +221,20 @@ class Payment : AppCompatActivity() {
                     // if come from buy now
                     if(method == "buynow")
                     {
-                        val newstock = bundle.getString("newstock")
-                        val id = bundle.getString("id")
+                        val stock = bundle.getInt("newstock")
+                        val newstock = stock.toString()
+                        val id = bundle.getString("prodID")
+                        val cartItem = Common.cartRepository.getCartItems()
+
+                        for(i in 0 until cartItem.size)
+                        {
+                            if(id!!.toInt() == cartItem[i].id)
+                            {
+                                Common.cartRepository.deleteCartItemById(id)
+                            }
+
+                        }
+
                         resetStockNum(id, newstock)
                         binding.progressBar.visibility = View.GONE
                     }
@@ -230,7 +244,7 @@ class Payment : AppCompatActivity() {
                         val cartItem = Common.cartRepository.getCartItems()
                         for(i in 0 until cartItem.size)
                         {
-                            resetStockNum(cartItem[i].id.toString(), cartItem[i].stock.toString())
+                            resetStockNum(cartItem[i].id.toString(), (cartItem[i].stock-cartItem[i].quantity).toString())
 
                         }
                         binding.progressBar.visibility = View.GONE
@@ -268,14 +282,14 @@ class Payment : AppCompatActivity() {
                         if(response != null){
                             val strResponse = response.toString()
                             val jsonResponse  = JSONObject(strResponse)
-//                            val success: String = jsonResponse.get("success").toString()
+                            val success: String = jsonResponse.get("success").toString()
 
-//                            if(success.equals("1")){
-//                                Toast.makeText(applicationContext, "Updated successfully!", Toast.LENGTH_LONG).show()
-//
-//                            }else{
-//                                Toast.makeText(applicationContext, "Fail to update", Toast.LENGTH_LONG).show()
-//                            }
+                            if(success.equals("1")){
+                                Toast.makeText(applicationContext, "Updated successfully!", Toast.LENGTH_LONG).show()
+
+                            }else{
+                                Toast.makeText(applicationContext, "Fail to update", Toast.LENGTH_LONG).show()
+                            }
 
                         }
                     }catch (e:Exception){

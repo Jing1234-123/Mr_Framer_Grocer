@@ -105,6 +105,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             binding.addToCartButton.alpha = 0.5f
             binding.buyNowButton.isEnabled = false
             binding.buyNowButton.alpha = 0.5f
+            binding.stock.text = "Out of stock"
         }
 
         // handle qty plus and minus button
@@ -174,8 +175,6 @@ class ProductDetailsActivity : AppCompatActivity() {
                     Toast.makeText(this, "Quantity +$quantity", Toast.LENGTH_SHORT).show()
                 }
 
-
-
             }
 
             updateCartCount()
@@ -189,7 +188,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             intent.putExtra("method", "buynow" )
             intent.putExtra("subtotal", price*quantity)
             intent.putExtra("prodID", id)
-            intent.putExtra("newstock", (stock-quantity).toString())
+            intent.putExtra("newstock", stock-quantity)
 
             startActivity(intent)
         }

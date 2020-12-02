@@ -3,8 +3,8 @@
     <style name="Theme.Mr_Framer_Grocer" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/green</item>
+        <item name="colorOnPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/green</item>
 
         <!-- Secondary brand color. -->

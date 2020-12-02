@@ -203,7 +203,7 @@ class productList : AppCompatActivity() {
             prodView.findViewById<ImageView>(R.id.prod_img).setOnClickListener{
                 // if any of the product is clicked, direct to product details page
                 val intent = Intent(context, ProductDetailsActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
                 intent.putExtra("id", product.id)
                 intent.putExtra("name", product.name)

@@ -20,11 +20,12 @@ class AboutUs : AppCompatActivity() {
         binding = ActivityAboutUsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Up button to My Profile Activity
+        // Up button to Profile Activity
         val back = binding.backBtn
         back.setOnClickListener{
-            intent= Intent(this,MyProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
+            intent= Intent(this,ProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
             startActivity(intent)
+            finish()
         }
 
         // Expandable listview

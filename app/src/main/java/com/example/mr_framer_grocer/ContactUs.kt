@@ -84,8 +84,9 @@ class ContactUs : AppCompatActivity() {
         // Up button to My Profile Activity
         val back = binding.backBtn
         back.setOnClickListener{
-            intent=Intent(this, MyProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
+            intent=Intent(this, ProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
             startActivity(intent)
+            finish()
         }
     }
 

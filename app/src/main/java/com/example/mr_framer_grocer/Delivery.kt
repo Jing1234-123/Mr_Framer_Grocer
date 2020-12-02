@@ -42,7 +42,6 @@ class Delivery : AppCompatActivity() {
         // user info
         getUserInfo()
 
-
         // Up button to Previous Activity
         val back = binding.backBtn
         back.setOnClickListener {

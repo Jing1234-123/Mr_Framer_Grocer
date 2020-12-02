@@ -15,8 +15,6 @@ import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.ProfileModel
 import com.example.mr_framer_grocer.databinding.ActivityProfileBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_profile.*
 import org.json.JSONObject
 
 class ProfileActivity : AppCompatActivity() {
@@ -30,33 +28,14 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.background = null
-        bottomNavigationView.menu.getItem(1).isEnabled = false
-        bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
-            when (item.itemId) {
-                R.id.miHome -> {
-                    val intent = Intent(this, AllCategory::class.java)
-                    this.startActivity(intent)
-                    finish()
-                }
-                R.id.miProfile -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    this.startActivity(intent)
-                    finish()
-                }
-            }
-            return@setOnNavigationItemSelectedListener true
-        }
-
         preferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
         val name = preferences.getString("NAME", "")
         //nameTextView.text = name
-        nameTextView.text = name
+        binding.nameTextView.text = Common.name.toString()
 
         binding.textViewEditProfile.setOnClickListener {
-            intent = Intent(this, MyProfileActivity::class.java)
+            val intent = Intent(this, MyProfileActivity::class.java)
             intent.putExtra("edit_profile", "yes")
             startActivity(intent)
         }
@@ -78,49 +57,44 @@ class ProfileActivity : AppCompatActivity() {
 
         //listView onclick
         listView.setOnItemClickListener { parent, view, position, id ->
+            if(position == 0){
+                val intent = Intent(this, MyFav::class.java)
+                startActivity(intent)
+            }
             if(position == 1){
                 val intent = Intent(this, MyCartActivity::class.java)
                 startActivity(intent)
             }
+            if(position == 2){
+                val intent = Intent(this, AboutUs::class.java)
+                startActivity(intent)
+            }
             if (position == 3){
-//                val intent = Intent(this, contact_us::class.java)
-//                startActivity(intent)
+                val intent = Intent(this, ContactUs::class.java)
+                startActivity(intent)
             }
             if (position == 4){
                 val intent = Intent(this, ChangePasswordActivity::class.java)
                 startActivity(intent)
             }
             if (position == 5){
+                // clear the login history
                 val editor: SharedPreferences.Editor = preferences.edit()
                 editor.clear()
                 editor.apply()
 
                 // reset cart item in database
                 resetCartDB()
+                resetFavDB()
+
+                // go back to login activity
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
 
-       /* listView.setOnItemClickListener { parent, view, position, id ->
-            val element = list.elementAt(3)
-            val intent = Intent(this, contact_us::class.java)
-            startActivity(intent)
-        }
-        listView.setOnItemClickListener { parent, view, position, id ->
-            val element = list.elementAt(4)
-            val intent = Intent(this, ChangePasswordActivity::class.java)
-            startActivity(intent)
-        }
-        listView.setOnItemClickListener { parent, view, position, id ->
-            val element = list.elementAt(5)
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }*/
-
     }
-
 
     private fun resetCartDB() {
 
@@ -206,5 +180,91 @@ class ProfileActivity : AppCompatActivity() {
 
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+    }
+
+    private fun resetFavDB() {
+
+        val url = EndPoints.URL_DELETE_FAVITEM + "?contact_no=" + Common.contact_no
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                // Process the JSON
+                try{
+                    if(response != null){
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
+                        val success: String = jsonResponse.get("success").toString()
+
+                        if(success.equals("1")){
+                            val favItem = Common.favRepository.getFavItems()
+                            for(i in 0 until favItem.size)
+                            {
+                                insertFavItem(favItem[i].id)
+                            }
+                        }
+                    }
+                }catch (e:Exception){
+                    Log.d("Main", "Response: %s".format(e.message.toString()))
+
+                }
+            },
+            { error ->
+                Log.d("Main", "Response: %s".format(error.message.toString()))
+            }
+        )
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+
+    }
+
+    private fun insertFavItem(id: Int?) {
+        val url = EndPoints.URL_INSERT_FAVITEM + "?id=" + id + "&contact_no=" + Common.contact_no
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                // Process the JSON
+                try{
+                    if(response != null){
+                        val strResponse = response.toString()
+                        val jsonResponse  = JSONObject(strResponse)
+                        val success: String = jsonResponse.get("success").toString()
+                        Log.d("Main", "Response: %s".format(success))
+
+                    }
+                }catch (e:Exception){
+                    Log.d("Main", "Response: %s".format(e.message.toString()))
+
+                }
+            },
+            { error ->
+                Log.d("Main", "Response: %s".format(error.message.toString()))
+
+            }
+        )
+
+        //Volley request policy, only one time request
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0, //no retry
+            1f
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.nameTextView.text = Common.name.toString()
     }
 }

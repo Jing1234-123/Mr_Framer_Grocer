@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mr_framer_grocer.databinding.ActivityAboutUsBinding
-import com.example.mr_framer_grocer.ui.main.ExpandableListViewAdapter
+import com.example.mr_framer_grocer.Adapter.ExpandableListViewAdapter
 
 class AboutUs : AppCompatActivity() {
     // Binding About Us Activity
@@ -29,7 +29,12 @@ class AboutUs : AppCompatActivity() {
 
         // Expandable listview
         showList()
-        listViewAdapter = ExpandableListViewAdapter(this,expandable_list,expandable_list_text)
+        listViewAdapter =
+            ExpandableListViewAdapter(
+                this,
+                expandable_list,
+                expandable_list_text
+            )
         binding.eListView.setAdapter(listViewAdapter)
     }
 

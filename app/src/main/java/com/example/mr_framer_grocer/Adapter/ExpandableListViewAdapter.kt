@@ -1,4 +1,4 @@
-package com.example.mr_framer_grocer.ui.main
+package com.example.mr_framer_grocer.Adapter
 
 import android.content.Context
 import android.graphics.Typeface

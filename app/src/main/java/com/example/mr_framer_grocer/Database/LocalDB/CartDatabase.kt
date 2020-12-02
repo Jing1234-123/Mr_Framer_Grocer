@@ -10,7 +10,6 @@ import androidx.room.RoomDatabase
 abstract class CartDatabase : RoomDatabase(){
     abstract fun cartDAO(): CartDAO
 
-
     companion object {
         @Volatile private var instance:  CartDatabase? = null
         private val LOCK = Any()

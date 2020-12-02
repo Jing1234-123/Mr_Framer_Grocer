@@ -18,7 +18,7 @@ class FavRepository(private  var iFavDataSource: IFavDataSource): IFavDataSource
     }
 
     override fun deleteFavItem(fav: Fav) {
-        return iFavDataSource.deleteFavItem(fav)
+       iFavDataSource.deleteFavItem(fav)
     }
 
     override fun addToFav(vararg fav: Fav) {
@@ -27,6 +27,10 @@ class FavRepository(private  var iFavDataSource: IFavDataSource): IFavDataSource
 
     override fun delById(itemId: Int) {
         iFavDataSource.delById(itemId)
+    }
+
+    override fun emptyFav() {
+        iFavDataSource.emptyFav()
     }
 
 }

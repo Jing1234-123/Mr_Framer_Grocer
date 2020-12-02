@@ -1,13 +1,15 @@
-package com.example.mr_framer_grocer.Database
+package com.example.mr_framer_grocer.Database.LocalDB
 
-import com.example.mr_framer_grocer.Database.LocalDB.Cart
-
-class CartRepository(private var iCartDataSource: ICartDataSource) : ICartDataSource {
+class CartRepository(private var iCartDataSource: ICartDataSource) :
+    ICartDataSource {
 
 
         companion object{
-            fun getInstance(iCartDataSource: ICartDataSource): CartRepository{
-                   val instance = CartRepository(iCartDataSource)
+            fun getInstance(iCartDataSource: ICartDataSource): CartRepository {
+                   val instance =
+                       CartRepository(
+                           iCartDataSource
+                       )
                 return instance
 
             }

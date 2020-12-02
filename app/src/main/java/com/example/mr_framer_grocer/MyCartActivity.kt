@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mr_framer_grocer.Adapter.MyAdapter
-import com.example.mr_framer_grocer.Database.CartDataSource
-import com.example.mr_framer_grocer.Database.CartRepository
+import com.example.mr_framer_grocer.Database.LocalDB.CartDataSource
+import com.example.mr_framer_grocer.Database.LocalDB.CartRepository
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
 import com.example.mr_framer_grocer.Helper.MyButton
@@ -202,7 +202,8 @@ class MyCartActivity : AppCompatActivity() {
 
     private fun initDB() {
         Common.cartDatabase = CartDatabase.invoke(this)
-        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
+        Common.cartRepository = CartRepository.getInstance(
+            CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
     }
 
 }

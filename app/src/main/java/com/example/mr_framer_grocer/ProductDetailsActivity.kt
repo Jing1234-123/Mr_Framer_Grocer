@@ -15,11 +15,11 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.example.mr_framer_grocer.Adapter.CustomExpandableListAdapter
 import com.example.mr_framer_grocer.Adapter.ProdAdapter
-import com.example.mr_framer_grocer.Database.CartDataSource
-import com.example.mr_framer_grocer.Database.CartRepository
 import com.example.mr_framer_grocer.Database.EndPoints
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
+import com.example.mr_framer_grocer.Database.LocalDB.CartDataSource
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
+import com.example.mr_framer_grocer.Database.LocalDB.CartRepository
 import com.example.mr_framer_grocer.Database.MySingleton
 import com.example.mr_framer_grocer.Model.Product
 import com.example.mr_framer_grocer.databinding.ActivityProductDetailsBinding
@@ -193,6 +193,22 @@ class ProductDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // back button
+        binding.backArrow.setOnClickListener{
+            val cate = when(category){
+                "Vegetables" -> "Vegetables"
+                "Seafoods" -> "Seafoods"
+                "Fruits" -> "Fruits"
+                "Chicken" -> "Chickens"
+                else -> "Eggs"
+            }
+            val intent = Intent(this, productList::class.java)
+            intent.putExtra("category", cate)
+            finish()
+            startActivity(intent)
+        }
+
+
     }
 
     private fun updateCartCount() {
@@ -212,7 +228,8 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     private fun initDB() {
         Common.cartDatabase = CartDatabase.invoke(this)
-        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
+        Common.cartRepository = CartRepository.getInstance(
+            CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
     }
 
     // get related products based on category from server database

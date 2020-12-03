@@ -100,7 +100,7 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
                 val cartItem = Common.cartRepository.getCartItemsById(itemList[position].id!!)
 
                 if (cartItem[0].quantity + 1 > cartItem[0].stock) {
-                    Toast.makeText(context, "Quantity reach maximum.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Quantity exceed stock level.", Toast.LENGTH_SHORT).show()
                 } else {
                     val newCart = Cart(
                         itemList[position].id!!.toInt(),
@@ -114,7 +114,7 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
 
                     Common.cartRepository.updateCart(newCart)
 
-                    Toast.makeText(context, "Quantity +1", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Added successfully!", Toast.LENGTH_SHORT).show()
                 }
             }
 

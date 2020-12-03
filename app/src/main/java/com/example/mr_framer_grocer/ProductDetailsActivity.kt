@@ -182,7 +182,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                 if(cartItem[0].quantity + quantity > cartItem[0].stock)
                 {
-                    Toast.makeText(this, "Quantity reach maximum.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Quantity exceed stock level", Toast.LENGTH_SHORT).show()
                 }
                 else
                 {
@@ -191,7 +191,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                     Common.cartRepository.updateCart(newCart)
 
-                    Toast.makeText(this, "Quantity +$quantity", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Added successfully!", Toast.LENGTH_SHORT).show()
                 }
 
             }

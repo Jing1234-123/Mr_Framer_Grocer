@@ -59,8 +59,7 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
         {
             if(itemList[position].id == favItem[i].id.toString())
                 holder.favBtn.setBackgroundResource(R.drawable.prod_list_fill_heart)
-            else
-                holder.favBtn.setBackgroundResource(R.drawable.prod_list_emp_heart)
+
         }
 
         // view product details

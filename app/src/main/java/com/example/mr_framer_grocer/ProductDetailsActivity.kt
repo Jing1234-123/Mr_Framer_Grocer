@@ -461,6 +461,10 @@ class ProductDetailsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateCartCount()
+
+        loadRelatedProd()
+        relatedProdadapter = ProdAdapter(this, prodList)
+        binding.relatedProdList.adapter = relatedProdadapter
     }
 
 

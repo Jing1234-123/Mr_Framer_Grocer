@@ -42,7 +42,7 @@
             android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:fontFamily="sans-serif"
-            android:maxWidth="200dp"
+            android:maxWidth="100dp"
             android:maxLines="1"
             android:text="@string/tomato"
             android:textColor="@color/black"

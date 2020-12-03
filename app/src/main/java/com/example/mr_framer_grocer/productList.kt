@@ -82,10 +82,10 @@ class productList : AppCompatActivity() {
         }
 
         // load the product based on category
-//        loadProduct()
+        loadProduct()
 
-//        adapter = ProductAdapters(this, prodList)
-//        binding.products.adapter = adapter
+        adapter = ProductAdapters(this, prodList)
+        binding.products.adapter = adapter
 
         // proceed to my cart page
         binding.fab.setOnClickListener{
@@ -335,9 +335,7 @@ class productList : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        loadProduct()
-        binding.bottomNavigationView.background = null
-        adapter = ProductAdapters(this, prodList)
+
         binding.products.adapter = adapter
 
     }

@@ -188,8 +188,6 @@ class MyCartActivity : AppCompatActivity() {
                 startActivity(intent)
 
             }
-            cartAdapter = MyAdapter(this, itemList)
-            binding.cartList.adapter = cartAdapter
         }
     }
 

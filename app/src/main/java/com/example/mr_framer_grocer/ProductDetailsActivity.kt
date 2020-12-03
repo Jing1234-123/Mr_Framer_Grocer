@@ -92,8 +92,8 @@ class ProductDetailsActivity : AppCompatActivity() {
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.relatedProdList.layoutManager = layoutManager
 
-//        relatedProdadapter = ProdAdapter(this, prodList)
-//        binding.relatedProdList.adapter = relatedProdadapter
+        relatedProdadapter = ProdAdapter(this, prodList)
+        binding.relatedProdList.adapter = relatedProdadapter
 
         // if stock is 0
         if(stock == 0)
@@ -461,9 +461,6 @@ class ProductDetailsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateCartCount()
-
-        loadRelatedProd()
-        relatedProdadapter = ProdAdapter(this, prodList)
         binding.relatedProdList.adapter = relatedProdadapter
     }
 

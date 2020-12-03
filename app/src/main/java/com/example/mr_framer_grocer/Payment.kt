@@ -46,6 +46,7 @@ class Payment : AppCompatActivity() {
         val back = binding.backBtn
         back.setOnClickListener {
             intent = Intent(this, MyCartActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }
@@ -75,7 +76,13 @@ class Payment : AppCompatActivity() {
             val phoneNo = "+6$phoneno"
             binding.otpTxt.isEnabled = true     // Enable OTP edittext if user select "Send OTP" button
 
+
             if (!phoneNo.isEmpty()) {
+                Toast.makeText(
+                    applicationContext,
+                    "Sending verification code",
+                    Toast.LENGTH_LONG
+                ).show()
                 sendVerificationcode(phoneNo)
             } else {
                 Toast.makeText(

@@ -15,7 +15,7 @@ class OrderSuccessful : AppCompatActivity() {
 
         val done = binding.doneBtn
         done.setOnClickListener{
-            intent= Intent(this,AllCategory::class.java)    /////////////////------------->>>>>>>>>>>>>>>> HERE
+            intent= Intent(this,AllCategory::class.java)
             startActivity(intent)
         }
     }

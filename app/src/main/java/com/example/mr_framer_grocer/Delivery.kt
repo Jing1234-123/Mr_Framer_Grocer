@@ -45,7 +45,8 @@ class Delivery : AppCompatActivity() {
         // Up button to Previous Activity
         val back = binding.backBtn
         back.setOnClickListener {
-            intent = Intent(this, MyCartActivity::class.java) /////////////////------------->>>>>>>>>>>>>>>> HERE
+            intent = Intent(this, MyCartActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }

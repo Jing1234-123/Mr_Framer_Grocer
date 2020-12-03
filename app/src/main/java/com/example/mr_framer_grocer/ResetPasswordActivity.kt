@@ -41,6 +41,12 @@ class ResetPasswordActivity : AppCompatActivity() {
                 editTextNewPass.setError("New Password is Empty")
             }
         }
+        binding.backArrow.setOnClickListener {
+            intent = Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            Toast.makeText(applicationContext, "Password changed unsuccessful.", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun updatePsw() {

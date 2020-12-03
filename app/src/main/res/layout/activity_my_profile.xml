@@ -245,6 +245,7 @@
             android:maxEms="1"
             android:textSize="16dp"
             android:layout_marginTop="10dp"
+            android:maxLength="100"
             android:hint="enter address"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"

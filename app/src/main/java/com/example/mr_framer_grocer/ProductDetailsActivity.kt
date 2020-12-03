@@ -221,10 +221,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                 "Chicken" -> "Chickens"
                 else -> "Eggs"
             }
-            val intent = Intent(this, productList::class.java)
+            val intent = Intent(this, productList::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("category", cate)
-            finish()
             startActivity(intent)
+            finish()
         }
 
 

@@ -162,6 +162,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                         //if change password button
                         else{
+                            Common.contact_no = editTextPhone.text.toString()
                             intent = Intent(this, PasswordRecoveryActivity::class.java)
                             var phone =  binding.editTextPhone.text.toString().trim()
                             val phoneNo = "+6$phone"

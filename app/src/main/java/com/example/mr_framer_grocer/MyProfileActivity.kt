@@ -45,7 +45,6 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
-
         // set phone number
         binding.contact.text = Common.contact_no
 
@@ -89,34 +88,40 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             finish()
         }
 
+
         binding.saveButton.setOnClickListener {
             if (binding.editTextName.text.toString().isNotEmpty()){
 
-                if(binding.editTextEmail.text.toString().matches(emailPattern.toRegex())) {
+                if(binding.birthDate.text.toString().isNotEmpty()) {
 
-                    if (binding.editTextAddress.text.toString().isNotEmpty()) {
+                    if (binding.editTextEmail.text.toString().matches(emailPattern.toRegex())) {
 
-                        // user edit profile
-                        if(bundle.getString("edit_profile") == "yes")
-                        {
-                            updateUserInfo()
+                        if (binding.editTextAddress.text.toString().isNotEmpty()) {
+
+
+                            // user edit profile
+                            if (bundle.getString("edit_profile") == "yes") {
+                                updateUserInfo()
+                            }
+
+                            //user create new profile
+                            if (bundle.getString("edit_profile") == "no") {
+                                // insert user data
+                                createUser()
+
+                            }
+
+                        } else {
+                            editTextAddress.setError("Address cannot be empty")
                         }
-
-                        //user create new profile
-                        if(bundle.getString("edit_profile") == "no"){
-                            // insert user data
-                            createUser()
-
-                        }
-
-                    } else {
-                        editTextAddress.setError("Address cannot be empty")
+                    }
+                    else{
+                        editTextEmail.setError("Invalid Email Address")
                     }
                 }
                 else{
-                    editTextEmail.setError("Invalid Email Address")
+                    birthDate.setError("Please select a date")
                 }
-
             }
             else{
                 editTextName.setError("Name cannot be empty")

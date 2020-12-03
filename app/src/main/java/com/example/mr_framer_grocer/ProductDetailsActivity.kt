@@ -145,7 +145,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 // LIKE
                 binding.heartButton.setBackgroundResource(R.drawable.filled_heart)
                 val newFav = Fav(
-                    id!!.toInt(), name, price, weight, image, category)
+                    id!!.toInt(), name, price, weight, image, category,stock)
 
                 // add to database
                 Common.favRepository.addToFav(newFav)

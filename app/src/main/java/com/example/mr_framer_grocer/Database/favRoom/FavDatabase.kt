@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = arrayOf(Fav::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Fav::class), version = 2, exportSchema = false)
 abstract class FavDatabase: RoomDatabase() {
     abstract fun favDao(): FavDao
 
@@ -19,8 +19,14 @@ abstract class FavDatabase: RoomDatabase() {
             FavDatabase.INSTANCE ?: buildDatabase(context).also { FavDatabase.INSTANCE = it}
         }
 
-        private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
-            FavDatabase::class.java, "fav_table").allowMainThreadQueries()
+        private fun buildDatabase(context: Context) =   Room.databaseBuilder(context, FavDatabase::class.java, "dfav_table")
+            .fallbackToDestructiveMigration().allowMainThreadQueries()
             .build()
+
+//            Room.databaseBuilder(context,
+//            FavDatabase::class.java, "fav_table").allowMainThreadQueries()
+//            .build()
+
+
     }
 }

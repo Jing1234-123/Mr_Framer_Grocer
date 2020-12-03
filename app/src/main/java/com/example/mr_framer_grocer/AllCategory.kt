@@ -12,7 +12,6 @@ import com.example.mr_framer_grocer.Database.favRoom.FavDatabase
 import com.example.mr_framer_grocer.Database.favRoom.FavRepository
 import com.example.mr_framer_grocer.databinding.ActivityAllCategoryBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_bottom_nav_bar.*
 
 
 class AllCategory : AppCompatActivity() {
@@ -31,16 +30,13 @@ class AllCategory : AppCompatActivity() {
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
+        bottomNavigationView.menu.getItem(0).setChecked(true)
         bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
             when (item.itemId) {
-                R.id.miHome -> {
-                    val intent = Intent(this, AllCategory::class.java)
-                    this.startActivity(intent)
-                    finish()
-                }
                 R.id.miProfile -> {
                     val intent = Intent(this, ProfileActivity::class.java)
                     this.startActivity(intent)
+                    this.onBackPressed()
                     finish()
                 }
             }

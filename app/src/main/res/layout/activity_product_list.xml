@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="15dp"
-        android:layout_marginTop="120dp"
+        android:paddingTop="100dp"
         android:paddingLeft="15dp"
         android:numColumns="auto_fit"
         android:gravity="center"
@@ -78,23 +78,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </RelativeLayout>
-
-    <SearchView
-        android:id="@+id/searchBtn"
-        android:layout_width="38dp"
-        android:layout_height="34dp"
-        android:layout_marginLeft="350dp"
-        android:queryHint="search..."
-        android:layout_marginTop="72dp" />
-
-    <androidx.constraintlayout.utils.widget.ImageFilterButton
-        android:id="@+id/filterList"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="20dp"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/filter" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"

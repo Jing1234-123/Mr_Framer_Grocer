@@ -1,8 +1,6 @@
 package com.example.mr_framer_grocer
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -206,10 +204,10 @@ class SignUpActivity : AppCompatActivity() {
                 Common.contact_no = binding.editTextPhone.text.toString()
                 Common.psw = binding.editTextTextPassword.text.toString()
 
-                val intent = Intent(applicationContext, MyProfileActivity::class.java)
+                val intent = Intent(this, MyProfileActivity::class.java)
                 intent.putExtra("edit_profile", "no")
-                finish()
                 startActivity(intent)
+                finish()
             })
 
         //Volley request policy, only one time request

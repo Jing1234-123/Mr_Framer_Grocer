@@ -12,5 +12,6 @@ data class Fav (
     @ColumnInfo(name = "price") var price: Float?,
     @ColumnInfo(name = "weight") var weight: String?,
     @ColumnInfo(name = "image") var image: String?,
-    @ColumnInfo(name = "category") var category: String?
+    @ColumnInfo(name = "category") var category: String?,
+    @ColumnInfo(name = "stock") var stock: Int?
 )

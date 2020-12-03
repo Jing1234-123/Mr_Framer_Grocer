@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -268,7 +269,9 @@ class LoginActivity : AppCompatActivity() {
                                 objectProd.getString("price").toFloat(),
                                 objectProd.getString("weight"),
                                 objectProd.getString("image"),
-                                objectProd.getString("category")
+                                objectProd.getString("category"),
+                                objectProd.getInt("stock")
+
                             )
 
                             Common.favRepository.addToFav(favitem)
@@ -303,5 +306,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initFavDB() {
         Common.favDatabase = FavDatabase.invoke(this)
         Common.favRepository = FavRepository.getInstance(FavDataSource.getInstance(Common.favDatabase.favDao()))
+
+
     }
 }

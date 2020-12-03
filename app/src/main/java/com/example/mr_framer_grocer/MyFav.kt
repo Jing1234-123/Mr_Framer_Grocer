@@ -24,31 +24,52 @@ class MyFav : AppCompatActivity() {
         binding = ActivityMyFavBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadFavItem()
+//        loadFavItem()
 
         binding.backBtn!!.setOnClickListener {
             intent= Intent(this, ProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
             startActivity(intent)
             finish()
         }
-
-        // if fav list has nothing
-        if(favListItem.isNullOrEmpty()) {
-            Toast.makeText(this, "Nothing inside favorite list", Toast.LENGTH_SHORT).show()
-        }
-        else {
-            binding.favList.setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this)
-            binding.favList.layoutManager = layoutManager
-
-            favAdapter = FavAdapter(this, favListItem )
-            binding.favList.adapter = favAdapter
-        }
+//
+//        // if fav list has nothing
+//        if(favListItem.isNullOrEmpty()) {
+//            Toast.makeText(this, "Nothing inside favorite list", Toast.LENGTH_SHORT).show()
+//        }
+//        else {
+//            binding.favList.setHasFixedSize(true)
+//            layoutManager = LinearLayoutManager(this)
+//            binding.favList.layoutManager = layoutManager
+//
+//            favAdapter = FavAdapter(this, favListItem )
+//            binding.favList.adapter = favAdapter
+//        }
 
     }
 
     private fun loadFavItem() {
         favListItem = ArrayList(Common.favRepository.getFavItems())
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        loadFavItem()
+
+        binding.favList.setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this)
+        binding.favList.layoutManager = layoutManager
+
+        favAdapter = FavAdapter(this, favListItem )
+        binding.favList.adapter = favAdapter
+
+         //if fav list has nothing
+        if(favListItem.isNullOrEmpty()) {
+            Toast.makeText(this, "Nothing inside favorite list", Toast.LENGTH_SHORT).show()
+        }
+
+
+
     }
 
 }

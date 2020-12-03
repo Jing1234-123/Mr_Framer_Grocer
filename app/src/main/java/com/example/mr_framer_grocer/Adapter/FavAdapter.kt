@@ -36,6 +36,7 @@ class FavAdapter(internal var context: Context, internal var itemList: MutableLi
             intent.putExtra("weight", itemList[position].weight)
             intent.putExtra("img", itemList[position].image)
             intent.putExtra("category", itemList[position].category)
+            intent.putExtra("stock", itemList[position].stock)
             context.startActivity(intent)
         }
     }

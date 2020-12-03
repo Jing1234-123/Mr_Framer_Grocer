@@ -102,9 +102,7 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         if(bundle.getString("edit_profile") == "no"){
                             // insert user data
                             createUser()
-                            val intent = Intent(this, ProfileActivity::class.java)
-                            finish()
-                            startActivity(intent)
+
                         }
 
                     } else {
@@ -257,6 +255,10 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                             editor.putString("NAME", Common.name)
                             editor.putBoolean("LOGIN", true)
                             editor.apply()
+
+                            val intent = Intent(this, ProfileActivity::class.java)
+                            startActivity(intent)
+                            finish()
 
                         }else{
                             Toast.makeText(applicationContext, "Record not saved", Toast.LENGTH_LONG).show()

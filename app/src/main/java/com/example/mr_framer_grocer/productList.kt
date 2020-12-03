@@ -45,7 +45,8 @@ class productList : AppCompatActivity() {
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
-        bottomNavigationView.menu.getItem(0).isEnabled = false
+        bottomNavigationView.menu.getItem(1).setChecked(true)
+
         bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
             when (item.itemId) {
                 R.id.miHome -> {
@@ -186,7 +187,8 @@ class productList : AppCompatActivity() {
             {
                 if(product.id == favItem[i].id.toString())
                     favBtn.setBackgroundResource(R.drawable.filled_heart)
-
+                else
+                    favBtn.setBackgroundResource(R.drawable.empty_heart)
             }
 
             if(product.stock == 0)
@@ -269,7 +271,8 @@ class productList : AppCompatActivity() {
                         product.price,
                         product.weight,
                         product.img,
-                        product.category)
+                        product.category,
+                        product.stock)
 
                     // add to database
                     Common.favRepository.addToFav(newFav)
@@ -331,5 +334,8 @@ class productList : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         binding.bottomNavigationView.background = null
+        adapter = ProductAdapters(this, prodList)
+        binding.products.adapter = adapter
+
     }
 }

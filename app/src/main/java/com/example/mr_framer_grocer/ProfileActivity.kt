@@ -31,6 +31,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.background = null
+        bottomNavigationView.menu.getItem(2).setChecked(true)
         bottomNavigationView.menu.getItem(1).isEnabled = false
         bottomNavigationView.setOnNavigationItemSelectedListener{ item ->
             when (item.itemId) {
@@ -39,11 +40,7 @@ class ProfileActivity : AppCompatActivity() {
                     this.startActivity(intent)
                     finish()
                 }
-                R.id.miProfile -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    this.startActivity(intent)
-                    finish()
-                }
+
             }
             return@setOnNavigationItemSelectedListener true
         }
@@ -57,6 +54,12 @@ class ProfileActivity : AppCompatActivity() {
         binding.textViewEditProfile.setOnClickListener {
             val intent = Intent(this, MyProfileActivity::class.java)
             intent.putExtra("edit_profile", "yes")
+            startActivity(intent)
+        }
+
+        // proceed to my cart page
+        binding.fab!!.setOnClickListener{
+            val intent = Intent(this, MyCartActivity::class.java)
             startActivity(intent)
         }
 

@@ -41,6 +41,16 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
         // if stock is 0, disable add to cart
         holder.cart_btn.isEnabled = itemList[position].stock != 0
 
+        val favItem = Common.favRepository.getFavItems()
+
+        for(i in 0 until favItem.size)
+        {
+            if(itemList[position].id == favItem[i].id.toString())
+                holder.favBtn.setBackgroundResource(R.drawable.filled_heart)
+            else
+                holder.favBtn.setBackgroundResource(R.drawable.empty_heart)
+        }
+
         // view product details
         holder.prod_image.setOnClickListener {
 

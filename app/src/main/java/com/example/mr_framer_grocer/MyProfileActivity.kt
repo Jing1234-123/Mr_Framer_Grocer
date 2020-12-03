@@ -75,7 +75,11 @@ class MyProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         val bundle = intent.extras
         if(bundle!!.getString("edit_profile") == "yes")
         {
+            binding.backArrow.isEnabled = true
             getUserInfo()
+        }
+        else{
+            binding.backArrow.isEnabled = false
         }
 
 

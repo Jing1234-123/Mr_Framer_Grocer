@@ -2,14 +2,17 @@ package com.example.mr_framer_grocer.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mr_framer_grocer.Common
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
+import com.example.mr_framer_grocer.Database.favRoom.Fav
 import com.example.mr_framer_grocer.Model.Product
 import com.example.mr_framer_grocer.ProductDetailsActivity
 import com.example.mr_framer_grocer.R
@@ -32,6 +35,7 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
         return itemList.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: RelatedProdViewHolder, position: Int) {
         Glide.with(context).load(itemList[position].img).into(holder.prod_image)
         holder.prod_name.text = itemList[position].name
@@ -74,6 +78,34 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
             intent.putExtra("category", itemList[position].category)
             intent.putExtra("stock", itemList[position].stock)
             context.startActivity(intent)
+        }
+
+        // add to fav
+        holder.favBtn.setOnClickListener {
+            if(holder.favBtn.background.constantState == context.getDrawable(R.drawable.prod_list_emp_heart)!!.constantState)
+            {
+                holder.favBtn.setBackgroundResource(R.drawable.prod_list_fill_heart)
+                val newFav = Fav(
+                    itemList[position].id!!.toInt(),
+                    itemList[position].name,
+                    itemList[position].price,
+                    itemList[position].weight,
+                    itemList[position].img,
+                    itemList[position].category,
+                    itemList[position].stock)
+
+                // add to database
+                Common.favRepository.addToFav(newFav)
+                Log.d("fav_table", Gson().toJson(newFav))
+                Toast.makeText(context, "Added to Favorite", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                holder.favBtn.setBackgroundResource(R.drawable.prod_list_emp_heart)
+                // remove from database
+                Common.favRepository.delById(itemList[position].id!!.toInt())
+                Toast.makeText(context, "Removed from Favorite", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // add to cart

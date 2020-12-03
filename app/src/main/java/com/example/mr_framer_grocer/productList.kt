@@ -191,8 +191,6 @@ class productList : AppCompatActivity() {
             {
                 if(product.id == favItem[i].id.toString())
                     favBtn.setBackgroundResource(R.drawable.prod_list_fill_heart)
-                else
-                    favBtn.setBackgroundResource(R.drawable.prod_list_emp_heart)
             }
 
             if(product.stock == 0)
@@ -337,6 +335,7 @@ class productList : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        loadProduct()
         binding.bottomNavigationView.background = null
         adapter = ProductAdapters(this, prodList)
         binding.products.adapter = adapter

@@ -3,9 +3,9 @@ package com.example.mr_framer_grocer
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.mr_framer_grocer.databinding.ActivityContactUsBinding
 
@@ -46,7 +46,7 @@ class ContactUs : AppCompatActivity() {
 
         // For viewing street view purpose using intent
         val openMap = binding.addressDetails
-        openMap!!.setOnClickListener {
+        openMap.setOnClickListener {
             // Mr Farmer Grocer - Latitude, Longitude
             // 3.089613,101.691924
 
@@ -84,7 +84,8 @@ class ContactUs : AppCompatActivity() {
         // Up button to My Profile Activity
         val back = binding.backBtn
         back.setOnClickListener{
-            intent=Intent(this, ProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
+            intent=Intent(this, ProfileActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }

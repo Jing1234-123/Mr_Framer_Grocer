@@ -1,8 +1,8 @@
 package com.example.mr_framer_grocer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.databinding.ActivityPaymentSuccessfulBinding
 
 class PaymentSuccessful : AppCompatActivity() {
@@ -17,6 +17,7 @@ class PaymentSuccessful : AppCompatActivity() {
         done.setOnClickListener{
             intent= Intent(this,AllCategory::class.java) /////////////////------------->>>>>>>>>>>>>>>> HERE
             startActivity(intent)
+            finish()
         }
     }
 }

@@ -9,10 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mr_framer_grocer.Adapter.MyAdapter
-import com.example.mr_framer_grocer.Database.LocalDB.CartDataSource
-import com.example.mr_framer_grocer.Database.LocalDB.CartRepository
 import com.example.mr_framer_grocer.Database.LocalDB.Cart
+import com.example.mr_framer_grocer.Database.LocalDB.CartDataSource
 import com.example.mr_framer_grocer.Database.LocalDB.CartDatabase
+import com.example.mr_framer_grocer.Database.LocalDB.CartRepository
 import com.example.mr_framer_grocer.Helper.MyButton
 import com.example.mr_framer_grocer.Helper.MyButtonClickListener
 import com.example.mr_framer_grocer.Helper.MySwipeHelper
@@ -47,9 +47,10 @@ class MyCartActivity : AppCompatActivity() {
             val back_menu = findViewById<Button>(R.id.back_menu_btn)
             back_menu.setOnClickListener {
                 // Back to menu page
-                finish()
                 val intent = Intent(this, AllCategory::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
+                finish()
 
             }
         }
@@ -172,6 +173,24 @@ class MyCartActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateCartCount()
+
+        loadCartItem()
+
+        // if the my cart is empty
+        if(itemList.isNullOrEmpty()) {
+            setContentView(R.layout.empty_cart)
+            val back_menu = findViewById<Button>(R.id.back_menu_btn)
+            back_menu.setOnClickListener {
+                // Back to menu page
+                finish()
+                val intent = Intent(this, AllCategory::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+
+            }
+            cartAdapter = MyAdapter(this, itemList)
+            binding.cartList.adapter = cartAdapter
+        }
     }
 
     private fun alertDialog() {
@@ -205,5 +224,7 @@ class MyCartActivity : AppCompatActivity() {
         Common.cartRepository = CartRepository.getInstance(
             CartDataSource.getInstance(Common.cartDatabase.cartDAO()))
     }
+    
+
 
 }

@@ -46,9 +46,9 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
         for(i in 0 until favItem.size)
         {
             if(itemList[position].id == favItem[i].id.toString())
-                holder.favBtn.setBackgroundResource(R.drawable.filled_heart)
+                holder.favBtn.setBackgroundResource(R.drawable.prod_list_fill_heart)
             else
-                holder.favBtn.setBackgroundResource(R.drawable.empty_heart)
+                holder.favBtn.setBackgroundResource(R.drawable.prod_list_emp_heart)
         }
 
         // view product details
@@ -56,7 +56,7 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
 
             // if any of the product is clicked, direct to product details page
             val intent = Intent(context, ProductDetailsActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
             intent.putExtra("id", itemList[position].id)
             intent.putExtra("name", itemList[position].name)

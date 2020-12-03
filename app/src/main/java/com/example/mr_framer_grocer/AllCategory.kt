@@ -35,8 +35,8 @@ class AllCategory : AppCompatActivity() {
             when (item.itemId) {
                 R.id.miProfile -> {
                     val intent = Intent(this, ProfileActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     this.startActivity(intent)
-                    this.onBackPressed()
                     finish()
                 }
             }

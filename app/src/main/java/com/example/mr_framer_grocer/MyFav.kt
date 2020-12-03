@@ -26,24 +26,13 @@ class MyFav : AppCompatActivity() {
 
 //        loadFavItem()
 
-        binding.backBtn!!.setOnClickListener {
-            intent= Intent(this, ProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
+        binding.backBtn.setOnClickListener {
+            intent= Intent(this, ProfileActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }
-//
-//        // if fav list has nothing
-//        if(favListItem.isNullOrEmpty()) {
-//            Toast.makeText(this, "Nothing inside favorite list", Toast.LENGTH_SHORT).show()
-//        }
-//        else {
-//            binding.favList.setHasFixedSize(true)
-//            layoutManager = LinearLayoutManager(this)
-//            binding.favList.layoutManager = layoutManager
-//
-//            favAdapter = FavAdapter(this, favListItem )
-//            binding.favList.adapter = favAdapter
-//        }
+
 
     }
 

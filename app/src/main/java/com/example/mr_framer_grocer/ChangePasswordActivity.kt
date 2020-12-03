@@ -26,6 +26,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         binding.backArrow.setOnClickListener {
             intent = Intent(this, ProfileActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }

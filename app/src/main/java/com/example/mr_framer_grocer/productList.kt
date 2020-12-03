@@ -51,11 +51,13 @@ class productList : AppCompatActivity() {
             when (item.itemId) {
                 R.id.miHome -> {
                     val intent = Intent(this, AllCategory::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     this.startActivity(intent)
                     finish()
                 }
                 R.id.miProfile -> {
                     val intent = Intent(this, ProfileActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     this.startActivity(intent)
                     finish()
                 }
@@ -88,14 +90,16 @@ class productList : AppCompatActivity() {
         // proceed to my cart page
         binding.fab.setOnClickListener{
             val intent = Intent(this, MyCartActivity::class.java)
+
             startActivity(intent)
         }
 
         // back button
         binding.backbtn.setOnClickListener{
             val intent = Intent(this, AllCategory::class.java)
-            finish()
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -186,9 +190,9 @@ class productList : AppCompatActivity() {
             for(i in 0 until favItem.size)
             {
                 if(product.id == favItem[i].id.toString())
-                    favBtn.setBackgroundResource(R.drawable.filled_heart)
+                    favBtn.setBackgroundResource(R.drawable.prod_list_fill_heart)
                 else
-                    favBtn.setBackgroundResource(R.drawable.empty_heart)
+                    favBtn.setBackgroundResource(R.drawable.prod_list_emp_heart)
             }
 
             if(product.stock == 0)
@@ -262,9 +266,9 @@ class productList : AppCompatActivity() {
 
             // add to fav
             favBtn.setOnClickListener {
-                if(favBtn.background.constantState == context.getDrawable(R.drawable.empty_heart)!!.constantState)
+                if(favBtn.background.constantState == context.getDrawable(R.drawable.prod_list_emp_heart)!!.constantState)
                 {
-                    favBtn.setBackgroundResource(R.drawable.filled_heart)
+                    favBtn.setBackgroundResource(R.drawable.prod_list_fill_heart)
                     val newFav = Fav(
                         product.id!!.toInt(),
                         product.name,
@@ -281,7 +285,7 @@ class productList : AppCompatActivity() {
                 }
                 else
                 {
-                    favBtn.setBackgroundResource(R.drawable.empty_heart)
+                    favBtn.setBackgroundResource(R.drawable.prod_list_emp_heart)
                     // remove from database
                     Common.favRepository.delById(product.id!!.toInt())
                     Toast.makeText(context, "Removed from Favorite", Toast.LENGTH_SHORT).show()

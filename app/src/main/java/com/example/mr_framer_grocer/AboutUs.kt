@@ -1,10 +1,10 @@
 package com.example.mr_framer_grocer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.mr_framer_grocer.databinding.ActivityAboutUsBinding
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mr_framer_grocer.Adapter.ExpandableListViewAdapter
+import com.example.mr_framer_grocer.databinding.ActivityAboutUsBinding
 
 class AboutUs : AppCompatActivity() {
     // Binding About Us Activity
@@ -23,7 +23,8 @@ class AboutUs : AppCompatActivity() {
         // Up button to Profile Activity
         val back = binding.backBtn
         back.setOnClickListener{
-            intent= Intent(this,ProfileActivity::class.java)  /////////////////------------->>>>>>>>>>>>>>>> HERE
+            intent= Intent(this,ProfileActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }

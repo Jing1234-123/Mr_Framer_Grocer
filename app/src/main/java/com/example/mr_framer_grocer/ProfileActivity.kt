@@ -37,6 +37,7 @@ class ProfileActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.miHome -> {
                     val intent = Intent(this, AllCategory::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     this.startActivity(intent)
                     finish()
                 }

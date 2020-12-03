@@ -14,7 +14,7 @@ class RelatedProdViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     var prod_image: ImageView
     var prod_weight: TextView
     var cart_btn: Button
-    var favBtn: ImageView
+    var favBtn: Button
 
     init {
         prod_image = itemView.findViewById(R.id.prod_img)

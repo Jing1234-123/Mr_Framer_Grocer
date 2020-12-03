@@ -39,7 +39,15 @@ class ProdAdapter(internal var context: Context, internal var itemList: ArrayLis
         holder.prod_weight.text = context.getString(R.string.weight, itemList[position].weight)
 
         // if stock is 0, disable add to cart
-        holder.cart_btn.isEnabled = itemList[position].stock != 0
+        if(itemList[position].stock == 0)
+        {
+            holder.cart_btn.isEnabled = false
+            holder.cart_btn.alpha = 0.5f
+        }
+        else{
+            holder.cart_btn.isEnabled = true
+            holder.cart_btn.alpha = 1.0f
+        }
 
         val favItem = Common.favRepository.getFavItems()
 

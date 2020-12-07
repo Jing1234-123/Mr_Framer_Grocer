@@ -174,22 +174,23 @@ class MyCartActivity : AppCompatActivity() {
         super.onResume()
         updateCartCount()
 
-        loadCartItem()
-
-        // if the my cart is empty
-        if(itemList.isNullOrEmpty()) {
-            setContentView(R.layout.empty_cart)
-            val back_menu = findViewById<Button>(R.id.back_menu_btn)
-            back_menu.setOnClickListener {
-                // Back to menu page
-                finish()
-                val intent = Intent(this, AllCategory::class.java)
-                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-
-            }
-            binding.cartList.adapter = cartAdapter
-        }
+//        loadCartItem()
+//
+//        // if the my cart is empty
+//        if(itemList.isNullOrEmpty()) {
+//            setContentView(R.layout.empty_cart)
+//            val back_menu = findViewById<Button>(R.id.back_menu_btn)
+//            back_menu.setOnClickListener {
+//                // Back to menu page
+//                finish()
+//                val intent = Intent(this, AllCategory::class.java)
+//                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                startActivity(intent)
+//
+//            }
+//        }
+//        cartAdapter = MyAdapter(this, itemList)
+//        binding.cartList.adapter = cartAdapter
     }
 
     private fun alertDialog() {
